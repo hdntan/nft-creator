@@ -1,6 +1,7 @@
 
 "use client"
 import React, { useEffect, useState } from 'react';
+import {ConnectButton} from '@rainbow-me/rainbowkit'
 
 import {  Button, Dropdown, Image, Input, Layout, Menu, MenuProps, Space, Typography } from 'antd';
 import {
@@ -13,11 +14,14 @@ import {
   ShoppingCartOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const { Header } = Layout;
 const { Search } = Input;
 const { SubMenu } = Menu;
 const Navbar = () => {
+
+  const pathname = usePathname()
 
   const items: MenuProps['items'] = [
     {
@@ -75,52 +79,48 @@ const Navbar = () => {
       <Link href={"/"} className='text-xl font-bold'>OpenSea</Link>
       </div>
     
-      <Menu mode='horizontal' className='flex items-center justify-center'>
-        
-        <Menu.Item   className='bg-transparent'>
-          <Link className='text-lg font-bold' href={"/uploadNft"}>Upload</Link>
-        </Menu.Item>
-        <Menu.Item className='text-lg font-bold'>About</Menu.Item>
-       
-        {/* <SubMenu key={2} className='text-lg font-bold' title="About">
-        <Menu.Item   className=''>
-          <Link  href={"/profile"}>Home</Link>
-        </Menu.Item>
-        <Menu.Item className=''>About</Menu.Item>
-        </SubMenu> */}
-        
-       
-      </Menu>
+    <ul className='flex items-end justify-between font-bold mr-10 text-lg '>
+    {
+                            pathname ==="/uploadNft" ? 
+                            
+                            
+                            <li className='border-b-2  p-2'>
+                                <Link href="/uploadNft">Create</Link>
+                            </li>
+
+                            :
+                            <li className='hover:border-b-2  p-2'>
+                                <Link href="/uploadNft"> Create</Link>
+                            </li>
+                        }
+    </ul>
       {/* <Input.Search className='w-[500px] ' size='large' placeholder='Search...' loading={false}></Input.Search> */}
-      <div className='border-2 w-1/2 flex items-center rounded-xl  mx-3'>
+      <div className='border-2 w-[500px] flex items-center rounded-xl  mx-3'>
        <div className='mx-3' >
            <SearchOutlined />
          </div>
-         <input className='w-full mr-3 p-2 focus:outline-none' type='search' placeholder='search'></input>
+         <input className='w-full mr-3 p-1 focus:outline-none' type='search' placeholder='search'></input>
         </div>
      
 
         <div className='flex gap-8 justify-center items-center mr-10'>
-        <Button className='flex items-center justify-center' size='large' shape="round" loading ={false}>
-         <ShoppingCartOutlined />
-        </Button>
+        
 
-        {
-        connect ?  <Button className='bg-blue-400 text-white font-bold' size='large' shape="round" loading ={false}>
-        Connect Wallet
-      </Button> : (
+     
+        <ConnectButton label='Connect Wallet'/>
+
+     
         <div>
  
     <Dropdown menu={{ items }}   placement="bottomRight" arrow>
-      <Button className='text-xl font-bold' size='large'>0x123456</Button>
+    <Button className='flex items-center justify-center' size='large' shape="round" loading ={false}>
+         <UserOutlined />
+        </Button>
     </Dropdown>
         </div>
       
   
-      )
-          
-
-      }
+  
 
         </div> 
 
@@ -134,44 +134,7 @@ const Navbar = () => {
     
 
     </div>
-    // <nav className='w-screen flex mt-5 items-center justify-center gap-8'>
-    //   <div className='flex justify-center items-center'>
-    //     <img className='w-10 h-10 mx-2' src='https://opensea.io/static/images/logos/opensea-logo.svg'/>
-       
-    //     <div className='text-xl font-bold border-r-2 pr-2'>
-    //       OpenSea
-    //     </div>
-    //   </div>
-     
-    //   <ul className='flex justify-center items-center gap-8'>
-    //     <li>Drops</li>
-    //     <li>Stats</li>
-    //   </ul>
-    //   <div className='border-2 w-1/2 flex items-center rounded-xl  mx-3'>
-    //   <div className='mx-3 pb-1' >
-    //       <SearchOutlined />
-    //     </div>
-    //     <input className='w-full mr-3 p-2 focus:outline-none' type='search' placeholder='search'></input>
-    //    </div>
-    //   <div>
-       
-     
-        
-        
-    //     <button className='border-2 px-5 py-2 rounded-l-xl'>Connect Wallet </button>
-          
-       
-    //     <button className='border-2 px-4  py-2 rounded-r-xl'>
-    //     <ShoppingCartOutlined  />
-    //     </button>
-    //   </div>
-    //   <div>
-    //     <button className='border-2 px-5 py-2 rounded-xl'>
-    //     <ShoppingCartOutlined  />
-    //     </button>
-    //   </div>
-     
-    // </nav>
+    
   
   );
   

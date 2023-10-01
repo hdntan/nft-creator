@@ -1,30 +1,46 @@
 
 
 import { Card } from 'antd'
+import Link from 'next/link';
 import React from 'react'
 interface ItemNftProps {
-    title: string
-    descriptions: string;
-    price:number;
-    imageUrl:string;
+    // tokenId:number,
+    // title: string
+    // descriptions: string;
+    // price:number;
+    // imageUrl:string;
+    price: number,
+  tokenId: number,
+  seller: string,
+  owner: string,
+  image: string,
+  name: string,
+  description: string,
 }
 // interface CardProductProps {
 //   product: ItemNftProps;
 // }
 
 const ItemNft: React.FC<ItemNftProps> = (product ) => {
+  const newTo = {
+    path:"/nftPage/"+product.tokenId
+}
   return (
-   
-       <Card
+   <Link href={newTo.path}>
+      <Card
+      className='shadow-lg'
             hoverable
             style={{ width: 300 }}
-            cover={<img alt={product.title} src={product.imageUrl} />}
+            cover={<img alt={product.name} style={{height: 200}} src={product.image} />}
           >
-            <h3>{product.title}</h3>
+            <h3>{product.name}</h3>
             <p>product.description</p>
             <span>$product.price</span>
             
           </Card>
+   </Link>
+
+       
  
    
     // <div className='w-[247px] h-[280px] border-2 rounded-xl shadow-lg'>
