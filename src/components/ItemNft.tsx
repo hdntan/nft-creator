@@ -10,6 +10,7 @@ interface ItemNftProps {
     // price:number;
     // imageUrl:string;
     price: number,
+  itemId: number,
   tokenId: number,
   seller: string,
   owner: string,
@@ -23,7 +24,7 @@ interface ItemNftProps {
 
 const ItemNft: React.FC<ItemNftProps> = (product ) => {
   const newTo = {
-    path:"/nftPage/"+product.tokenId
+    path:"/nftPage/"+product.itemId
 }
   return (
    <Link href={newTo.path}>
