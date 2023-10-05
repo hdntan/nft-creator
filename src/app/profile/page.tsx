@@ -1,91 +1,89 @@
-
 'use client'
-import { Carousel } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import axios from 'axios';
-import Marketplace from '../../../Marketplace.json';
-import ItemNft from '@/components/ItemNft';
-import Sidebar from '@/components/Sidebar';
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
+import { fetchBalance } from '@wagmi/core'
+import {watchAccount} from "wagmi/actions"
+
+const profile = () => {
+  const { address } = useAccount();
+ const [balanceOf, setBalanceOf] = useState(0);
+
+    
+//     })
+const getEllipsisTxt = (str, n = 6) => {
+    if (str) {
+      return `${str.slice(0, n)}...${str.slice(str.length - n)}`;
+    }
+    return "";
+  };
+
+async function getBalance() {
+
+      const promise =await   fetchBalance({
+    address: address,
+    formatUnits: 'ether',
+  }).then(res =>{
+   setBalanceOf(res.formatted);
+    })
+
+   
 
 
-interface ItemNftProps {
-  price: number,
-  tokenId: number,
-  seller: string,
-  owner: string,
-  image: string,
-  name: string,
-  description: string,
 }
 
 
-const Profile = ({children}) => {
-  const [listItem, setListItem] = useState<ItemNftProps[]>([]);
 
-  const getMyNft = async() => {
-    try {
-      const provider =  new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-      console.log('contract detail', contract);
-      let transaction = await contract.getMyNFTs();
-      const items = await Promise.all(transaction.map(async (i: any) => {
-       const tokenURI = await contract.tokenURI(i.tokenId);
-       let metadata = await axios.get(tokenURI);
-       console.log('metadata', metadata, i.tokenId);
-   
-       let price = ethers.utils.formatUnits(i.price.toString(),'ether');
-       let item = {
-         price,
-         tokenId: i.tokenId.toNumber(),
-         seller: i.seller,
-         owner: i.owner,
-         image: metadata.data.image,
-         name: metadata.data.name,
-         description: metadata.data.description,
-       };
-       console.log('item', item);
-       return item;
-      }));
-      // setDataFetched(true);
-      setListItem(items);
-    } catch (error) {
-      
-    console.log('err', error);
-    
-  
- 
-  }
-}
+  useEffect(()=> {
+    // getBalance();
+//   watchAccount(() => getBalance());
 
-useEffect(() => {
-    
-    
-   
- 
+  },[])
 
-  // getMyNft();
-  // fetch('https://reqres.in/api/users?page=2').then(res => res.json()).then(res => {
-  //   setUserData(res.data);
-  // })
-},[])
   return (
-
-
-
-    <div className="layout">
-    <Sidebar />
-    <main className="content">{children}</main>
-  </div>
-    
-   
-     
-   
- 
-    
-    
+    <div className="flex " >
+        <div className="xl:w-10/12 w-full px-8">
+            
+            <div className="xl:px-24">
+          
+                <div className="mt-16 lg:flex justify-between border-b border-gray-200 pb-16">
+                    <div className="w-80">
+                        <div className="flex items-center">
+                            <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Personal Information</h1>
+                        </div>
+                        <p className="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p>
+                    </div>
+                    <div>
+                        <div className="md:flex items-center lg:ml-24 lg:mt-0 mt-4">
+                            <div className="md:w-64">
+                                <label className="text-sm leading-none text-gray-800" id="firstName" >Address</label>
+                                
+                                
+                      
+                                <input type="name" className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder={getEllipsisTxt(address)} />
+                            </div>
+                            <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
+                                <label className="text-sm leading-none text-gray-800" id="lastName">Balance</label>
+                                <input type="name"  className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder='' />
+                            </div>
+                        </div>
+                        <div className="md:flex items-center lg:ml-24 mt-8">
+                            <div className="md:w-64">
+                                <label className="text-sm leading-none text-gray-800" id="emailAddress">Email address</label>
+                                <input type="email"  className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="emailAddress" placeholder="youremail@example.com" />
+                            </div>
+                            <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
+                                <label className="text-sm leading-none text-gray-800" id="phone" >Phone number</label>
+                                <input type="name"  className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="123-1234567" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+    </div>
   )
 }
 
-export default Profile
+export default profile

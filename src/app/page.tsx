@@ -1,24 +1,22 @@
 "use client";
 import ItemNft from "@/components/ItemNft";
-import Navbar from "@/components/Navbar";
+
 
 import Image from "next/image";
 import { Carousel, Card, Layout } from "antd";
 
 import { useEffect, useState } from "react";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+
 import { useGlobalContext } from "./context/store";
 import { useAccount } from "wagmi";
+import {watchAccount} from "wagmi/actions"
 import { ethers } from "ethers";
 import axios from "axios";
 
 import Marketplace from "../../Marketplace.json";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
-const CONTRACT_ADDRESS_MARKET = "0xc99040D7ed043D2b6602670EDDcB435a24115185";
-const CONTRACT_ADDRESS_NFT = "0xD5125c091a7c2f04132b66C20D5afA12E481E90F";
-const marketplaceABI = require("../utils/market-abi.json");
-const nftABI = require("../utils/nft-abi.json");
+
 const { Content } = Layout;
 
 interface ItemNftProps {
@@ -38,6 +36,7 @@ export default function Home() {
   const { userId, setUserId, provider, signer, contract } = useGlobalContext();
   const [userData, setUserData] = useState({});
   const [listItem, setListItem] = useState<ItemNftProps[]>([]);
+  const [itemCount, setItemCount] = useState(0);
 
   const getAllItem = async () => {
     try {
@@ -49,7 +48,9 @@ export default function Home() {
         signer
       );
       console.log("contract detail", contract);
-      let transaction = await contract.getAllNFTs();
+      const transaction = await contract.gettAllNftOnSale();
+    
+    
       const items = await Promise.all(
         transaction.map(async (i: any) => {
           const tokenURI = await contract.tokenURI(i.tokenId);
@@ -74,25 +75,20 @@ export default function Home() {
       );
       // setDataFetched(true);
       setListItem(items);
+      // setItemCount(totalItem);
     } catch (error) {
       console.log("err", error);
     }
   };
 
   useEffect(() => {
-    // const provider1 = new ethers.providers.Web3Provider(window.ethereum);
-    // const signer = provider1.getSigner();
-    // let contract1 = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-    setUserId("1");
-    // console.log('SMART CONTRACT',provider, signer, contract);
-    // console.log('IDDD',userId);
-
+    
+    
+   console.log('connect context', contract);
     getAllItem();
-    // fetch('https://reqres.in/api/users?page=2').then(res => res.json()).then(res => {
-    //   setUserData(res.data);
-    // })
+   
   }, []);
-  // console.log('sm',contract);
+
 
   const items = [
     {
@@ -146,19 +142,7 @@ export default function Home() {
     // Add more products here
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const prevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
-
-  const nextSlide = () => {
-    if (currentSlide < items.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
+ 
 
   return (
     <Layout className="2xl:container 2xl:mx-auto">
@@ -171,7 +155,7 @@ export default function Home() {
                 <p className=" w-10/12 mx-auto md:w-full  font-semibold lg:text-4xl text-3xl lg:leading-9 md:leading-7 leading-9 text-center text-gray-800">NFT NEWS</p>
             </div>
             <hr className=" w-full bg-gray-200 my-6" />
-        <div className=" flex justify-between items-center ">
+        <div className=" hidden sm:flex  justify-between items-center ">
                     <div className=" flex space-x-3 justify-center items-center">
                         <svg className=" cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.75 7.5H20.25" stroke="#1F2937" strokeMiterlimit="10" strokeLinecap="round" />
@@ -180,7 +164,7 @@ export default function Home() {
                         </svg>
                         <p className=" font-normal text-base leading-4 text-gray-800">Filter</p>
                     </div>
-                    <p className=" cursor-pointer hover:underline duration-100 font-normal text-base leading-4 text-gray-600">Showing 18 products</p>
+                    <p className=" cursor-pointer hover:underline duration-100 font-normal text-base leading-4 text-gray-600">Showing {itemCount} products</p>
                 </div>
       
     
@@ -210,32 +194,6 @@ export default function Home() {
       </Content>
       <Footer />
     </Layout>
-    // <div className="  mt-10 h-[1000px]">
-    //   <div className="mx-10 ">
-    //     <Banner />
-    //     <div className="py-10">
-    //       <strong className="text-xl ">All NFT </strong>
-
-    //       <div className=" grid  grid-cols-1 lg:grid-cols-4 gap-4 py-5">
-    //         {listItem.map((product, index) => (
-    //           <div key={index} className=" ">
-    //             <ItemNft
-    //               seller={product.seller}
-    //               owner={product.owner}
-    //               name={product.name}
-    //               tokenId={product.tokenId}
-    //               description={product.description}
-    //               price={product.price}
-    //               image={product.image}
-    //             />
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   <Footer />
    
-    // </div>
   );
 }

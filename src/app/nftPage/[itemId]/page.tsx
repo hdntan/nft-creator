@@ -5,13 +5,16 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {  ethers } from "ethers";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import Marketplace from "../../../../Marketplace.json";
 import { useAccount } from "wagmi";
+import { Button, Modal } from "antd";
 
 const nftPage = () => {
   const { address } = useAccount();
-
+  const [loading, setLoading] = useState(false);
+const [price, setPrice] = useState("");
   const { itemId } = useParams();
   const [data, updateData] = useState({});
   const [dataFetched, updateDataFetched] = useState(false);
@@ -61,6 +64,8 @@ const nftPage = () => {
 
   const buyNft = async () => {
     try {
+      setLoading(true);
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       let contract = new ethers.Contract(
@@ -68,19 +73,35 @@ const nftPage = () => {
         Marketplace.abi,
         signer
       );
+
       const salePrice = ethers.utils.parseUnits(data.price, "ether");
       let transaction = await contract.executeSale(itemId, {
         value: salePrice,
       });
       await transaction.wait();
-      alert("You successfully bought the NFT!");
+      showSuccessToast("You successfully bought the NFT!");
+      // alert("You successfully bought the NFT!");
+      setLoading(false);
+
     } catch (error) {
-      alert("Buy Error");
+      // alert("Buy Error");
+      showErrorToast("Buy Error" + error);
+      setLoading(false);
+
     }
   };
 
   const changePriceNft = async () => {
+    if(!price) {
+      showErrorToast("Enter price");
+      return
+
+    }
+    setIsModalOpen(false);
+
     try {
+      setLoading(true);
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       let contract = new ethers.Contract(
@@ -88,7 +109,42 @@ const nftPage = () => {
         Marketplace.abi,
         signer
       );
-    } catch (error) {}
+      const salePrice = ethers.utils.parseUnits(price, "ether");
+      let transaction = await contract.changePriceItem(itemId,salePrice);
+      await transaction.wait();
+      showSuccessToast("You successfully change price the NFT!");
+      // alert("You successfully bought the NFT!");
+
+      setPrice("");
+      setLoading(false);
+
+      
+    } catch (error) {
+      showErrorToast("Buy Error" + error);
+      setLoading(false);
+    }
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message)
+  }
+  
+  const showSuccessToast = (message) => {
+    toast.success(message)
+  }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    changePriceNft();
+
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -97,6 +153,19 @@ const nftPage = () => {
 
   return (
     <div className="2xl:container flex items-center justify-center 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
+      <ToastContainer position="top-right" />
+      <Modal title="Change price nft" open={isModalOpen} okType={'default'} onOk={handleOk} onCancel={handleCancel}>
+        <p>Price</p>
+        <input
+                type="number"
+                placeholder="price..."
+                className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 py-3 mt-3"
+                value={price}
+                onChange={e => setPrice(e.target.value)}
+                required
+              ></input>
+      </Modal>
+
       <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
       
         <div className=" w-full sm:w-96 md:w-8/12  lg:w-6/12  gap-4">
@@ -147,20 +216,25 @@ const nftPage = () => {
             <hr className=" bg-gray-200 w-full mt-4" />
           </div>
           {address != data.owner && currAddress != data.seller ? (
+            
             <button className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6" onClick={buyNft}>
               Buy NFT
             </button>
           ) : (
             <div className="">
-              <input
-                type="number"
-                placeholder="price..."
-                className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 py-3 mt-5"
-                required
-              ></input>
-              <button className="mt-5 focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 ">
+               <div className=" flex flex-row justify-between items-center mt-4">
+              <p className="font-medium text-base leading-4 text-gray-600">
+                Update price Nft
+              </p>
+              <p className="font-medium text-base leading-4 text-gray-600">
+               "Your are owner of Nft"
+              </p>
+            </div>
+             
+              {/* <button className="mt-5 focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 ">
                 Change Price
-              </button>
+              </button> */}
+              <Button size="large" loading={loading} disabled={loading}  className="mt-5 focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full " onClick={showModal}>Change Price</Button>
             </div>
           )}
         </div>

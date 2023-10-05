@@ -27,17 +27,28 @@ import Marketplace from '../../../Marketplace.json';
 interface ContextProps {
   userId: string,
   setUserId: Dispatch<SetStateAction<string>>,
+  connectNft: boolean,
+  setConnectNft: Dispatch<SetStateAction<boolean>>,
+  ApprovalForAll: boolean,
+  setApprovalForAll: Dispatch<SetStateAction<boolean>>,
+
   provider: ethers.providers.Web3Provider | null;
   signer: ethers.Signer | null;
   contract: ethers.Contract | null;
+  setContract: Dispatch<SetStateAction<ethers.Contract>>
 }
 
 const GlobalContext = createContext<ContextProps>({
   userId: '',
   setUserId: ():string =>'',
+  connectNft : false,
+  setConnectNft:() => {},
+  ApprovalForAll: false,
+  setApprovalForAll:() =>{},
   provider: null,
   signer: null,
   contract: null,
+  setContract:() => {}
 });
 // const Web3Context = createContext<{
 //     provider:  null;
@@ -49,12 +60,15 @@ const GlobalContext = createContext<ContextProps>({
 
 export const GlobalContextProvider = ({children}) =>{
     const [userId, setUserId] = useState('');
+    const [connectNft, setConnectNft] = useState(false);
+    const [ApprovalForAll, setApprovalForAll] = useState(false);
+
+
     // const [data, setData] = useState<[] | DataType[]>([]);
     const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
     const [signer, setSigner] = useState<ethers.Signer | null>(null);
     const [contract, setContract] = useState<ethers.Contract | null>(null);
 
-  useEffect(() => {
 
     const fetchContract = async() => {
       try {
@@ -70,8 +84,8 @@ export const GlobalContextProvider = ({children}) =>{
         const signer = provider.getSigner();
         const contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
         // console.log('contract', contract1);
-        setProvider(provider);
-        setSigner(signer);
+        // setProvider(provider);
+        // setSigner(signer);
         setContract(contract);
         console.log('smart contract', contract);
         
@@ -79,14 +93,19 @@ export const GlobalContextProvider = ({children}) =>{
         console.error(error.message);
       }
     }
+  // useEffect(() => {
+
+  //   const connectContract = async () => {
+  //     await fetchContract();
+  //   }
+  //   connectContract();
     
-    fetchContract();
      
    
-  },[] );
+  // },[] );
 
     return (
-        <GlobalContext.Provider value={{userId, setUserId,provider, signer, contract}}>
+        <GlobalContext.Provider value={{userId, setUserId,connectNft, setConnectNft ,provider, signer, contract, ApprovalForAll, setApprovalForAll}}>
             {children}
         </GlobalContext.Provider>
     )

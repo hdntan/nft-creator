@@ -3,28 +3,14 @@ import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { Alert, Button, Form, Input, InputNumber, Upload } from "antd";
 import React, { useRef, useState } from "react";
 
-// const ipfsClient = require('ipfs-http-client');
-// import {ipfs} from '../../utils/ipfs';
 import Marketplace from "../../../Marketplace.json";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../../pinata";
-import { Buffer } from "buffer";
+
 import { ethers } from "ethers";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { showErrorToast, showSuccessToast } from "@/utils/openAlert";
 
-// const projectId = '2OdM18NSh1dijfz4i42B7zat4wq';
-// const projectSecret = 'b1d224681d5e870b09f87a28a22355a0';
-// const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
-
-// const ethers = require("ethers");
-
-// const client = ipfsClient({
-//   host: 'ipfs.infura.io',
-//   port: 5001,
-//   protocol: 'https',
-//   // apiPath: '/api/v0',
-//   headers: {
-//     authorization: auth,
-//   }
-// })
 
 const UploadNFT = () => {
   const [formParams, setFormParams] = useState({
@@ -36,14 +22,29 @@ const UploadNFT = () => {
   const [loading, setLoading] = useState(false);
   const [alertType, setAlertType] = useState('success');
   const [fileUrl, setFileUrl] = useState(null);
-  const [message, setMessage] = useState("processing...");
+  const [message, setMessage] = useState("");
   const [imageBase64, setImageBase64] = useState("https://cdn.tgdd.vn/Files/2020/06/08/1261696/moi-tai-bo-hinh-nen-asus-rog-2020-moi-nhat_800x450.jpg");
 
   const uploadMetadataToIPFS = async () => {
     const { name, description, price } = formParams;
-    if (!name || !description || !price || !fileUrl) {
-      return;
+  
+    if(!fileUrl) {
+      showErrorToast("Enter fileUrl nft");
+      return
     }
+    if(!name) {
+      showErrorToast("Enter name nft");
+      return
+    }
+    if(!description) {
+      showErrorToast("Enter description nft");
+      return
+    }
+    if(!price) {
+      showErrorToast("Enter price nft");
+      return
+    }
+    
     const nftJSON = { 
       name,
       description,
@@ -62,60 +63,8 @@ const UploadNFT = () => {
     }
   };
 
-  // const createItem = async (e) => {
-  //   e.preventDefault();
-  //   const {name, description, price} = formParams;
-  //   if (!fileUrl || !price || !name || !description) return
-
-  //   const imageResult = await ipfs.add(fileUrl)
-
-  //   try{
-  //       // setLoadingMsg('approve transaction...');
-  //       // const metaUri = {
-  //       //   fileUrl: fileUrl,
-  //       //   price: price,
-  //       //   title: title,
-  //       //   description: description
-  //       // }
-
-  //     const result = await ipfs.add(JSON.stringify({image: `https://ipfs.io/ipfs/${imageResult.path}`, price, name, description}));
-  //     console.log(result);
-  //     uploadNft(result);
-
-  //   } catch(error) {
-  //     console.log("ipfs uri upload error: ", error);
-
-  //   }
-  // }
-
-  // const uploadNft = async (result) => {
-
-  //     try {
-  //         // const metadataURL = await uploadMetadataToIPFS();
-  //         const uri = `https://ipfs.io/ipfs/${result.path}`;
-  //         console.log('uri',uri);
-  //         const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //         const signer = provider.getSigner();
-
-  //         setMessage("Please wait...");
-
-  //         let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-  //         const price = ethers.utils.parseUnits(formParams.price,'ether');
-  //         let listingPrice = await contract.getListPrice();
-  //         listingPrice = listingPrice.toString();
-  //         let transaction = await contract.createToken(uri, price, {value: listingPrice });
-  //         await transaction.wait();
-
-  //         alert("upload success");
-  //         setMessage("");
-  //         setFormParams({name:'', description:'', price:''});
-  //         window.location.replace("/");
-
-  //     } catch (error) {
-  //         alert("upload error: " + error);
-  //     }
-
-  // }
+  
+  
 
   const onChangFile = async (e) => {
     var file = e.target.files[0];
@@ -158,20 +107,26 @@ const UploadNFT = () => {
       // listingPrice = listingPrice.toString();
       let transaction = await contract.createToken(metadataURL, price);
       await transaction.wait();
-
-      alert("upload success");
+      showSuccessToast("upload success");
       setLoading(false);
-      setMessage("");
       setFormParams({ name: "", description: "", price: "" });
-      window.location.replace("/");
+      // window.location.replace("/");
     } catch (error) {
-      alert("upload error: " + error);
+      setLoading(false);
+    
+      showErrorToast("upload error");
+      // setMessage("");
+
     }
   };
 
   const inputRef = useRef(null);
 
 
+const onFinish = (value) => {
+ console.log('Nft', {value});
+}
+const notify = () => toast("Wow so easy!");
 
 
 
@@ -181,7 +136,7 @@ const UploadNFT = () => {
 
     <div className="relative container mx-auto">
       
-       
+      <ToastContainer position="top-right" />
 
       <div className="flex justify-center px-6 my-12">
         
@@ -226,11 +181,46 @@ const UploadNFT = () => {
             </label>
           </div>
 
-          <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-            <h3 className="pt-4 text-2xl text-center">
+          <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none ml-10">
+            <h3 className="pt-4 text-2xl text-center ">
               Create NFT In Marketplace!
             </h3>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+            {/* <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+              layout="vertical"
+              onFinish={onFinish}  labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              style={{ maxWidth: 600 }}>
+              <Form.Item className="" label="Name" name={"nameNft"} rules={[
+                { 
+                  required: true,
+                  message: "Please enter name Nft"
+                }
+              ]}>
+                <Input size="large" placeholder="Enter name Nft"/>
+              </Form.Item>
+              <Form.Item label="Description" name={"description"} rules={[
+                { 
+                  required: true,
+                  message: "Please enter description Nft"
+                }
+              ]}>
+                <Input.TextArea size="large" placeholder="Enter description Nft "/>
+              </Form.Item>
+              <Form.Item label="Price" name={"price"} rules={[
+                { 
+                  required: true,
+                  message: "Please enter price Nft"
+                }
+              ]}>
+                <Input size="large" type="number" placeholder="Enter price Nft "/>
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Button htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+            </Form> */}
+            <form  className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-bold text-gray-700">
                   Name
@@ -238,10 +228,12 @@ const UploadNFT = () => {
                 <input
                   className="w-full border border-gray-300 dark:border-gray-300 pl-3 py-3 shadow-sm rounded text-sm focus:outline-none focus:border-gray-500 bg-transparent placeholder-gray-500 text-gray-500 dark:text-gray-400"
                   type="text"
+                  value={formParams.name}
                   onChange={(e) =>
                     setFormParams({ ...formParams, name: e.target.value })
                   }
                   placeholder="name..."
+                  name="name" 
                   required
                 />
               </div>
@@ -281,14 +273,8 @@ const UploadNFT = () => {
                 />
               </div>
               <div className="mb-6 text-center">
-                {/* <button
-                  className="w-1/2 px-4 py-3 font-bold border-2 hover:bg-gray-100 shadow-xl"
-                  type="button"
-                  onClick={uploadNft}
-                >
-                  Create NFT
-                </button> */}
-                <Button className="hover:bg-gray-100 "  onClick={uploadNft} disabled={loading} loading={loading} size="large">Create NFT</Button>
+               
+                <Button className="hover:bg-gray-100 shadow-lg"  onClick={uploadNft} disabled={loading} loading={loading} size="large">Create NFT</Button>
               </div>
               <hr className="mb-6 border-t" />
             </form>

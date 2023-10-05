@@ -9,16 +9,15 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
  
 
-  fantomTestnet,
+  fantomTestnet, goerli,
   
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, publicClient } = configureChains(
-    [  fantomTestnet],
+    [ goerli],
     [
-      // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
       publicProvider()
     ]
   );

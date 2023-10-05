@@ -5,11 +5,16 @@ import React from 'react'
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { usePathname } from 'next/navigation';
 
 const { Header, Content, Sider } = Layout;
 
 
 const Sidebar = () => {
+   
+
+  const pathname = usePathname();
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -19,16 +24,32 @@ const Sidebar = () => {
       <div className='"h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <ul className='space-y-2 font-medium'>
         <li>
-            <Link href="/profileLayout/userProfile" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+           
+            {pathname === "/profile" ? (
+                   <Link href="/profileLayout" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 group">
                
-               <span className="ml-3">Profile</span>
-            </Link>
+                   <span className="ml-3">Profile</span>
+                </Link>
+                ) : (
+                  <Link href="/profile" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               
+                  <span className="ml-3">Profile</span>
+               </Link>
+                )}
          </li>
          <li>
-            <Link href="/profileLayout/myNft" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+         {pathname === "/profile/myNft" ? (
+                   <Link href="/profile/myNft" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:bg-gray-700 group">
+               
+                   <span className="ml-3">My Nft</span>
+                </Link>
+                ) : (
+                  <Link href="/profile/myNft" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               
-               <span className="ml-3">My Nft</span>
-            </Link>
+                  <span className="ml-3">My Nft</span>
+               </Link>
+                )}
+           
          </li>
          <li>
             <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
