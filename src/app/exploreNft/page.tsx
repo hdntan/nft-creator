@@ -12,7 +12,9 @@ import { useGlobalContext } from '../context/store';
 import { showErrorToast, showSuccessToast } from '@/utils/openAlert';
 import { Button } from 'antd';
 
-
+interface Window {
+    ethereum: any
+}
 const Explore = () => {
     const network = "goerli"
     const API_KEY = "F_v3giM_QYUTUdgcsSJxxgSXw-cpf1aN"
@@ -26,8 +28,8 @@ const CONTRACT_ADDRESS_MARKET = "0xe93941940d7CFF0aC761265def80ddafad0aF76B"
 
     const [owner, setOwner] = useState("")
     const [contractAddress, setContractAddress] = useState("")
-    const [NFTs, setNFTs] = useState("")
-const [contractNft, setContractNft] = useState(null);
+    const [NFTs, setNFTs] = useState<any>("")
+const [contractNft, setContractNft] = useState<any>(null);
 const [addressNft, setAddressNft] = useState(null);
 
 
@@ -69,7 +71,7 @@ const [addressNft, setAddressNft] = useState(null);
 
             return
         };
-        await fetchNFTs(owner, contractAddress, setNFTs    );
+        await fetchNFTs(owner, contractAddress, setNFTs,0 );
         showSuccessToast("search...");
         setLoading(false);
 
@@ -152,7 +154,7 @@ const [addressNft, setAddressNft] = useState(null);
 
             <section className='flex flex-wrap justify-center'>
                 {
-                    NFTs ? NFTs.map(NFT => {
+                    NFTs ? NFTs.map((NFT: any) => {
                        
                         return (
                             <div className='flex flex-col'>

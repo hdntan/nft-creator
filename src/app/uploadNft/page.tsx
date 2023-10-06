@@ -66,12 +66,12 @@ const UploadNFT = () => {
   
   
 
-  const onChangFile = async (e) => {
+  const onChangFile = async (e:any) => {
     var file = e.target.files[0];
     const reader = new FileReader();
     if(file) reader.readAsDataURL(file);
 
-    reader.onload = (readerEvent) => {
+    reader.onload = (readerEvent:any) => {
         const file = readerEvent.target.result;
         setImageBase64(file);
     }
@@ -87,7 +87,7 @@ const UploadNFT = () => {
     }
   };
 
-  const uploadNft = async (e) => {
+  const uploadNft = async (e:any) => {
     e.preventDefault();
 
     try {
@@ -123,7 +123,7 @@ const UploadNFT = () => {
   const inputRef = useRef(null);
 
 
-const onFinish = (value) => {
+const onFinish = (value:any) => {
  console.log('Nft', {value});
 }
 const notify = () => toast("Wow so easy!");
@@ -185,41 +185,7 @@ const notify = () => toast("Wow so easy!");
             <h3 className="pt-4 text-2xl text-center ">
               Create NFT In Marketplace!
             </h3>
-            {/* <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
-              layout="vertical"
-              onFinish={onFinish}  labelCol={{ span: 8 }}
-              wrapperCol={{ span: 16 }}
-              style={{ maxWidth: 600 }}>
-              <Form.Item className="" label="Name" name={"nameNft"} rules={[
-                { 
-                  required: true,
-                  message: "Please enter name Nft"
-                }
-              ]}>
-                <Input size="large" placeholder="Enter name Nft"/>
-              </Form.Item>
-              <Form.Item label="Description" name={"description"} rules={[
-                { 
-                  required: true,
-                  message: "Please enter description Nft"
-                }
-              ]}>
-                <Input.TextArea size="large" placeholder="Enter description Nft "/>
-              </Form.Item>
-              <Form.Item label="Price" name={"price"} rules={[
-                { 
-                  required: true,
-                  message: "Please enter price Nft"
-                }
-              ]}>
-                <Input size="large" type="number" placeholder="Enter price Nft "/>
-              </Form.Item>
-              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-            </Form> */}
+         
             <form  className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-bold text-gray-700">

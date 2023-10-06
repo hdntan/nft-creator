@@ -10,13 +10,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import Marketplace from "../../../../Marketplace.json";
 import { useAccount } from "wagmi";
 import { Button, Modal } from "antd";
+import { showErrorToast, showSuccessToast } from "@/utils/openAlert";
 
 const nftPage = () => {
   const { address } = useAccount();
   const [loading, setLoading] = useState(false);
 const [price, setPrice] = useState("");
   const { itemId } = useParams();
-  const [data, updateData] = useState({});
+  const [data, updateData] = useState<any>({});
   const [dataFetched, updateDataFetched] = useState(false);
   const [message, updateMessage] = useState("");
   const [currAddress, updateCurrAddress] = useState("0x");
@@ -125,13 +126,7 @@ const [price, setPrice] = useState("");
     }
   };
 
-  const showErrorToast = (message) => {
-    toast.error(message)
-  }
   
-  const showSuccessToast = (message) => {
-    toast.success(message)
-  }
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {

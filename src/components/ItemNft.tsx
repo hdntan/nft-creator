@@ -35,8 +35,8 @@ const ItemNft: React.FC<ItemNftProps> = (product ) => {
             cover={<img alt={product.name} style={{height: 200}} src={product.image} />}
           >
             <h3>{product.name}</h3>
-            <p>product.description</p>
-            <span>$product.price</span>
+            {/* <p>product.description</p> */}
+            <span>{product.price}ETH</span>
             
           </Card>
    </Link>
