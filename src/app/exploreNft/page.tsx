@@ -71,7 +71,7 @@ const [addressNft, setAddressNft] = useState(null);
 
             return
         };
-        await fetchNFTs(owner, contractAddress, setNFTs,0 );
+        await fetchNFTs(owner, contractAddress, setNFTs );
         showSuccessToast("search...");
         setLoading(false);
 
@@ -87,7 +87,6 @@ const [addressNft, setAddressNft] = useState(null);
         try {
           console.log(contractNft)
           const setApprovalForAll =  await contractNft.setApprovalForAll(CONTRACT_ADDRESS_MARKET, true);
-          // setGlobalState('setApproveAllNftExternal', true)
           setApprovalForAll(true);
           showSuccessToast('You successfully setApprovalForAll NFT');
         setLoadingApprove(false);
