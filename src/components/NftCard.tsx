@@ -7,7 +7,15 @@ import { showErrorToast, showSuccessToast } from '@/utils/openAlert';
 import { useGlobalContext } from '@/app/context/store';
 import { Button, Modal, theme } from 'antd';
 import { darkTheme } from '@rainbow-me/rainbowkit';
-const NftCard = ( {image, id, title, address, description, attributes }) => {
+
+interface ItemNftProps {
+    image: string,
+  id: string,
+  title: string,
+  address: string,
+  description: string,
+}
+const NftCard: React.FC<ItemNftProps> = ( {image, id, title, address, description,} ) => {
     const {connectNft, setConnectNft, ApprovalForAll} = useGlobalContext();
     const [loading, setLoading] = useState(false);
 
@@ -112,7 +120,7 @@ const NftCard = ( {image, id, title, address, description, attributes }) => {
      
     
         </div>
-            <div className="flex flex-wrap justify-center items-center p-3 ">
+            {/* <div className="flex flex-wrap justify-center items-center p-3 ">
                 {attributes?.length > 0 && attributes.map((attribute:any) => {
                     return (
                         <div className="w-1/2 mb-2 flex justify-start flex-col">
@@ -121,7 +129,7 @@ const NftCard = ( {image, id, title, address, description, attributes }) => {
                         </div>
                     )
                 })}
-            </div>
+            </div> */}
            
         </div>
     )

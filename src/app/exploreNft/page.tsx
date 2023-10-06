@@ -165,7 +165,7 @@ const [addressNft, setAddressNft] = useState(null);
                       
                                      </div>
                                      <div className='w-full'>
-                                     <NftCard  image={NFT.media[0].gateway} id={NFT.id.tokenId } title={NFT.title} address={NFT.contract.address} description={NFT.description} attributes={NFT.metadata.attributes} />
+                                     <NftCard  image={NFT.media[0].gateway} id={NFT.id.tokenId } title={NFT.title} address={NFT.contract.address} description={NFT.description}  />
                                      </div>
                                
                             </div>

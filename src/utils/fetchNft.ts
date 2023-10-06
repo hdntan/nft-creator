@@ -2,10 +2,10 @@
 const apiKey = "F_v3giM_QYUTUdgcsSJxxgSXw-cpf1aN";
 const endpoint = `https://eth-goerli.g.alchemy.com/v2/${apiKey}`;
 
-export const fetchNFTs = async (owner:any, contractAddress:any, setNFTs:any, retryAttempt:any) => {
-    if (retryAttempt === 5) {
-        return;
-    }
+export const fetchNFTs = async (owner:any, contractAddress:any, setNFTs:any,number: any) => {
+    // if (retryAttempt === 5) {
+    //     return;
+    // }
     if (owner) {
         let data;
         try {
