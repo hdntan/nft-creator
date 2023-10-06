@@ -114,7 +114,7 @@ const [price, setPrice] = useState("");
       let transaction = await contract.changePriceItem(itemId,salePrice);
       await transaction.wait();
       showSuccessToast("You successfully change price the NFT!");
-      // alert("You successfully bought the NFT!");
+     
 
       setPrice("");
       setLoading(false);
@@ -226,9 +226,7 @@ const [price, setPrice] = useState("");
               </p>
             </div>
              
-              {/* <button className="mt-5 focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 ">
-                Change Price
-              </button> */}
+            
               <Button size="large" loading={loading} disabled={loading}  className="mt-5 focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full " onClick={showModal}>Change Price</Button>
             </div>
           )}

@@ -33,7 +33,7 @@ interface ItemNftProps {
 export default function Home() {
   const { address } = useAccount();
 
-  const { userId, setUserId, provider, signer, contract } = useGlobalContext();
+
   const [userData, setUserData] = useState({});
   const [listItem, setListItem] = useState<ItemNftProps[]>([]);
   const [itemCount, setItemCount] = useState(0);
@@ -84,7 +84,7 @@ export default function Home() {
   useEffect(() => {
     
     
-   console.log('connect context', contract);
+  
     getAllItem();
    
   }, []);
