@@ -12,7 +12,7 @@ import { useAccount } from "wagmi";
 import { Button, Modal } from "antd";
 import { showErrorToast, showSuccessToast } from "@/utils/openAlert";
 
-const nftPage = () => {
+const NftPage = () => {
   const { address } = useAccount();
   const [loading, setLoading] = useState(false);
 const [price, setPrice] = useState("");
@@ -238,4 +238,4 @@ const [price, setPrice] = useState("");
   );
 };
 
-export default nftPage;
+export default NftPage;

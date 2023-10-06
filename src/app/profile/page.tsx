@@ -5,32 +5,32 @@ import { useAccount } from 'wagmi'
 import { fetchBalance } from '@wagmi/core'
 import {watchAccount} from "wagmi/actions"
 
-const profile = () => {
+const Profile = () => {
   const { address } = useAccount();
  const [balanceOf, setBalanceOf] = useState(0);
 
     
 //     })
-const getEllipsisTxt = (str, n = 6) => {
+const getEllipsisTxt = (str:any, n = 6) => {
     if (str) {
       return `${str.slice(0, n)}...${str.slice(str.length - n)}`;
     }
     return "";
   };
 
-async function getBalance() {
+// async function getBalance() {
 
-      const promise =await   fetchBalance({
-    address: address,
-    formatUnits: 'ether',
-  }).then(res =>{
-   setBalanceOf(res.formatted);
-    })
+//       const promise =await   fetchBalance({
+//     address: address,
+//     formatUnits: 'ether',
+//   }).then((res:any) =>{
+//    setBalanceOf(res.formatted);
+//     })
 
    
 
 
-}
+// }
 
 
 
@@ -86,4 +86,4 @@ async function getBalance() {
   )
 }
 
-export default profile
+export default Profile

@@ -17,7 +17,7 @@ interface ItemNftProps {
   name: string;
   description: string;
 }
-const myNftTab = () => {
+const MyNftTab = () => {
 
   const [listItem, setListItem] = useState<ItemNftProps[]>([]);
 
@@ -108,4 +108,4 @@ useEffect(() => {
   )
 }
 
-export default myNftTab
+export default MyNftTab
