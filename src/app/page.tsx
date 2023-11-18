@@ -1,4 +1,5 @@
 "use client";
+import { Character, NewMap, NewWorld, NftSkin } from "@/assets/images";
 import CreatorItem from "@/components/CreatorItem";
 import MainLayout from "@/layout";
 import styled from "styled-components";
@@ -24,7 +25,7 @@ export default function App(props: IAppProps) {
 const ContainerItemCreator = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 61px 0 130px 0;
+  margin: 61px 0 120px 0;
   gap: 49px;
   padding: 0 90px 0 90px;
   justify-content: space-between;
@@ -52,27 +53,27 @@ const SubTitle = styled(Title)`
   font-family: "Techno Race";
   font-size: 60px;
   line-height: 72px;
-  color: #b9c2f2;
+  color: #FFFFFF;
 `;
 const ITEMS = [
   {
     title: "NFT Skins",
-    image: ``,
+    image: NftSkin,
     href: "#",
   },
   {
     title: "Character Weapons",
-    image: ``,
+    image: Character,
     href: "#",
   },
   {
     title: "New Map On Paw",
-    image: ``,
+    image: NewMap,
     href: "#",
   },
   {
     title: "New Worlds On Paw",
-    image: ``,
+    image: NewWorld,
     href: "#",
   },
 ];

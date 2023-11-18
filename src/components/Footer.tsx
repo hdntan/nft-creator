@@ -28,15 +28,22 @@ const LINKS = [
 const ICONS = [
   {
     icon: <TwitterIcon />,
+    href: "#"
   },
   {
     icon: <TelegramIcon />,
+    href: "#"
+
   },
   {
     icon: <YoutubeIcon />,
+    href: "#"
+
   },
   {
     icon: <DiscordIcon />,
+    href: "#"
+
   },
 ];
 
@@ -52,7 +59,10 @@ const Footer = () => {
       <FooterRight>
         <FooterRightLogo>
           {ICONS.map((icon, index) => (
-            <ContainerIcon key={index}>{icon.icon}</ContainerIcon>
+            <Link href={icon.href} key={index} >
+             <ContainerIcon >{icon.icon}</ContainerIcon>
+            </Link>
+           
           ))}
         </FooterRightLogo>
         <FooterRightMenu>
@@ -73,7 +83,7 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 24px 90px 24px 90px;
+  padding: 24px 90px;
 `;
 
 const FooterLeft = styled.div`
@@ -94,7 +104,10 @@ const FooterRightLogo = styled.div`
   display: flex;
   gap: 12px;
 `;
-const Copyright = styled.div``;
+const Copyright = styled.div`
+font-size: 14px;
+color: #FFFFFF;
+`
 const ContainerIcon = styled.div`
   display: flex;
   align-items: center;
@@ -106,9 +119,11 @@ const ContainerIcon = styled.div`
 `;
 const FooterRightMenu = styled.div`
   display: flex;
-  gap: 10px;
-  font-size: 14px;
+  gap: 48px;
 `;
 const MenuLink = styled.div`
   font-size: 14px;
+  color: #FFFFFF;
 `;
+
+

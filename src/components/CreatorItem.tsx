@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import Gold from "../assets/Gold.png";
+
 
 interface StyledComponentProps {
   typeButton: string;
@@ -11,7 +11,7 @@ const CreatorItem = ({ item }: any) => {
     <Wrapper>
       <Title>{item.title}</Title>
       <ContainerImage>
-        <Image src={Gold} alt="gold" height={200} width={200} />
+        <Image src={item.image} alt="gold" height={200} width={200} />
       </ContainerImage>
       <ButtonContainer>
         <ButtonItem typeButton="manage">Manage</ButtonItem>
@@ -32,14 +32,9 @@ const Wrapper = styled.div`
   gap: 36px;
   width: 398px;
   height: 480px;
-
-  background: radial-gradient(
-      107.25% 65.08% at 32.08% -8.14%,
-      rgba(62, 111, 255, 0.4) 0%,
-      rgba(62, 111, 255, 0) 100%
-    ),
-    rgba(17, 14, 3, 0.4);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(62, 111, 255, 0.00);
+  background: radial-gradient(110.18% 67.48% at 32.08% -8.14%, rgba(62, 111, 255, 0.40) 0%, rgba(62, 111, 255, 0.00) 100%), rgba(17, 14, 3, 0.40);
   border-radius: 12px;
 `;
 const ButtonContainer = styled.div`
@@ -54,7 +49,8 @@ const ButtonItem = styled.button<StyledComponentProps>`
   border-radius: 4px;
   width: 326px;
   border: 1px solid;
-  padding: 8px 16px 8px 16px;
+  padding: 8px 16px;
+  font-size: 16px;
   background-color: ${(props) =>
     props.typeButton === "manage" ? "#FED73B" : " #000000"};
   color: ${(props) => (props.typeButton !== "manage" ? "#FED73B" : " #000000")};
