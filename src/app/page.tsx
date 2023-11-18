@@ -10,19 +10,18 @@ export interface IAppProps {}
 const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 
   flex-direction: column;
   justify-content: space-between;
 `;
 const ContainerItemCreator = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 90px 0 90px;
-  margin-top: 70px;
-  margin-bottom: 140px;
+  flex-direction: row;
+  margin: 61px 0 130px 0;
   gap: 49px;
+  padding: 0 90px 0 90px;
+  justify-content: space-between;
 `;
 
 const ContainerTitle = styled.div`
@@ -31,7 +30,6 @@ const ContainerTitle = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 70px;
-  padding: 0 90px 0 90px;
 `;
 
 const Title = styled.p`
@@ -81,9 +79,10 @@ export default function App(props: IAppProps) {
         <SubTitle>PAWCIFIC RIM</SubTitle>
       </ContainerTitle>
       <ContainerItemCreator>
-        {ITEMS.map((item, index) => (
+      {ITEMS.map((item, index) => (
           <CreatorItem item={item} key={index} />
         ))}
+        
       </ContainerItemCreator>
       <Footer />
     </Wrapper>
