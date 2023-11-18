@@ -3,9 +3,10 @@
 import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
-import logo from '../assets/Pawcific Rim logo 1.svg'
-import iconYoutube from '../assets/Youtube.svg'
+import logo from '../assets/PawcificLogo.png'
+
 import Link from 'next/link'
+import { DiscordIcon, TelegramIcon, TwitterIcon, YoutubeIcon } from './Icons'
 const Wrapper = styled.div`
     width: 100%;
     display: flex;
@@ -72,6 +73,21 @@ const LINKS = [
 
 ]
 
+const ICONS = [
+    {
+        icon: <TwitterIcon/>  
+    },
+    {
+        icon: <TelegramIcon/>  
+    },
+    {
+        icon: <YoutubeIcon/>  
+    },
+    {
+        icon: <DiscordIcon/>  
+    },
+]
+
 const Footer = () => {
   return (
     <Wrapper >
@@ -83,18 +99,12 @@ const Footer = () => {
     </FooterLeft>
     <FooterRight>
         <FooterRightLogo>
-            <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" height={16} width={18} />
-            </ContainerIcon>
-            <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-            </ContainerIcon>
-            <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-            </ContainerIcon>
-            <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-            </ContainerIcon>
+            {
+                ICONS.map((icon, index) => <ContainerIcon key={index}>
+                {icon.icon}
+            </ContainerIcon>)
+            }
+            
         </FooterRightLogo>
         <FooterRightMenu>
            {

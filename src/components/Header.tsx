@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import logo from '../assets/Pawcific Rim logo 1.svg'
+import logo from '../assets/PawcificLogo.png'
 import Image from 'next/image';
 
 import { useConnectModal, useAccountModal } from "@rainbow-me/rainbowkit";

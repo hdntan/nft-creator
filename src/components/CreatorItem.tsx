@@ -1,7 +1,7 @@
 
 import React from 'react'
 import styled from 'styled-components';
-import Gold from "../assets/Gold 1.svg";
+import Gold from "../assets/Gold.png"
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,7 +16,6 @@ box-sizing: border-box;
  align-items: center;
  padding: 36px;
  gap: 36px;
-
  width: 398px;
  height: 480px;
 
