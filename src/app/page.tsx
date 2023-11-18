@@ -1,20 +1,26 @@
 "use client";
 import CreatorItem from "@/components/CreatorItem";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import * as React from "react";
+import MainLayout from "@/layout";
 import styled from "styled-components";
 
 export interface IAppProps {}
 
-const Wrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  /* align-items: center; */
+export default function App(props: IAppProps) {
+  return (
+    <MainLayout>
+      <ContainerTitle>
+        <Title>Create your own world on</Title>
+        <SubTitle>PAWCIFIC RIM</SubTitle>
+      </ContainerTitle>
+      <ContainerItemCreator>
+        {ITEMS.map((item, index) => (
+          <CreatorItem item={item} key={index} />
+        ))}
+      </ContainerItemCreator>
+    </MainLayout>
+  );
+}
 
-  flex-direction: column;
-  justify-content: space-between;
-`;
 const ContainerItemCreator = styled.div`
   display: flex;
   flex-direction: row;
@@ -70,21 +76,3 @@ const ITEMS = [
     href: "#",
   },
 ];
-export default function App(props: IAppProps) {
-  return (
-    <Wrapper>
-      <Header />
-      <ContainerTitle>
-        <Title>Create your own world on</Title>
-        <SubTitle>PAWCIFIC RIM</SubTitle>
-      </ContainerTitle>
-      <ContainerItemCreator>
-      {ITEMS.map((item, index) => (
-          <CreatorItem item={item} key={index} />
-        ))}
-        
-      </ContainerItemCreator>
-      <Footer />
-    </Wrapper>
-  );
-}
