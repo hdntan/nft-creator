@@ -45,7 +45,7 @@ const Header = () => {
               <Link href={"#"}>
                 <SubMenu>Overview</SubMenu>
               </Link>
-              <Link href={"#"}>
+              <Link href={"/uploadAsset"}>
                 <SubMenu>Upload</SubMenu>
               </Link>
             </DropMenuContent>

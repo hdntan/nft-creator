@@ -4,7 +4,8 @@ import styled from "styled-components";
 import logo from "../assets/PawcificLogo.png";
 
 import Link from "next/link";
-import { DiscordIcon, TelegramIcon, TwitterIcon, YoutubeIcon } from "./Icons";
+import { IconDiscord, IconTelegram, IconTwitter, IconYoutube } from "@/assets/icons";
+
 
 const LINKS = [
   {
@@ -27,21 +28,21 @@ const LINKS = [
 
 const ICONS = [
   {
-    icon: <TwitterIcon />,
+    icon: <IconTwitter />,
     href: "#"
   },
   {
-    icon: <TelegramIcon />,
-    href: "#"
-
-  },
-  {
-    icon: <YoutubeIcon />,
+    icon: <IconTelegram />,
     href: "#"
 
   },
   {
-    icon: <DiscordIcon />,
+    icon: <IconYoutube />,
+    href: "#"
+
+  },
+  {
+    icon: <IconDiscord />,
     href: "#"
 
   },
