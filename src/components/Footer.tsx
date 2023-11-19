@@ -1,52 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/Pawcific Rim logo 1.svg";
-import iconYoutube from "../assets/Youtube.svg";
-import Link from "next/link";
-const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 24px 90px 24px 90px;
-`;
+import logo from "../assets/PawcificLogo.png";
 
-const FooterLeft = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-`;
-const FooterRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  justify-content: end;
-  gap: 12px;
-`;
-const FooterLeftLogo = styled.div``;
-const FooterRightLogo = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-const Copyright = styled.div``;
-const ContainerIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fed73b;
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-`;
-const FooterRightMenu = styled.div`
-  display: flex;
-  gap: 10px;
-  font-size: 14px;
-`;
-const MenuLink = styled.div`
-  font-size: 14px;
-`;
+import Link from "next/link";
+import { IconDiscord, IconTelegram, IconTwitter, IconYoutube } from "@/assets/icons";
+
 
 const LINKS = [
   {
@@ -67,6 +26,28 @@ const LINKS = [
   },
 ];
 
+const ICONS = [
+  {
+    icon: <IconTwitter />,
+    href: "#"
+  },
+  {
+    icon: <IconTelegram />,
+    href: "#"
+
+  },
+  {
+    icon: <IconYoutube />,
+    href: "#"
+
+  },
+  {
+    icon: <IconDiscord />,
+    href: "#"
+
+  },
+];
+
 const Footer = () => {
   return (
     <Wrapper>
@@ -78,18 +59,12 @@ const Footer = () => {
       </FooterLeft>
       <FooterRight>
         <FooterRightLogo>
-          <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" height={16} width={18} />
-          </ContainerIcon>
-          <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-          </ContainerIcon>
-          <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-          </ContainerIcon>
-          <ContainerIcon>
-            <Image src={iconYoutube} alt="logo" />
-          </ContainerIcon>
+          {ICONS.map((icon, index) => (
+            <Link href={icon.href} key={index} >
+             <ContainerIcon >{icon.icon}</ContainerIcon>
+            </Link>
+           
+          ))}
         </FooterRightLogo>
         <FooterRightMenu>
           {LINKS.map((link, index) => (
@@ -104,3 +79,52 @@ const Footer = () => {
 };
 
 export default Footer;
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 90px;
+`;
+
+const FooterLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+`;
+const FooterRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: end;
+  gap: 12px;
+`;
+const FooterLeftLogo = styled.div``;
+const FooterRightLogo = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+const Copyright = styled.div`
+font-size: 14px;
+color: #FFFFFF;
+`
+const ContainerIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fed73b;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+`;
+const FooterRightMenu = styled.div`
+  display: flex;
+  gap: 48px;
+`;
+const MenuLink = styled.div`
+  font-size: 14px;
+  color: #FFFFFF;
+`;
+
+
