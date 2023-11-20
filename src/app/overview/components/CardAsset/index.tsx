@@ -1,5 +1,6 @@
 import IConDropdown from "@/assets/icons/IconDropdown";
 import Image from "next/image";
+import Link from "next/link";
 import * as React from "react";
 import styled from "styled-components";
 
@@ -7,7 +8,11 @@ export interface ICardAssetProps {}
 
 export default function CardAsset(props: ICardAssetProps) {
   const [isOpenDetail, setIsOpenDetail] = React.useState(false);
+  const newTo = {
+    path:"/nft-detail/"+ 1
+}
   return (
+    <Link href={newTo.path}>
     <WrapperCard>
       <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
       <BoxTitle>
@@ -19,6 +24,8 @@ export default function CardAsset(props: ICardAssetProps) {
         <IConDropdown />
       </ButtonShowDetail>
     </WrapperCard>
+    </Link>
+    
   );
 }
 
