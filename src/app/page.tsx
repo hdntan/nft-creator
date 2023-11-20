@@ -9,6 +9,7 @@ export interface IAppProps {}
 export default function App(props: IAppProps) {
   return (
     <MainLayout>
+      <Wrapper>
       <ContainerTitle>
         <Title>Create your own world on</Title>
         <SubTitle>PAWCIFIC RIM</SubTitle>
@@ -18,17 +19,26 @@ export default function App(props: IAppProps) {
           <CreatorItem item={item} key={index} />
         ))}
       </ContainerItemCreator>
+      </Wrapper>
+      
     </MainLayout>
   );
 }
 
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+   width: 100%;
+  padding: 78px 90px;
+`
+
 const ContainerItemCreator = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 61px 0 120px 0;
+  align-items: center;
+  justify-content: center;
   gap: 49px;
-  padding: 0 90px 0 90px;
-  justify-content: space-between;
 `;
 
 const ContainerTitle = styled.div`
@@ -36,7 +46,7 @@ const ContainerTitle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 70px;
+  margin-bottom: 61px;
 `;
 
 const Title = styled.p`
