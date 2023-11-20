@@ -41,7 +41,7 @@ const Header = () => {
       <Nav>
         <Link href={"#"}>
           <DropdownWrapper>
-            <NavItem currentActive={currentPath === "/" || "/overview" || "/upload-asset" || "/upload-asset/upload" ? "active" : "default"}>
+            <NavItem currentActive={currentPath === "/" || currentPath === "/overview" || currentPath ===  "/upload-asset" || currentPath ===  "/upload-asset/upload" ? "active" : "default"}>
               Creators
             </NavItem>
             <DropMenuContent>
