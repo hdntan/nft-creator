@@ -1,6 +1,7 @@
 "use client";
 import { Character, NewMap, NewWorld, NftSkin } from "@/assets/images";
 import CreatorItem from "@/components/CreatorItem";
+import { technoRaceFont } from "@/font";
 import MainLayout from "@/layout";
 import styled from "styled-components";
 
@@ -11,8 +12,8 @@ export default function App(props: IAppProps) {
     <MainLayout>
       <Wrapper>
       <ContainerTitle>
-        <Title>Create your own world on</Title>
-        <SubTitle>PAWCIFIC RIM</SubTitle>
+        <Title >Create your own world on</Title>
+        <SubTitle className={technoRaceFont.className}>PAWCIFIC RIM</SubTitle>
       </ContainerTitle>
       <ContainerItemCreator>
         {ITEMS.map((item, index) => (
@@ -50,9 +51,6 @@ const ContainerTitle = styled.div`
 `;
 
 const Title = styled.p`
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: 400;
   font-size: 24px;
   line-height: 32px;
 
@@ -60,7 +58,6 @@ const Title = styled.p`
 `;
 
 const SubTitle = styled(Title)`
-  font-family: "Techno Race";
   font-size: 60px;
   line-height: 72px;
   color: #FFFFFF;
