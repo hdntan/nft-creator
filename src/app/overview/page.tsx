@@ -1,6 +1,6 @@
 "use client";
 import { IconBack } from "@/assets/icons";
-import ListButton from "@/app/overview/components/ListButtons ";
+import ListButton from "@/app/overview/components/ListButtons";
 import Select from "@/components/Select";
 import MainLayout from "@/layout";
 import * as React from "react";
