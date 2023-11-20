@@ -20,6 +20,8 @@ export default function MainLayout({ children }: Readonly<IMainLayoutProps>) {
 
 const Layout = styled.div`
   background-image: url("/images/background.png");
+  background-size: cover; 
+  background-position: center; 
 `;
 
 const Wrapper = styled.div`

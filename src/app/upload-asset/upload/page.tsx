@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { IconBack } from "@/assets/icons";
 
 interface StyledLabelProps {
   fontSize: string;
@@ -18,7 +19,7 @@ interface UploadForm {
 }
 
 const UploadAsset = () => {
-  const router = useRouter();
+  const route = useRouter();
   const { register, control, handleSubmit } = useForm<UploadForm>();
   console.log(register("name"));
 
@@ -45,6 +46,11 @@ const UploadAsset = () => {
   return (
     <MainLayout>
       <Wrapper>
+      <ContainerBack >
+                <ButtonBack onClick={() => route.push('/upload-asset')}><IconBack /></ButtonBack>
+            
+            </ContainerBack>
+      <WrapperUpload>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Label textColor="" fontSize="32px">
             Upload Asset
@@ -148,15 +154,24 @@ const UploadAsset = () => {
             <Button type="submit">Upload NFT</Button>
           </ContainerButton>
         </Form>
+      </WrapperUpload>
       </Wrapper>
+        
     </MainLayout>
   );
 };
 
 export default UploadAsset;
-
 const Wrapper = styled.div`
-  margin: 64px 0 105px 0;
+display: flex;
+  align-items: start;
+  
+   width: 100%;
+  padding: 81px 90px;
+  max-width: 1847px;
+`
+const WrapperUpload = styled.div`
+  /* margin: 64px 0 105px 0; */
   color: white;
   width: 850px;
   /* margin: 0 auto; */
@@ -169,6 +184,13 @@ const Wrapper = styled.div`
   background: linear-gradient(0deg, #00062b, #00062b),
     linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%);
 `;
+
+const ContainerBack = styled.div`
+    margin-right: 391px;
+`
+const ButtonBack = styled.button`
+   
+`
 const Form = styled.form`
   display: flex;
   flex-direction: column;

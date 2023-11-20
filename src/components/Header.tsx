@@ -21,7 +21,7 @@ const LINKS = [
   },
   {
     label: "Leaderboard",
-    href: "/leader",
+    href: "/leader-board",
   },
 ];
 const Header = () => {
@@ -32,20 +32,23 @@ const Header = () => {
   const currentPath = usePathname();
   return (
     <Wrapper>
+      <Link href={"/"}>
       <HeaderLogo>
         <Image src={logo} alt="logo" width={130} height={73} />
       </HeaderLogo>
+      </Link>
+      
       <Nav>
         <Link href={"#"}>
           <DropdownWrapper>
-            <NavItem currentActive={currentPath === "/" ? "active" : "default"}>
+            <NavItem currentActive={currentPath === "/" || "/overview" || "/upload-asset" || "/upload-asset/upload" ? "active" : "default"}>
               Creators
             </NavItem>
             <DropMenuContent>
-              <Link href={"#"}>
+              <Link href={"/overview"}>
                 <SubMenu>Overview</SubMenu>
               </Link>
-              <Link href={"/uploadAsset"}>
+              <Link href={"/upload-asset"}>
                 <SubMenu>Upload</SubMenu>
               </Link>
             </DropMenuContent>

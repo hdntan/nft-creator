@@ -1,7 +1,8 @@
 "use client";
-import { IconAddCircle } from "@/assets/icons";
+import { IconAddCircle, IconBack } from "@/assets/icons";
 import MainLayout from "@/layout";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styled from "styled-components";
 interface StyledLabelProps {
@@ -14,6 +15,7 @@ interface StyledTabProps {
 }
 
 const UploadAsset = () => {
+  const route = useRouter()
   const [currentTab, setCurrentTab] = useState("1");
 
   const handleTabClick = (e: any) => {
@@ -23,6 +25,11 @@ const UploadAsset = () => {
   return (
     <MainLayout>
       <Wrapper>
+      <ContainerBack >
+                <Button onClick={() => route.push('/')}><IconBack /></Button>
+            
+            </ContainerBack>
+      <WrapperTab>
         <Tabs className="tabs">
           {tabs.map((tab, i) => (
             <ButtonTab
@@ -49,13 +56,15 @@ const UploadAsset = () => {
             </div>
           ))}
 
-          <Link href={"/uploadNft"}>
+          <Link href={"/upload-asset/upload"}>
             <UploadButton>
               Upload Asset <IconAddCircle />
             </UploadButton>
           </Link>
         </TabContent>
+      </WrapperTab>
       </Wrapper>
+     
     </MainLayout>
   );
 };
@@ -63,7 +72,14 @@ const UploadAsset = () => {
 export default UploadAsset;
 
 const Wrapper = styled.div`
-  margin: 64px 0 105px 0;
+display: flex;
+   width: 100%;
+  padding: 81px 90px;
+  max-width: 1847px;
+`
+
+const WrapperTab = styled.div`
+  
   color: white;
   width: 1437px;
   /* margin: 0 auto; */
@@ -76,6 +92,13 @@ const Wrapper = styled.div`
   background: linear-gradient(0deg, #00062b, #00062b),
     linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%);
 `;
+
+const ContainerBack = styled.div`
+    margin-right: 93px;
+`
+const Button = styled.button`
+   
+`
 
 const Label = styled.label<StyledLabelProps>`
   font-size: ${(props) => props.fontSize || "14px"};
