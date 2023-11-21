@@ -7,25 +7,23 @@ import styled from "styled-components";
 export interface ICardAssetProps {}
 
 export default function CardAsset(props: ICardAssetProps) {
-  const [isOpenDetail, setIsOpenDetail] = React.useState(false);
   const newTo = {
-    path:"/nft-detail/"+ 1
-}
+    path: "/nft-detail/" + 1,
+  };
   return (
     <Link href={newTo.path}>
-    <WrapperCard>
-      <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
-      <BoxTitle>
-        <Title>Asset No.1</Title>
-        <TypeAsset>Type: NFT Skin</TypeAsset>
-      </BoxTitle>
-      <ButtonShowDetail onClick={() => setIsOpenDetail(true)}>
-        <p>See Detail</p>
-        <IConDropdown />
-      </ButtonShowDetail>
-    </WrapperCard>
+      <WrapperCard>
+        <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
+        <BoxTitle>
+          <Title>Asset No.1</Title>
+          <TypeAsset>Type: NFT Skin</TypeAsset>
+        </BoxTitle>
+        <ButtonShowDetail>
+          <p>See Detail</p>
+          <IConDropdown />
+        </ButtonShowDetail>
+      </WrapperCard>
     </Link>
-    
   );
 }
 
