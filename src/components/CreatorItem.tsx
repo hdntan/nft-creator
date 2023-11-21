@@ -1,3 +1,5 @@
+
+import { technoRaceFont } from "@/font";
 import Image from "next/image";
 import styled from "styled-components";
 
@@ -9,7 +11,7 @@ interface StyledComponentProps {
 const CreatorItem = ({ item }: any) => {
   return (
     <Wrapper>
-      <Title>{item.title}</Title>
+      <Title className={technoRaceFont.className}>{item.title}</Title>
       <ContainerImage>
         <Image src={item.image} alt="gold" height={200} width={200} />
       </ContainerImage>
@@ -42,7 +44,10 @@ const ButtonContainer = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-const Title = styled.div``;
+const Title = styled.div`
+font-size: 32px;
+color: #FFFFFF;
+`;
 
 const ContainerImage = styled.div``;
 const ButtonItem = styled.button<StyledComponentProps>`
