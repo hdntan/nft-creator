@@ -1,4 +1,4 @@
-import gameAbi from "./AbiContract.json";
+import gameAbi from "./abi/AbiContract.json";
 
 const GameContract = {
   abi: gameAbi,
