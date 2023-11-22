@@ -1,3 +1,4 @@
+
 import IConDropdown from "@/assets/icons/IconDropdown";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,18 +7,22 @@ import styled from "styled-components";
 
 export interface ICardAssetProps {}
 
-export default function CardAsset(props: ICardAssetProps) {
+export default function CardAsset({nft}: any) {
   const [isOpenDetail, setIsOpenDetail] = React.useState(false);
+
+  const [type, setType] = React.useState("")
+
+ 
   const newTo = {
-    path:"/nft-detail/"+ 1
+    path:"/nft-detail/"+ nft.id
 }
   return (
     <Link href={newTo.path}>
     <WrapperCard>
       <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
       <BoxTitle>
-        <Title>Asset No.1</Title>
-        <TypeAsset>Type: NFT Skin</TypeAsset>
+        <Title>{nft.name}</Title>
+        <TypeAsset>Type: {nft.type}</TypeAsset>
       </BoxTitle>
       <ButtonShowDetail onClick={() => setIsOpenDetail(true)}>
         <p>See Detail</p>
@@ -84,3 +89,31 @@ const ButtonShowDetail = styled.div`
     text-transform: capitalize;
   }
 `;
+
+
+const OPTIONS = [
+  {
+   value: "",
+   label: "",
+ },
+ {
+   value: "--",
+   label: "--",
+ },
+ {
+   value: "Skin",
+   label: "NFT Skins",
+ },
+ {
+   value: "Weapon",
+   label: "Character weapons",
+ },
+ {
+   value: "Map",
+   label: "Map",
+ },
+ {
+   value: "World",
+   label: "Worlds",
+ },
+];
