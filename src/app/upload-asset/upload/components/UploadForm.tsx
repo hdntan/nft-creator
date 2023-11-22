@@ -1,6 +1,11 @@
+import axiosInstance from "@/config/axios.config";
+import axios from "axios";
+import { url } from "inspector";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { useAccount } from "wagmi";
 
 interface StyledLabelProps {
   fontSize: string;
@@ -8,35 +13,94 @@ interface StyledLabelProps {
 }
 
 interface UploadForm {
-  assetType: string;
-  image: string;
   name: string;
   symbol: string;
   description: string;
+  type: string;
+  file: string;
 }
 
 const UploadForm = () => {
+  const route = useRouter();
+  console.log("axios");
   const { register, control, handleSubmit } = useForm<UploadForm>();
 
-  const [imageNft, setImageNft] = useState("");
+  const [imageNft, setImageNft] = useState<File>();
+
+  const { address, isConnected } = useAccount();
+
+  
+  
 
   const onChangFile = async (e: any) => {
     var file = e.target.files[0];
-    const reader = new FileReader();
-    if (file) reader.readAsDataURL(file);
+   
+    console.log("file", file);
 
-    reader.onload = (readerEvent: any) => {
-      const file = readerEvent.target.result;
-      setImageNft(file);
-    };
+    setImageNft(file);
+   
+  };
+
+  const validateUpload = (data: any) => {
+    if (!data.name) {
+      alert("please enter name NFT");
+      return false;
+    }
+    if (!data.image && !imageNft) {
+      alert("please enter image NFT");
+      return false;
+    }
+    if (!data.symbol) {
+      alert("please enter symbol NFT");
+      return false;
+    }
+    if (!data.description) {
+      alert("please enter description NFT");
+      return false;
+    }
   };
 
   const removeImage = () => {
-    setImageNft("");
+    setImageNft(undefined);
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    validateUpload(data);
     console.log("Form submitted with data:", data);
+    const formData = new FormData();
+    // formData.append("name",data.name );
+    // formData.append("symbol",data.symbol );
+    // formData.append("description",data.description );
+    // formData.append("type",data.type );
+    // formData.append("address",address ? address: "" );
+    formData.append("file",imageNft ? imageNft : "" );
+
+    console.log("form data", formData, imageNft);
+
+
+    const nftData = {...data, file: formData, creator: address,}
+    // const nftData = {
+    //   name: data.name,
+    //   symbol: data.symbol,
+    //   description: data.description,
+    //   type: data.type,
+    //   creator: address,
+    //   fileName: data.file,
+    // };
+
+
+
+
+    try {
+      await axiosInstance.post('/collection/create',{
+        ...nftData
+      }).then(() => {
+        alert(" create product")
+        route.push('/upload-asset')
+      });
+    } catch (error) {
+      console.log("err", error);
+    }
   };
 
   return (
@@ -50,9 +114,9 @@ const UploadForm = () => {
           Asset Type
         </Label>
 
-        <SelectInput {...register("assetType")}>
+        <SelectInput {...register("type")}>
           {OPTIONS.map((option) => (
-            <option key={option.value} value={option.label}>
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
@@ -66,7 +130,7 @@ const UploadForm = () => {
           {!!imageNft ? (
             <ContainerImage>
               <img
-                src={imageNft}
+                src={URL.createObjectURL(imageNft)}
                 className=" rounded-xl  object-cover w-[129px] h-[129px]  "
               />
             </ContainerImage>
@@ -78,7 +142,7 @@ const UploadForm = () => {
               <ImageUploadButton>
                 Change
                 <Controller
-                  name="image"
+                  name="file"
                   control={control}
                   render={({ field }) => (
                     <HiddenInput
@@ -298,19 +362,19 @@ const SelectInput = styled.select`
 
 const OPTIONS = [
   {
-    value: "1",
+    value: "Skin",
     label: "NFT Skins",
   },
   {
-    value: "2",
+    value: "Weapon",
     label: "Character weapons",
   },
   {
-    value: "3",
+    value: "Map",
     label: "Map",
   },
   {
-    value: "4",
+    value: "World",
     label: "Worlds",
   },
 ];
