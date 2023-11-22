@@ -1,8 +1,6 @@
-import axiosInstance from "@/config/axios.config";
-import axios from "axios";
-import { url } from "inspector";
+import { uploadNFTRequest } from "@/services";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
@@ -22,23 +20,15 @@ interface UploadForm {
 
 const UploadForm = () => {
   const route = useRouter();
-  console.log("axios");
   const { register, control, handleSubmit } = useForm<UploadForm>();
 
   const [imageNft, setImageNft] = useState<File>();
 
   const { address, isConnected } = useAccount();
 
-  
-  
-
   const onChangFile = async (e: any) => {
-    var file = e.target.files[0];
-   
-    console.log("file", file);
-
+    let file = e.target.files[0];
     setImageNft(file);
-   
   };
 
   const validateUpload = (data: any) => {
@@ -66,38 +56,12 @@ const UploadForm = () => {
 
   const onSubmit = async (data: any) => {
     validateUpload(data);
-    console.log("Form submitted with data:", data);
-    const formData = new FormData();
-    // formData.append("name",data.name );
-    // formData.append("symbol",data.symbol );
-    // formData.append("description",data.description );
-    // formData.append("type",data.type );
-    // formData.append("address",address ? address: "" );
-    formData.append("file",imageNft ? imageNft : "" );
 
-    console.log("form data", formData, imageNft);
-
-
-    const nftData = {...data, file: formData, creator: address,}
-    // const nftData = {
-    //   name: data.name,
-    //   symbol: data.symbol,
-    //   description: data.description,
-    //   type: data.type,
-    //   creator: address,
-    //   fileName: data.file,
-    // };
-
-
-
+    const dataSubmit = { ...data, creator: address, file: imageNft };
 
     try {
-      await axiosInstance.post('/collection/create',{
-        ...nftData
-      }).then(() => {
-        alert(" create product")
-        route.push('/upload-asset')
-      });
+      await uploadNFTRequest(dataSubmit);
+      route.push("/overview");
     } catch (error) {
       console.log("err", error);
     }
@@ -362,19 +326,19 @@ const SelectInput = styled.select`
 
 const OPTIONS = [
   {
-    value: "Skin",
+    value: "1",
     label: "NFT Skins",
   },
   {
-    value: "Weapon",
+    value: "2",
     label: "Character weapons",
   },
   {
-    value: "Map",
+    value: "3",
     label: "Map",
   },
   {
-    value: "World",
+    value: "4",
     label: "Worlds",
   },
 ];
