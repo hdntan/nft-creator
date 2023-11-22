@@ -8,7 +8,7 @@ import styled from "styled-components";
 interface StyledTdProps {
   bg: string;
   fontSize: string;
-  padding: string
+  padding: string;
 }
 
 const LeaderBoard = () => {
@@ -19,18 +19,22 @@ const LeaderBoard = () => {
         <StyledTableWrapper>
           <StyledTable>
             <StyleThead>
-              <tr>
+              <StyledTr>
                 <StyledTh>Top</StyledTh>
                 <StyledTh>Users</StyledTh>
                 <StyledTh>Successful assets</StyledTh>
                 <StyledTh>Total reward</StyledTh>
                 <StyledTh>Rating </StyledTh>
-              </tr>
+              </StyledTr>
             </StyleThead>
             <StyledTbody>
               {NFTS.map((nft, index) => (
-                <tr key={index}>
-                  <StyledTd fontSize="" bg={index <= 2 ? "TOP" : ""} padding="62px 80px">
+                <StyledTr key={index}>
+                  <StyledTd
+                    fontSize=""
+                    bg={index <= 2 ? "TOP" : ""}
+                    padding="62px 80px"
+                  >
                     {nft.id}
                   </StyledTd>
                   <StyledTd fontSize="36px" padding="" bg="">
@@ -44,7 +48,9 @@ const LeaderBoard = () => {
                       <p>{nft.users}</p>
                     </ContainerUser>
                   </StyledTd>
-                  <StyledTd fontSize="" padding="" bg="" >{nft.successfulAssets} </StyledTd>
+                  <StyledTd fontSize="" padding="" bg="">
+                    {nft.successfulAssets}{" "}
+                  </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
                     <ContainerReward>
                       <Image
@@ -56,8 +62,10 @@ const LeaderBoard = () => {
                       <p> {nft.totalReward}</p>
                     </ContainerReward>
                   </StyledTd>
-                  <StyledTd fontSize="" bg="" padding="0 60px">{nft.rating}</StyledTd>
-                </tr>
+                  <StyledTd fontSize="" bg="" padding="0 60px">
+                    {nft.rating}
+                  </StyledTd>
+                </StyledTr>
               ))}
             </StyledTbody>
           </StyledTable>
@@ -74,6 +82,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 94px 90px 163px 90px;
 `;
 
@@ -85,20 +94,20 @@ const Title = styled.div`
 
 const StyledTableWrapper = styled.div`
   overflow-x: auto;
+  width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 `;
 
 const StyledTable = styled.table`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 `;
 
-const ContainerTr = styled.div`
-  border-left: 1px solid #6c93ff;
-  border-right: 1px solid #6c93ff;
-`;
+const StyledTr = styled.tr``;
 
 const StyledTh = styled.th`
   font-size: 18px;
@@ -138,11 +147,8 @@ const StyledTbody = styled.tbody`
       rgba(166, 177, 255, 0.5) 0%,
       rgba(89, 100, 177, 0) 100%
     );
-
-  /* border-right: 1px solid #6C93FF; */
 `;
 const StyleThead = styled.thead`
-  /* background: linear-gradient(90deg, #021491 -16.29%, #1647CF 106.35%); */
   background: linear-gradient(
     90deg,
     rgba(2, 20, 145, 0.8) -16.29%,
