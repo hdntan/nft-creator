@@ -23,6 +23,10 @@ const LINKS = [
     label: "Leaderboard",
     href: "/leader-board",
   },
+  {
+    label: "Marketplace",
+    href: "/marketplace",
+  },
 ];
 const Header = () => {
   const { address, isConnected } = useAccount();
