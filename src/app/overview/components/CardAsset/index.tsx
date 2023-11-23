@@ -1,33 +1,24 @@
 import IConDropdown from "@/assets/icons/IconDropdown";
 import Image from "next/image";
-import Link from "next/link";
-import * as React from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 export interface ICardAssetProps {}
 
 export default function CardAsset({ nft }: any) {
-  const [isOpenDetail, setIsOpenDetail] = React.useState(false);
-
-  const [type, setType] = React.useState("");
-
-  const newTo = {
-    path: "/nft-detail/" + nft.id,
-  };
+  const router = useRouter();
   return (
-    <Link href={newTo.path}>
-      <WrapperCard>
-        <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
-        <BoxTitle>
-          <Title>{nft.name}</Title>
-          <TypeAsset>Type: {nft.type}</TypeAsset>
-        </BoxTitle>
-        <ButtonShowDetail onClick={() => setIsOpenDetail(true)}>
-          <p>See Detail</p>
-          <IConDropdown />
-        </ButtonShowDetail>
-      </WrapperCard>
-    </Link>
+    <WrapperCard onClick={() => router.push(`/nft-detail/${nft.id}`)}>
+      <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
+      <BoxTitle>
+        <Title>{nft.name}</Title>
+        <TypeAsset>Type: {nft.type}</TypeAsset>
+      </BoxTitle>
+      <ButtonShowDetail>
+        <p>See Detail</p>
+        <IConDropdown />
+      </ButtonShowDetail>
+    </WrapperCard>
   );
 }
 

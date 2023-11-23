@@ -95,7 +95,7 @@ const FilterBox = styled.div`
 const ListAsset = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
-  column-gap: 10px;
+  justify-items: center;
   gap: 24px;
   width: 100%;
   margin-top: 60px;
