@@ -1,4 +1,3 @@
-
 import IConDropdown from "@/assets/icons/IconDropdown";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,41 +6,39 @@ import styled from "styled-components";
 
 export interface ICardAssetProps {}
 
-export default function CardAsset({nft}: any) {
+export default function CardAsset({ nft }: any) {
   const [isOpenDetail, setIsOpenDetail] = React.useState(false);
 
-  const [type, setType] = React.useState("")
+  const [type, setType] = React.useState("");
 
- 
   const newTo = {
-    path:"/nft-detail/"+ nft.id
-}
+    path: "/nft-detail/" + nft.id,
+  };
   return (
     <Link href={newTo.path}>
-    <WrapperCard>
-      <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
-      <BoxTitle>
-        <Title>{nft.name}</Title>
-        <TypeAsset>Type: {nft.type}</TypeAsset>
-      </BoxTitle>
-      <ButtonShowDetail onClick={() => setIsOpenDetail(true)}>
-        <p>See Detail</p>
-        <IConDropdown />
-      </ButtonShowDetail>
-    </WrapperCard>
+      <WrapperCard>
+        <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
+        <BoxTitle>
+          <Title>{nft.name}</Title>
+          <TypeAsset>Type: {nft.type}</TypeAsset>
+        </BoxTitle>
+        <ButtonShowDetail onClick={() => setIsOpenDetail(true)}>
+          <p>See Detail</p>
+          <IConDropdown />
+        </ButtonShowDetail>
+      </WrapperCard>
     </Link>
-    
   );
 }
 
 const WrapperCard = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 463px;
   width: 329px;
   min-width: 329px;
   max-width: 329px;
-  flex-direction: column;
-  align-items: center;
   gap: 27px;
   flex: 1 0 0;
   border-radius: 24px 24px 36px 36px;
@@ -90,30 +87,29 @@ const ButtonShowDetail = styled.div`
   }
 `;
 
-
 const OPTIONS = [
   {
-   value: "",
-   label: "",
- },
- {
-   value: "--",
-   label: "--",
- },
- {
-   value: "Skin",
-   label: "NFT Skins",
- },
- {
-   value: "Weapon",
-   label: "Character weapons",
- },
- {
-   value: "Map",
-   label: "Map",
- },
- {
-   value: "World",
-   label: "Worlds",
- },
+    value: "",
+    label: "",
+  },
+  {
+    value: "--",
+    label: "--",
+  },
+  {
+    value: "Skin",
+    label: "NFT Skins",
+  },
+  {
+    value: "Weapon",
+    label: "Character weapons",
+  },
+  {
+    value: "Map",
+    label: "Map",
+  },
+  {
+    value: "World",
+    label: "Worlds",
+  },
 ];
