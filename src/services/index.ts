@@ -1,4 +1,6 @@
 import axiosInstance from "@/config/axios.config";
+import { NFTCreatorFactory } from "@/contracts";
+import { ethers } from "ethers";
 
 type IDataSubmit = {
   name: string;
@@ -9,6 +11,12 @@ type IDataSubmit = {
   file: File;
 };
 
+type IDataContract = {
+  abi: any[];
+  address: string;
+  
+};
+
 const uploadNFTRequest = (data: IDataSubmit) => {
   const formData = new FormData();
   formData.append("name", data.name);
@@ -16,7 +24,7 @@ const uploadNFTRequest = (data: IDataSubmit) => {
   formData.append("description", data.description);
   formData.append("type", data.type.toString());
   formData.append("creator", data.creator);
-  formData.append("file", data.file, "nft");
+  formData.append("file", data.file);
 
   return axiosInstance.post("/collection/create", formData, {
     headers: {
@@ -30,4 +38,36 @@ const getListNFTOverviewRequest = (type: string) => {
   return axiosInstance.get("/collection", { params: { type } });
 };
 
-export { uploadNFTRequest, getListNFTOverviewRequest };
+ const getContract = async(data: IDataContract) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const {ethereum} = window;
+
+  if(ethereum) {
+      const signer = provider.getSigner();
+
+      const contractReader = new ethers.Contract(data.address,
+      data.abi, signer
+      );
+      return contractReader;
+      
+  }
+}
+
+
+const contractNftCreatorFactory = async() => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const {ethereum} = window;
+
+  if(ethereum) {
+      const signer = provider.getSigner();
+
+      const contractReader = new ethers.Contract(NFTCreatorFactory.address,
+        NFTCreatorFactory.abi, signer
+      );
+      return contractReader;
+      
+  }
+}
+
+
+export { uploadNFTRequest, getListNFTOverviewRequest, getContract, contractNftCreatorFactory };

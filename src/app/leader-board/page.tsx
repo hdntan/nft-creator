@@ -1,8 +1,9 @@
 "use client";
 import { Avatar, Coin } from "@/assets/images";
 import MainLayout from "@/layout";
+import { contractNftCreatorFactory } from "@/services";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface StyledTdProps {
@@ -11,11 +12,49 @@ interface StyledTdProps {
   padding: string;
 }
 
+type TopUser = {
+  id: string,
+  avatar: string,
+  users: string,
+  sub: string,
+  successfulAssets: string,
+  totalReward:string,
+  iconCoin: string,
+  rating: string,
+}
+
+
+type User = {
+  users: string,
+  rating: string,
+
+}
+
 const LeaderBoard = () => {
+
+  const [users, setUsers] = useState([]);
+
+  const getCreators = async() => {
+    const contract = await contractNftCreatorFactory();
+    const transaction1 = await contract.getAllCreators();
+    const transaction2 = await contract.getAllCreatorsFullInfo();
+    const topUsers = transaction1.map((user, index) => ({
+      id: index,
+      user,
+      voteTotalPower: transaction2[index].voteTotalPower.toNumber(),
+      voteCount: transaction2[index].voteCount.toNumber()
+    }));
+
+    setUsers(topUsers);
+  }
+
+  useEffect(() => {
+    getCreators();
+  },[])
   return (
     <MainLayout>
       <Wrapper>
-        <Title>Creators Leaderboards</Title>
+        <button className="text-white" onClick={getCreators}>Creators Leaderboards</button>
         <StyledTableWrapper>
           <StyledTable>
             <StyleThead>
@@ -28,7 +67,7 @@ const LeaderBoard = () => {
               </StyledTr>
             </StyleThead>
             <StyledTbody>
-              {NFTS.map((nft, index) => (
+              {users.map((nft, index) => (
                 <StyledTr key={index}>
                   <StyledTd
                     fontSize=""
@@ -40,30 +79,30 @@ const LeaderBoard = () => {
                   <StyledTd fontSize="36px" padding="" bg="">
                     <ContainerUser>
                       <Image
-                        src={nft.avatar}
+                        src={Avatar}
                         alt="avatar"
                         height={129}
                         width={129}
                       />
-                      <p>{nft.users}</p>
+                      <p>{nft.user?.slice(0, 6)}...${nft.user?.slice(nft.user.length - 6)}</p>
                     </ContainerUser>
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
-                    {nft.successfulAssets}{" "}
+                    {"1234"}
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
                     <ContainerReward>
                       <Image
-                        src={nft.iconCoin}
+                        src={Coin}
                         alt="avatar"
                         height={65}
                         width={67}
                       />
-                      <p> {nft.totalReward}</p>
+                      <p> {nft.voteTotalPower}</p>
                     </ContainerReward>
                   </StyledTd>
                   <StyledTd fontSize="" bg="" padding="0 60px">
-                    {nft.rating}
+                    {nft.voteCount}
                   </StyledTd>
                 </StyledTr>
               ))}
