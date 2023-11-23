@@ -3,23 +3,17 @@ import styled from "styled-components";
 
 export interface ISelectProps {
   options: { value: string; label: string }[];
-  value: string | number;
-  name: string;
   defaultValue?: string;
   onChange: (e: any) => void;
 }
 
 export default function Select({
-  value,
   onChange,
   options,
-  name,
   defaultValue,
 }: Readonly<ISelectProps>) {
   return (
     <SelectCustom
-      value={value}
-      name={name}
       onChange={onChange}
       defaultValue={defaultValue}
     >
