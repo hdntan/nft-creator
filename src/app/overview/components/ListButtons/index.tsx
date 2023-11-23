@@ -1,17 +1,19 @@
 import { IconPlus, IconStart } from "@/assets/icons";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import styled from "styled-components";
 
 export interface IListButtonProps {}
 
 export default function ListButton(props: IListButtonProps) {
+  const router = useRouter();
   return (
     <List>
-      <ButtonVote>
+      <ButtonVote onClick={() => router.push("/rate-nfts")}>
         <p>Rating</p>
         <IconStart />
       </ButtonVote>
-      <ButtonUpload>
+      <ButtonUpload onClick={() => router.push("/upload-asset")}>
         <p>Upload Asset</p>
         <IconPlus />
       </ButtonUpload>
@@ -21,6 +23,7 @@ export default function ListButton(props: IListButtonProps) {
 
 const List = styled.div`
   display: flex;
+  cursor: pointer;
   p {
     color: #fed73b;
     text-align: center;

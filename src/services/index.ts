@@ -33,7 +33,7 @@ const uploadNFTRequest = (data: IDataSubmit) => {
   });
 };
 
-const getListNFTOverviewRequest = (type: string) => {
+const getListNFTOverviewRequest = (type?: string) => {
   return axiosInstance.get("/collection", { params: { type } });
 };
 
