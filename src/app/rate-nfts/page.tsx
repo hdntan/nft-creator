@@ -21,7 +21,6 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
               name="typeNft"
               onChange={(e) => console.log(e)}
               options={[{ value: "nft", label: "NFT" }]}
-              value={"nft"}
             />
           </FilterBox>
         </TopMenu>

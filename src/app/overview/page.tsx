@@ -42,7 +42,11 @@ export default function OverviewPage(props: IOverviewPageProps) {
             <h2>Overview</h2>
           </TitleBox>
           <FilterBox>
-            <Select onChange={(e) => SelectType(e)} options={OPTIONS} />
+            <Select
+              onChange={(e) => SelectType(e)}
+              options={OPTIONS}
+              name="typeNFT"
+            />
             <ListButton />
           </FilterBox>
         </TopMenu>
