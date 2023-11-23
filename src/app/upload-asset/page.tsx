@@ -1,5 +1,6 @@
 "use client";
 import { IconAddCircle, IconBack } from "@/assets/icons";
+import ButtonBack from "@/components/ButtonBack";
 import MainLayout from "@/layout";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,7 +8,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 interface StyledLabelProps {
   fontSize: string;
-  textColor: string
+  textColor: string;
 }
 
 interface StyledTabProps {
@@ -15,7 +16,6 @@ interface StyledTabProps {
 }
 
 const UploadAsset = () => {
-  const route = useRouter()
   const [currentTab, setCurrentTab] = useState("1");
 
   const handleTabClick = (e: any) => {
@@ -25,46 +25,50 @@ const UploadAsset = () => {
   return (
     <MainLayout>
       <Wrapper>
-      <ContainerBack >
-                <Button onClick={() => route.push('/')}><IconBack /></Button>
-            
-            </ContainerBack>
-      <WrapperTab>
-        <Tabs className="tabs">
-          {tabs.map((tab, i) => (
-            <ButtonTab
-              currentActive={currentTab === `${tab.id}` ? "active" : "default"}
-              key={i}
-              id={tab.id}
-              disabled={currentTab === `${tab.id}`}
-              onClick={handleTabClick}
-            >
-              {" "}
-              {tab.tabTitle}
-            </ButtonTab>
-          ))}
-        </Tabs>
-        <TabContent>
-          {tabs.map((tab, i) => (
-            <div key={i}>
-              {currentTab === `${tab.id}` && (
-                <Content>
-                  <Label textColor="" fontSize="48px">{tab.title}</Label>
-                  <Label textColor="" fontSize="20px">{tab.content}</Label>
-                </Content>
-              )}
-            </div>
-          ))}
+        <ButtonBack href="/"/>
+        <WrapperTab>
+          <ContainerTab>
+            <TabHeader className="tabs">
+              {tabs.map((tab, i) => (
+                <ButtonTab
+                  currentActive={
+                    currentTab === `${tab.id}` ? "active" : "default"
+                  }
+                  key={i}
+                  id={tab.id}
+                  disabled={currentTab === `${tab.id}`}
+                  onClick={handleTabClick}
+                >
+                  {" "}
+                  {tab.tabTitle}
+                </ButtonTab>
+              ))}
+            </TabHeader>
+            <TabContent>
+              {tabs.map((tab, i) => (
+                <div key={i}>
+                  {currentTab === `${tab.id}` && (
+                    <Content>
+                      <Label textColor="" fontSize="48px">
+                        {tab.title}
+                      </Label>
+                      <Label textColor="" fontSize="20px">
+                        {tab.content}
+                      </Label>
+                    </Content>
+                  )}
+                </div>
+              ))}
 
-          <Link href={"/upload-asset/upload"}>
-            <UploadButton>
-              Upload Asset <IconAddCircle />
-            </UploadButton>
-          </Link>
-        </TabContent>
-      </WrapperTab>
+              <Link href={"/upload-asset/upload"}>
+                <UploadButton>
+                  Upload Asset <IconAddCircle />
+                </UploadButton>
+              </Link>
+            </TabContent>
+          </ContainerTab>
+        </WrapperTab>
       </Wrapper>
-     
     </MainLayout>
   );
 };
@@ -72,40 +76,34 @@ const UploadAsset = () => {
 export default UploadAsset;
 
 const Wrapper = styled.div`
-display: flex;
-   width: 100%;
+  display: flex;
+  align-items: start;
+  width: 100%;
   padding: 81px 90px;
-  max-width: 1847px;
-`
-
+`;
 const WrapperTab = styled.div`
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const ContainerTab = styled.div`
   color: white;
   width: 1437px;
-  /* margin: 0 auto; */
-
   border: 1px solid #1647cf;
-
-  /* border-color: linear-gradient(90deg, #021491 -16.29%, #1647CF 106.35%); */
-
   border-radius: 8px;
   background: linear-gradient(0deg, #00062b, #00062b),
     linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%);
 `;
-
-const ContainerBack = styled.div`
-    margin-right: 93px;
-`
-const Button = styled.button`
-   
-`
 
 const Label = styled.label<StyledLabelProps>`
   font-size: ${(props) => props.fontSize || "14px"};
   color: ${(props) => (props.textColor !== "yellow" ? "#FFFFFF" : "#FED73B")};
 `;
 
-const Tabs = styled.div`
+const TabHeader = styled.div`
+  width: 100%;
   width: 1437px;
 `;
 const TabContent = styled.div`

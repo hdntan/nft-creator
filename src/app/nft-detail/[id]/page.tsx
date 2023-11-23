@@ -2,9 +2,11 @@
 'use client'
 import { IconBack } from '@/assets/icons'
 import { Hero } from '@/assets/images'
+import ButtonBack from '@/components/ButtonBack'
+import axiosInstance from '@/config/axios.config'
 import MainLayout from '@/layout'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
 interface StyledLabelProps {
@@ -12,32 +14,48 @@ interface StyledLabelProps {
 }
 
 const NFTDetail = () => {
-const route = useRouter()
 
+    const { id } = useParams();
+    console.log("id nft",id);
+
+  const [nft, setNft] = React.useState({});
+
+
+    React.useEffect(() => {
+
+        axiosInstance.get(`/collection/${id}`)
+          .then((response) => {
+            console.log(response.data);
+            setNft(response.data.data)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    
+      }, [])
   return (
     <MainLayout>
         <Wrapper>
-            <ContainerBack >
-                <Button onClick={() => route.push('/overview')}><IconBack /></Button>
+            <ButtonBack href='/overview'/>
             
-            </ContainerBack>
+
+            <WrapperDetail>
+            <ContainerDetail>
             
-        <WrapperDetail>
-            
-        <ContainerImage>
-            <Image src={Hero} alt='hero' width={567} height={518}></Image>
-        </ContainerImage>
-        <ContainerContent>
-            {
-                NFTS.map((nft, index) => 
-                <Content key={index}>
-                    <Label textColor=''>{nft.title}</Label>
-                    <Label textColor='yellow'>{nft.content}</Label>
-                </Content> )
-            }
-           
-        </ContainerContent>
-        </WrapperDetail>
+            <ContainerImage>
+                <Image src={Hero} alt='hero' width={567} height={518}></Image>
+            </ContainerImage>
+            <ContainerContent>
+            <Content>
+                        <Label textColor=''>Owner:</Label>
+                        <Label textColor='yellow'>{nft.creator}</Label>
+                    </Content> 
+               
+               
+            </ContainerContent>
+            </ContainerDetail>
+            </WrapperDetail>
+       
         </Wrapper>
        
         </MainLayout>
@@ -48,21 +66,22 @@ export default NFTDetail
 
 const Wrapper = styled.div`
 display: flex;
+align-items: start;
    width: 100%;
   padding: 78px 90px;
-  max-width: 1847px;
-  margin: auto;
 
 
 `
-const ContainerBack = styled.div`
-    margin-right: 242px;
-`
-const Button = styled.button`
-   
-`
-
 const WrapperDetail = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+
+
+const ContainerDetail = styled.div`
     display: flex;
     flex-direction: row;
     width: 1144px;
