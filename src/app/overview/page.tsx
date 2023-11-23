@@ -1,57 +1,37 @@
 "use client";
-import { IconBack } from "@/assets/icons";
 import ListButton from "@/app/overview/components/ListButtons";
+import { IconBack } from "@/assets/icons";
 import Select from "@/components/Select";
 import MainLayout from "@/layout";
+import { getListNFTOverviewRequest } from "@/services";
 import * as React from "react";
 import styled from "styled-components";
 import CardAsset from "./components/CardAsset";
-import axiosInstance from "@/config/axios.config";
-import { useRouter } from "next/navigation";
 
 export interface IOverviewPageProps {}
 
 export default function OverviewPage(props: IOverviewPageProps) {
-  const route = useRouter();
   const [listNft, setListNft] = React.useState([]);
   const [type, setType] = React.useState("");
 
   const SelectType = async (e: any) => {
-    console.log("type nft", e.target.value);
-    if (e.target.value === "--") {
-      axiosInstance
-        .get("/collection")
-        .then((response) => {
-          console.log(response.data);
-          setListNft(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      axiosInstance
-        .get(`/collection?type=${e.target.value}`)
-        .then((response) => {
-          console.log(response.data);
-          setListNft(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    setType(e.target.value);
+  };
+
+  const fetchCollection = async () => {
+    try {
+      const { data } = await getListNFTOverviewRequest(
+        type == "--" ? undefined : type
+      );
+      setListNft(data?.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   React.useEffect(() => {
-    axiosInstance
-      .get("/collection")
-      .then((response) => {
-        console.log(response.data);
-        setListNft(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    fetchCollection();
+  }, [type]);
 
   return (
     <MainLayout>
@@ -67,7 +47,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
           </FilterBox>
         </TopMenu>
         <ListAsset>
-          {listNft.map((nft, index) => (
+          {listNft?.map((nft, index) => (
             <CardAsset nft={nft} key={index} />
           ))}
         </ListAsset>
@@ -78,7 +58,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding: 100px 90px;
+  padding: 100px 53px;
   max-width: 1847px;
   margin: auto;
 `;
@@ -113,10 +93,9 @@ const FilterBox = styled.div`
 `;
 
 const ListAsset = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
+  column-gap: 10px;
   gap: 24px;
   width: 100%;
   margin-top: 60px;
