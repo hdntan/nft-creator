@@ -14,7 +14,6 @@ type IDataSubmit = {
 type IDataContract = {
   abi: any[];
   address: string;
-  
 };
 
 const uploadNFTRequest = (data: IDataSubmit) => {
@@ -38,36 +37,37 @@ const getListNFTOverviewRequest = (type: string) => {
   return axiosInstance.get("/collection", { params: { type } });
 };
 
- const getContract = async(data: IDataContract) => {
+const getContract = async (data: IDataContract) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const {ethereum} = window;
+  const { ethereum } = window;
 
-  if(ethereum) {
-      const signer = provider.getSigner();
+  if (ethereum) {
+    const signer = provider.getSigner();
 
-      const contractReader = new ethers.Contract(data.address,
-      data.abi, signer
-      );
-      return contractReader;
-      
+    const contractReader = new ethers.Contract(data.address, data.abi, signer);
+    return contractReader;
   }
-}
+};
 
-
-const contractNftCreatorFactory = async() => {
+const contractNftCreatorFactory = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const {ethereum} = window;
+  const { ethereum } = window;
 
-  if(ethereum) {
-      const signer = provider.getSigner();
+  if (ethereum) {
+    const signer = provider.getSigner();
 
-      const contractReader = new ethers.Contract(NFTCreatorFactory.address,
-        NFTCreatorFactory.abi, signer
-      );
-      return contractReader;
-      
+    const contractReader = new ethers.Contract(
+      NFTCreatorFactory.address,
+      NFTCreatorFactory.abi,
+      signer
+    );
+    return contractReader;
   }
-}
+};
 
-
-export { uploadNFTRequest, getListNFTOverviewRequest, getContract, contractNftCreatorFactory };
+export {
+  uploadNFTRequest,
+  getListNFTOverviewRequest,
+  getContract,
+  contractNftCreatorFactory,
+};

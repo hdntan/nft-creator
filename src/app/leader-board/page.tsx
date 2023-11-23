@@ -13,48 +13,48 @@ interface StyledTdProps {
 }
 
 type TopUser = {
-  id: string,
-  avatar: string,
-  users: string,
-  sub: string,
-  successfulAssets: string,
-  totalReward:string,
-  iconCoin: string,
-  rating: string,
-}
-
+  id: string;
+  avatar: string;
+  users: string;
+  sub: string;
+  successfulAssets: string;
+  totalReward: string;
+  iconCoin: string;
+  rating: string;
+};
 
 type User = {
-  users: string,
-  rating: string,
-
-}
+  users: string;
+  rating: string;
+};
 
 const LeaderBoard = () => {
-
   const [users, setUsers] = useState([]);
 
-  const getCreators = async() => {
+  const getCreators = async () => {
     const contract = await contractNftCreatorFactory();
-    const transaction1 = await contract.getAllCreators();
-    const transaction2 = await contract.getAllCreatorsFullInfo();
-    const topUsers = transaction1.map((user, index) => ({
-      id: index,
-      user,
-      voteTotalPower: transaction2[index].voteTotalPower.toNumber(),
-      voteCount: transaction2[index].voteCount.toNumber()
-    }));
-
-    setUsers(topUsers);
-  }
+    if (contract) {
+      const transaction1 = await contract.getAllCreators();
+      const transaction2 = await contract.getAllCreatorsFullInfo();
+      const topUsers = transaction1.map((user: any, index: number) => ({
+        id: index,
+        user,
+        voteTotalPower: transaction2[index].voteTotalPower.toNumber(),
+        voteCount: transaction2[index].voteCount.toNumber(),
+      }));
+      setUsers(topUsers);
+    }
+  };
 
   useEffect(() => {
     getCreators();
-  },[])
+  }, []);
   return (
     <MainLayout>
       <Wrapper>
-        <button className="text-white" onClick={getCreators}>Creators Leaderboards</button>
+        <button className="text-white" onClick={getCreators}>
+          Creators Leaderboards
+        </button>
         <StyledTableWrapper>
           <StyledTable>
             <StyleThead>
@@ -67,7 +67,7 @@ const LeaderBoard = () => {
               </StyledTr>
             </StyleThead>
             <StyledTbody>
-              {users.map((nft, index) => (
+              {users.map((nft: any, index: number) => (
                 <StyledTr key={index}>
                   <StyledTd
                     fontSize=""
@@ -84,7 +84,10 @@ const LeaderBoard = () => {
                         height={129}
                         width={129}
                       />
-                      <p>{nft.user?.slice(0, 6)}...${nft.user?.slice(nft.user.length - 6)}</p>
+                      <p>
+                        {nft.user?.slice(0, 6)}...$
+                        {nft.user?.slice(nft.user.length - 6)}
+                      </p>
                     </ContainerUser>
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
@@ -92,12 +95,7 @@ const LeaderBoard = () => {
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
                     <ContainerReward>
-                      <Image
-                        src={Coin}
-                        alt="avatar"
-                        height={65}
-                        width={67}
-                      />
+                      <Image src={Coin} alt="avatar" height={65} width={67} />
                       <p> {nft.voteTotalPower}</p>
                     </ContainerReward>
                   </StyledTd>

@@ -1,4 +1,8 @@
-import { contractNftCreatorFactory, getContract, uploadNFTRequest } from "@/services";
+import {
+  contractNftCreatorFactory,
+  getContract,
+  uploadNFTRequest,
+} from "@/services";
 import { imageNameToUrl } from "@/utils/helper";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -59,18 +63,25 @@ const UploadForm = () => {
     validateUpload(data);
 
     const dataSubmit = { ...data, creator: address, file: imageNft };
-    console.log("datasubmit", dataSubmit)
+    console.log("datasubmit", dataSubmit);
 
     try {
       const record = await uploadNFTRequest(dataSubmit);
-      console.log("record", record, imageNameToUrl(record.data.data.fileName))
+      console.log("record", record, imageNameToUrl(record.data.data.fileName));
       // route.push("/overview");
       console.log("upload data be");
 
-      if(record) {
+      if (record) {
         const contract = await contractNftCreatorFactory();
-        const transaction = await contract.createCollection(record.data.data.name,record.data.data.symbol,imageNameToUrl(record.data.data.fileName),record.data.data.id);
-  await transaction.wait();
+        if (contract) {
+          const transaction = await contract.createCollection(
+            record.data.data.name,
+            record.data.data.symbol,
+            imageNameToUrl(record.data.data.fileName),
+            record.data.data.id
+          );
+          await transaction.wait();
+        }
       }
       console.log("upload nft successful");
     } catch (error) {
