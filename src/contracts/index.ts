@@ -18,4 +18,4 @@ const GamingToken = {
   abi: gamingTokenAbi,
   address: process.env.NEXT_PUBLIC_NFT_CREATOR_FACTORY_ADDRESS || ""
 }
-export { GameContract, NFTCreatorFactory };
+export { GameContract, NFTCreatorFactory, GamingToken };
