@@ -16,6 +16,6 @@ const NFTCreatorFactory = {
 
 const GamingToken = {
   abi: gamingTokenAbi,
-  address: process.env.NEXT_PUBLIC_NFT_CREATOR_FACTORY_ADDRESS || ""
+  address: process.env.NEXT_PUBLIC_GAMING_TOKEN_ADDRESS || ""
 }
 export { GameContract, NFTCreatorFactory, GamingToken };
