@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 export interface ISelectProps {
+  name: string;
   options: { value: string; label: string }[];
   defaultValue?: string;
   onChange: (e: any) => void;
@@ -11,12 +12,10 @@ export default function Select({
   onChange,
   options,
   defaultValue,
+  name,
 }: Readonly<ISelectProps>) {
   return (
-    <SelectCustom
-      onChange={onChange}
-      defaultValue={defaultValue}
-    >
+    <SelectCustom onChange={onChange} defaultValue={defaultValue} name={name}>
       {options?.map((item) => (
         <OptionItem value={item.value} key={item.value}>
           {item.label}
