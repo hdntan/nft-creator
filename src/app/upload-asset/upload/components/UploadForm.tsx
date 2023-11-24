@@ -3,12 +3,13 @@ import {
   getContract,
   uploadNFTRequest,
 } from "@/services";
-import { imageNameToUrl } from "@/utils/helper";
+import { imageNameToUrl, showErrorToast, showSuccessToast } from "@/utils/helper";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface StyledLabelProps {
   fontSize: string;
@@ -31,6 +32,8 @@ const UploadForm = () => {
 
   const { address, isConnected } = useAccount();
 
+  let [loading, setLoading] = useState(false);
+
   const onChangFile = async (e: any) => {
     let file = e.target.files[0];
     setImageNft(file);
@@ -38,19 +41,19 @@ const UploadForm = () => {
 
   const validateUpload = (data: any) => {
     if (!data.name) {
-      alert("please enter name NFT");
+      showErrorToast("please enter name")
       return false;
     }
     if (!data.image && !imageNft) {
-      alert("please enter image NFT");
+      showErrorToast("please enter image NFT")
       return false;
     }
     if (!data.symbol) {
-      alert("please enter symbol NFT");
+      showErrorToast("please enter symbol NFT")
       return false;
     }
     if (!data.description) {
-      alert("please enter description NFT");
+      showErrorToast("please enter description NFT")
       return false;
     }
   };
@@ -66,11 +69,9 @@ const UploadForm = () => {
     console.log("datasubmit", dataSubmit);
 
     try {
+      setLoading(true);
       const record = await uploadNFTRequest(dataSubmit);
       console.log("record", record, imageNameToUrl(record.data.data.fileName));
-      // route.push("/overview");
-      console.log("upload data be");
-
       if (record) {
         const contract = await contractNftCreatorFactory();
         if (contract) {
@@ -83,8 +84,13 @@ const UploadForm = () => {
           await transaction.wait();
         }
       }
-      console.log("upload nft successful");
+      setLoading(false);
+      showSuccessToast("upload nft successful");
+      route.push("/overview");
+
     } catch (error) {
+      showErrorToast("upload nft failed");
+
       console.log("err", error);
     }
   };
@@ -201,7 +207,11 @@ const UploadForm = () => {
         </Label>
 
         <ContainerButton>
-          <Button type="submit">Upload NFT</Button>
+          
+          <Button disabled={loading} type="submit">
+          <ClipLoader loading={loading} size={20} color="#36d7b7" />
+          <p>Upload</p>
+            </Button>
         </ContainerButton>
       </Form>
     </WrapperFormUpload>
@@ -318,15 +328,18 @@ const ContainerButton = styled.div`
   justify-content: end;
 `;
 const Button = styled.button`
-  width: 137px;
+display: flex;
+align-items: center;
+justify-content: center;
   height: 53px;
-  padding: 10px;
+  padding: 12px 24px;
   background-color: #fed73b;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 8px;
   font-size: 24px;
+  font-weight: 600;
   color: #000000;
+  gap: 12px;
 `;
 
 const SelectInput = styled.select`

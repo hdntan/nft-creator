@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import * as React from "react";
 import styled from "styled-components";
+import { ToastContainer } from 'react-toastify';
 
 export interface IMainLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ export interface IMainLayoutProps {
 export default function MainLayout({ children }: Readonly<IMainLayoutProps>) {
   return (
     <Layout>
+      <ToastContainer position="top-right" />
       <Header />
       <Wrapper>{children}</Wrapper>
       <Footer />
@@ -21,6 +23,7 @@ export default function MainLayout({ children }: Readonly<IMainLayoutProps>) {
 export function MarketplaceLayout({ children }: Readonly<IMainLayoutProps>) {
   return (
     <LayoutMarket>
+      <ToastContainer position="top-right" />
       <Header />
       <Wrapper>{children}</Wrapper>
       <Footer />

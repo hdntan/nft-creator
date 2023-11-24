@@ -1,5 +1,5 @@
 import axiosInstance from "@/config/axios.config";
-import { NFTCreatorFactory } from "@/contracts";
+import { GamingToken, NFTCreatorFactory } from "@/contracts";
 import { ethers } from "ethers";
 
 type IDataSubmit = {
@@ -63,11 +63,20 @@ const contractNftCreatorFactory = async () => {
     );
     return contractReader;
   }
-};
+}
+const contractGamingToken = async() => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const {ethereum} = window;
 
-export {
-  uploadNFTRequest,
-  getListNFTOverviewRequest,
-  getContract,
-  contractNftCreatorFactory,
-};
+  if(ethereum) {
+      const signer = provider.getSigner();
+
+      const contractReader = new ethers.Contract(GamingToken.address,
+        GamingToken.abi, signer
+      );
+      return contractReader;
+      
+  }
+}
+
+export { uploadNFTRequest, getListNFTOverviewRequest, getContract, contractNftCreatorFactory, contractGamingToken };
