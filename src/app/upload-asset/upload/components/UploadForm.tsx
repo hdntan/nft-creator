@@ -71,14 +71,14 @@ const UploadForm = () => {
     try {
       setLoading(true);
       const record = await uploadNFTRequest(dataSubmit);
-      console.log("record", record, imageNameToUrl(record.data.data.fileName));
+      console.log("record", record, record.data.data.ipfsMetadataUrl);
       if (record) {
         const contract = await contractNftCreatorFactory();
         if (contract) {
           const transaction = await contract.createCollection(
             record.data.data.name,
             record.data.data.symbol,
-            imageNameToUrl(record.data.data.fileName),
+            record.data.data.ipfsMetadataUrl,
             record.data.data.id
           );
           await transaction.wait();
