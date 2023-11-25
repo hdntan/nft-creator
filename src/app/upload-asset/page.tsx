@@ -9,6 +9,7 @@ import styled from "styled-components";
 interface StyledLabelProps {
   fontSize: string;
   textColor: string;
+  fontWeight: string
 }
 
 interface StyledTabProps {
@@ -25,7 +26,7 @@ const UploadAsset = () => {
   return (
     <MainLayout>
       <Wrapper>
-        <ButtonBack href="/"/>
+        <ButtonBack href="/" />
         <WrapperTab>
           <ContainerTab>
             <TabHeader className="tabs">
@@ -49,10 +50,10 @@ const UploadAsset = () => {
                 <div key={i}>
                   {currentTab === `${tab.id}` && (
                     <Content>
-                      <Label textColor="" fontSize="48px">
+                      <Label textColor="" fontSize="48px" fontWeight="600">
                         {tab.title}
                       </Label>
-                      <Label textColor="" fontSize="20px">
+                      <Label textColor="" fontSize="20px" fontWeight="">
                         {tab.content}
                       </Label>
                     </Content>
@@ -90,21 +91,25 @@ const WrapperTab = styled.div`
 
 const ContainerTab = styled.div`
   color: white;
-  width: 1437px;
-  border: 1px solid #1647cf;
-  border-radius: 8px;
-  background: linear-gradient(0deg, #00062b, #00062b),
-    linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%);
 `;
 
 const Label = styled.label<StyledLabelProps>`
   font-size: ${(props) => props.fontSize || "14px"};
+  font-weight: ${(props) => props.fontWeight || "400"};
+
   color: ${(props) => (props.textColor !== "yellow" ? "#FFFFFF" : "#FED73B")};
 `;
 
 const TabHeader = styled.div`
-  width: 100%;
-  width: 1437px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  background: linear-gradient(0deg, #00062b, #00062b),
+    linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%);
 `;
 const TabContent = styled.div`
   height: 400px;
@@ -112,12 +117,35 @@ const TabContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  opacity: 0.8;
+
+  background: linear-gradient(
+      154.81deg,
+      rgba(4, 9, 41, 0.9) -16.1%,
+      rgba(19, 33, 135, 0.9) 106.19%
+    ),
+    linear-gradient(
+      265.26deg,
+      rgba(60, 91, 205, 0) 0.41%,
+      #6c93ff 54.83%,
+      rgba(60, 89, 205, 0) 103.86%
+    ),
+    linear-gradient(0deg, rgba(62, 111, 255, 0.4), rgba(62, 111, 255, 0.4)),
+    radial-gradient(
+      758.86% 657.24% at 107.77% 190.85%,
+      rgba(166, 177, 255, 0.5) 0%,
+      rgba(89, 100, 177, 0) 100%
+    );
+
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 `;
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 32px;
 `;
 
 const ButtonTab = styled.button<StyledTabProps>`
@@ -137,15 +165,15 @@ const UploadButton = styled.div`
 
   align-items: center;
   justify-content: center;
-  width: 282px;
   height: 84px;
-  margin-top: 32px;
   padding: 24px 36px;
   border-radius: 240px;
   gap: 10px;
   background-color: #fed73b;
   color: #000000;
   font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 32px;
 `;
 
 const tabs = [
@@ -159,19 +187,19 @@ const tabs = [
   {
     id: "2",
     tabTitle: "Character weapons  ",
-    title: "Title 2",
-    content: "Contenido de tab 2.",
+    title: "No Character weapons ",
+    content: "You have no Character weapons yet. Create a new Character weapons, and build Pawcific Rim world together!",
   },
   {
     id: "3",
     tabTitle: "Map",
-    title: "Title 3",
-    content: "Contenido de tab 3.",
+    title: "No Map",
+    content: "You have no Map yet. Create a new Map, and build Pawcific Rim world together!",
   },
   {
     id: "4",
     tabTitle: "Worlds",
-    title: "Title 4",
-    content: "Contenido de tab 4.",
+    title: "No Worlds",
+    content: "You have no Worlds yet. Create a new Worlds, and build Pawcific Rim world together!",
   },
 ];
