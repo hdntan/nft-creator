@@ -91,6 +91,7 @@ const UploadForm = () => {
       route.push("/overview");
     } catch (error) {
       showErrorToast("upload nft failed");
+      setLoading(false);
     }
   };
 
