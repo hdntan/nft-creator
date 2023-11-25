@@ -35,9 +35,17 @@ const LeaderBoard = () => {
     const contract = await contractNftCreatorFactory();
     if (contract) {
       const transaction1 = await contract.getAllCreators();
+      console.log(
+        "🚀 ~ file: page.tsx:38 ~ getCreators ~ transaction1:",
+        transaction1
+      );
       const transaction2 = await contract.getAllCreatorsFullInfo();
+      console.log(
+        "🚀 ~ file: page.tsx:39 ~ getCreators ~ transaction2:",
+        transaction2
+      );
       const topUsers = transaction1.map((user: any, index: number) => ({
-        id: index,
+        id: index + 1,
         user,
         voteTotalPower: transaction2[index].voteTotalPower.toNumber(),
         voteCount: transaction2[index].voteCount.toNumber(),
