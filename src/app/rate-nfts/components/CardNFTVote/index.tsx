@@ -4,20 +4,32 @@ import useModal from "@/hooks/useModal";
 import Image from "next/image";
 import styled from "styled-components";
 import ModalConfirmVote from "../ModalConfirmVote";
+import { INFTDetail } from "@/types";
+import { imageNameToUrl } from "@/utils/helper";
+import { NFT_TYPE } from "@/constants";
 
-export interface ICardNFTVoteProps {}
+export interface ICardNFTVoteProps {
+  data: INFTDetail;
+}
 
-export default function CardNFTVote(props: ICardNFTVoteProps) {
+export default function CardNFTVote({ data }: ICardNFTVoteProps) {
   const { toggle } = useModal();
   return (
     <WrapperCard>
       <BoxImage>
-        <Image src={Hero} width={327} height={327} alt="hero1" />
+        <Image
+          src={imageNameToUrl(data.fileName)}
+          width={327}
+          height={327}
+          alt="hero1"
+        />
       </BoxImage>
 
       <BoxTitle>
-        <Title>Asset No.1</Title>
-        <TypeAsset>Type: NFT Skin</TypeAsset>
+        <Title>{data.name}</Title>
+        <TypeAsset>
+          Type: {NFT_TYPE.find((item) => item.value == data.type)?.label ?? ""}
+        </TypeAsset>
       </BoxTitle>
       <ButtonShowDetail onClick={toggle}>
         <p>Rating</p>
@@ -34,11 +46,15 @@ const BoxImage = styled.div`
   width: 100%;
   border-radius: 24px;
   border: 1px solid var(--PRIMARY, #3e6fff);
+  img {
+    width: 327px;
+    height: 327px;
+  }
 `;
 
 const WrapperCard = styled.div`
   display: flex;
-  height: 463px;
+  height: 515px;
   width: 329px;
   min-width: 329px;
   max-width: 329px;

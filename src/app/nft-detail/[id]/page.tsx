@@ -14,7 +14,6 @@ interface StyledLabelProps {
 
 const NFTDetail = () => {
   const { id } = useParams();
-  console.log("id nft", id);
 
   const [nft, setNft] = React.useState<any>();
 
@@ -22,11 +21,10 @@ const NFTDetail = () => {
     axiosInstance
       .get(`/collection/${id}`)
       .then((response) => {
-        console.log(response.data);
         setNft(response.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
   return (

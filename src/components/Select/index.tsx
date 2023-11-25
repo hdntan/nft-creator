@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export interface ISelectProps {
   name: string;
-  options: { value: string; label: string }[];
+  options: { value: string | number; label: string }[];
   defaultValue?: string;
   onChange: (e: any) => void;
 }

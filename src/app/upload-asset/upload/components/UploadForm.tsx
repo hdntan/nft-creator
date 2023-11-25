@@ -3,7 +3,11 @@ import {
   getContract,
   uploadNFTRequest,
 } from "@/services";
-import { imageNameToUrl, showErrorToast, showSuccessToast } from "@/utils/helper";
+import {
+  imageNameToUrl,
+  showErrorToast,
+  showSuccessToast,
+} from "@/utils/helper";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -41,19 +45,19 @@ const UploadForm = () => {
 
   const validateUpload = (data: any) => {
     if (!data.name) {
-      showErrorToast("please enter name")
+      showErrorToast("please enter name");
       return false;
     }
     if (!data.image && !imageNft) {
-      showErrorToast("please enter image NFT")
+      showErrorToast("please enter image NFT");
       return false;
     }
     if (!data.symbol) {
-      showErrorToast("please enter symbol NFT")
+      showErrorToast("please enter symbol NFT");
       return false;
     }
     if (!data.description) {
-      showErrorToast("please enter description NFT")
+      showErrorToast("please enter description NFT");
       return false;
     }
   };
@@ -66,12 +70,10 @@ const UploadForm = () => {
     validateUpload(data);
 
     const dataSubmit = { ...data, creator: address, file: imageNft };
-    console.log("datasubmit", dataSubmit);
 
     try {
       setLoading(true);
       const record = await uploadNFTRequest(dataSubmit);
-      console.log("record", record, record.data.data.ipfsMetadataUrl);
       if (record) {
         const contract = await contractNftCreatorFactory();
         if (contract) {
@@ -87,11 +89,8 @@ const UploadForm = () => {
       setLoading(false);
       showSuccessToast("upload nft successful");
       route.push("/overview");
-
     } catch (error) {
       showErrorToast("upload nft failed");
-
-      console.log("err", error);
     }
   };
 
@@ -207,11 +206,10 @@ const UploadForm = () => {
         </Label>
 
         <ContainerButton>
-          
           <Button disabled={loading} type="submit">
-          <ClipLoader loading={loading} size={20} color="#36d7b7" />
-          <p>Upload</p>
-            </Button>
+            <ClipLoader loading={loading} size={20} color="#36d7b7" />
+            <p>Upload</p>
+          </Button>
         </ContainerButton>
       </Form>
     </WrapperFormUpload>
@@ -328,9 +326,9 @@ const ContainerButton = styled.div`
   justify-content: end;
 `;
 const Button = styled.button`
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 53px;
   padding: 12px 24px;
   background-color: #fed73b;

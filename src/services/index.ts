@@ -37,6 +37,10 @@ const getListNFTOverviewRequest = (type?: string) => {
   return axiosInstance.get("/collection", { params: { type } });
 };
 
+const getNftDetail = (id: number) => {
+  return axiosInstance.get(`/collection/${id}`);
+};
+
 const getContract = async (data: IDataContract) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const { ethereum } = window;
@@ -63,20 +67,28 @@ const contractNftCreatorFactory = async () => {
     );
     return contractReader;
   }
-}
-const contractGamingToken = async() => {
+};
+const contractGamingToken = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const {ethereum} = window;
+  const { ethereum } = window;
 
-  if(ethereum) {
-      const signer = provider.getSigner();
+  if (ethereum) {
+    const signer = provider.getSigner();
 
-      const contractReader = new ethers.Contract(GamingToken.address,
-        GamingToken.abi, signer
-      );
-      return contractReader;
-      
+    const contractReader = new ethers.Contract(
+      GamingToken.address,
+      GamingToken.abi,
+      signer
+    );
+    return contractReader;
   }
-}
+};
 
-export { uploadNFTRequest, getListNFTOverviewRequest, getContract, contractNftCreatorFactory, contractGamingToken };
+export {
+  uploadNFTRequest,
+  getListNFTOverviewRequest,
+  getNftDetail,
+  getContract,
+  contractNftCreatorFactory,
+  contractGamingToken,
+};
