@@ -1,5 +1,6 @@
 "use client";
 import { Buy, ItemBattlePass, Seasion } from "@/assets/images";
+import LoadingModal from "@/components/LoadingModal";
 import { GamingToken, NFTCreatorFactory } from "@/contracts";
 import MainLayout, { MarketplaceLayout } from "@/layout";
 import { contractGamingToken, contractNftCreatorFactory } from "@/services";
@@ -13,6 +14,8 @@ import { useAccount } from "wagmi";
 const Marketplace = () => {
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("Processing...");
 
   const user = address?.toString();
 
@@ -49,6 +52,8 @@ const Marketplace = () => {
 
   const approveToken = async () => {
     try {
+      setLoading(true);
+      setMessage("Processing approve...")
       const contract = await contractGamingToken();
       if (contract) {
         const transaction = await contract.approve(
@@ -67,6 +72,8 @@ const Marketplace = () => {
       await approveToken();
       const listCollection = await getRandomCollection();
       const contract = await contractNftCreatorFactory();
+      setMessage("Processing buy...")
+
       if (contract) {
         const transaction = await contract.buyNFT(listCollection, {
           gasLimit: 7000000,
@@ -74,7 +81,9 @@ const Marketplace = () => {
         await transaction.wait();
         showSuccessToast("Buy successful");
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       showErrorToast("Buy is failed");
     }
   };
@@ -85,6 +94,8 @@ const Marketplace = () => {
 
   return (
     <MarketplaceLayout>
+        <LoadingModal isLoading={loading} message={message}/>
+
       <Wrapper>
         <ContainerBuyBattle>
           <Image src={Seasion} alt="seasion" />

@@ -1,5 +1,6 @@
 "use client";
 import { Avatar, Coin } from "@/assets/images";
+import LoadingModal from "@/components/LoadingModal";
 import MainLayout from "@/layout";
 import { contractNftCreatorFactory } from "@/services";
 import Image from "next/image";
@@ -30,8 +31,11 @@ type User = {
 
 const LeaderBoard = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const [message, setMessage] = useState("Processing...");
 
   const getCreators = async () => {
+    setLoading(true)
     const contract = await contractNftCreatorFactory();
     if (contract) {
       const transaction1 = await contract.getAllCreators();
@@ -51,6 +55,8 @@ const LeaderBoard = () => {
         voteCount: transaction2[index].voteCount.toNumber(),
       }));
       setUsers(topUsers);
+    setLoading(false)
+
     }
   };
 
@@ -59,10 +65,11 @@ const LeaderBoard = () => {
   }, []);
   return (
     <MainLayout>
+      <LoadingModal isLoading={loading} message="Loading" />
       <Wrapper>
-        <button className="text-white" onClick={getCreators}>
+        <Title  onClick={getCreators}>
           Creators Leaderboards
-        </button>
+        </Title>
         <StyledTableWrapper>
           <StyledTable>
             <StyleThead>
