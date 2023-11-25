@@ -1,19 +1,11 @@
-import {
-  contractNftCreatorFactory,
-  getContract,
-  uploadNFTRequest,
-} from "@/services";
-import {
-  imageNameToUrl,
-  showErrorToast,
-  showSuccessToast,
-} from "@/utils/helper";
+import { contractNftCreatorFactory, uploadNFTRequest } from "@/services";
+import { showErrorToast, showSuccessToast } from "@/utils/helper";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
-import ClipLoader from "react-spinners/ClipLoader";
 
 interface StyledLabelProps {
   fontSize: string;

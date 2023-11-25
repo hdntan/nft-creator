@@ -13,7 +13,7 @@ export interface ICardNFTVoteProps {
 }
 
 export default function CardNFTVote({ data }: ICardNFTVoteProps) {
-  const { toggle } = useModal();
+  const { isShowing, toggle } = useModal();
   return (
     <WrapperCard>
       <BoxImage>
@@ -31,11 +31,11 @@ export default function CardNFTVote({ data }: ICardNFTVoteProps) {
           Type: {NFT_TYPE.find((item) => item.value == data.type)?.label ?? ""}
         </TypeAsset>
       </BoxTitle>
-      <ButtonShowDetail onClick={toggle}>
+      <ButtonShowDetail onClick={() => toggle()}>
         <p>Rating</p>
         <IconStarBlack />
       </ButtonShowDetail>
-      <ModalConfirmVote />
+      <ModalConfirmVote isShowing={isShowing} toggle={toggle} data={data} />
     </WrapperCard>
   );
 }
@@ -46,6 +46,7 @@ const BoxImage = styled.div`
   width: 100%;
   border-radius: 24px;
   border: 1px solid var(--PRIMARY, #3e6fff);
+  overflow: hidden;
   img {
     width: 327px;
     height: 327px;

@@ -89,7 +89,7 @@ const SectionOverview = styled.section`
   width: 100%;
   padding: 53px;
   max-width: 1847px;
-  margin: auto;
+  margin: 0 auto;
 `;
 
 const TopMenu = styled.div`

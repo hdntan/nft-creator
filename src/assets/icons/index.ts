@@ -8,3 +8,5 @@ export { default as IconStart } from "./IconStart";
 export { default as IconPlus } from "./IconPlus";
 export { default as IconDropdown } from "./IconDropdown";
 export { default as IconStarBlack } from "./IconStarBlack";
+export { default as IconStartHightlight } from "./IconStartHightlight";
+export { default as IconStartNull } from "./IconStartNull";
