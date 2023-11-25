@@ -31,7 +31,7 @@ const Marketplace = () => {
         return listRandom;
       }
     } catch (error) {
-      console.log("err", error);
+      console.error("err", error);
     }
   };
 
@@ -41,10 +41,9 @@ const Marketplace = () => {
       if (contract) {
         const transaction = await contract.balanceOf(user);
         const balance = await transaction.toString();
-        console.log("token", toEth(balance));
       }
     } catch (error) {
-      console.log("err", error);
+      console.error("err", error);
     }
   };
 
@@ -57,10 +56,9 @@ const Marketplace = () => {
           5 * 10 ** 6
         );
         await transaction.wait();
-        console.log("approve successful");
       }
     } catch (error) {
-      console.log("err", error);
+      console.error("err", error);
     }
   };
 
@@ -68,19 +66,16 @@ const Marketplace = () => {
     try {
       await approveToken();
       const listCollection = await getRandomCollection();
-      console.log("all", listCollection);
       const contract = await contractNftCreatorFactory();
       if (contract) {
         const transaction = await contract.buyNFT(listCollection, {
           gasLimit: 7000000,
         });
         await transaction.wait();
-        console.log("buy successful");
         showSuccessToast("Buy successful");
       }
     } catch (error) {
-      showErrorToast("buy err");
-      console.log("err", error);
+      showErrorToast("Buy is failed");
     }
   };
 

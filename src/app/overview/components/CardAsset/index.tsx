@@ -1,4 +1,5 @@
 import IConDropdown from "@/assets/icons/IconDropdown";
+import { imageNameToUrl } from "@/utils/helper";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
@@ -9,7 +10,12 @@ export default function CardAsset({ nft }: any) {
   const router = useRouter();
   return (
     <WrapperCard onClick={() => router.push(`/nft-detail/${nft.id}`)}>
-      <Image src={"/images/hero1.png"} width={327} height={327} alt="hero1" />
+      <Image
+        src={imageNameToUrl(nft.fileName)}
+        width={327}
+        height={327}
+        alt="hero1"
+      />
       <BoxTitle>
         <Title>{nft.name}</Title>
         <TypeAsset>Type: {nft.type}</TypeAsset>
@@ -37,6 +43,10 @@ const WrapperCard = styled.div`
     --New-Gradient-1,
     linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%)
   );
+  img {
+    border-radius: 24px;
+    height: 327px;
+  }
 `;
 
 const BoxTitle = styled.div``;

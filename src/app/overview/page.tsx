@@ -2,6 +2,7 @@
 import ListButton from "@/app/overview/components/ListButtons";
 import { IconBack } from "@/assets/icons";
 import Select from "@/components/Select";
+import { NFT_TYPE } from "@/constants";
 import MainLayout from "@/layout";
 import { getListNFTOverviewRequest } from "@/services";
 import * as React from "react";
@@ -13,19 +14,23 @@ export interface IOverviewPageProps {}
 export default function OverviewPage(props: IOverviewPageProps) {
   const [listNft, setListNft] = React.useState([]);
   const [type, setType] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const SelectType = async (e: any) => {
     setType(e.target.value);
   };
 
   const fetchCollection = async () => {
+    setIsLoading(true);
     try {
       const { data } = await getListNFTOverviewRequest(
         type == "--" ? undefined : type
       );
       setListNft(data?.data);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -35,34 +40,38 @@ export default function OverviewPage(props: IOverviewPageProps) {
 
   return (
     <MainLayout>
-      <SectionOverview>
-        <TopMenu>
-          <TitleBox>
-            <IconBack />
-            <h2>Overview</h2>
-          </TitleBox>
-          <FilterBox>
-            <Select
-              onChange={(e) => SelectType(e)}
-              options={OPTIONS}
-              name="typeNFT"
-            />
-            <ListButton />
-          </FilterBox>
-        </TopMenu>
-        <ListAsset>
-          {listNft?.map((nft, index) => (
-            <CardAsset nft={nft} key={index} />
-          ))}
-        </ListAsset>
-      </SectionOverview>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <SectionOverview>
+          <TopMenu>
+            <TitleBox>
+              <IconBack />
+              <h2>Overview</h2>
+            </TitleBox>
+            <FilterBox>
+              <Select
+                onChange={(e) => SelectType(e)}
+                options={NFT_TYPE}
+                name="typeNFT"
+              />
+              <ListButton />
+            </FilterBox>
+          </TopMenu>
+          <ListAsset>
+            {listNft?.map((nft, index) => (
+              <CardAsset nft={nft} key={index} />
+            ))}
+          </ListAsset>
+        </SectionOverview>
+      )}
     </MainLayout>
   );
 }
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding: 100px 53px;
+  padding: 53px;
   max-width: 1847px;
   margin: auto;
 `;
@@ -104,26 +113,3 @@ const ListAsset = styled.div`
   width: 100%;
   margin-top: 60px;
 `;
-
-const OPTIONS = [
-  {
-    value: "--",
-    label: "--",
-  },
-  {
-    value: "Skin",
-    label: "NFT Skins",
-  },
-  {
-    value: "Weapon",
-    label: "Character weapons",
-  },
-  {
-    value: "Map",
-    label: "Map",
-  },
-  {
-    value: "World",
-    label: "Worlds",
-  },
-];
