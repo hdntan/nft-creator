@@ -78,7 +78,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
           <TopMenu>
             <TitleBox>
               <IconBack />
-              <h2>Overview</h2>
+              <h2>Rating the best art</h2>
             </TitleBox>
             <FilterBox>
               <Select
@@ -102,7 +102,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding: 53px;
+  padding-top: 76px;
   max-width: 1847px;
   margin: 0 auto;
 `;
@@ -138,7 +138,7 @@ const FilterBox = styled.div`
 
 const ListAsset = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   justify-items: center;
   gap: 24px;
   width: 100%;

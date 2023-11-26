@@ -11,6 +11,7 @@ import Rating from "../Rating";
 import { Label } from "@/components/Label";
 import { TextArea } from "@/components/TexArea";
 import { ClipLoader } from "react-spinners";
+import { IconStarBlack } from "@/assets/icons";
 
 export interface IModalConfirmVoteProps {
   isShowing: boolean;
@@ -89,7 +90,7 @@ export default function ModalConfirmVote({
         </BoxRate>
         <BoxFeedback>
           <Label>Send feedbacks:</Label>
-          <TextArea />
+          <TextArea placeholder="curve-arrow-pointing-left" />
         </BoxFeedback>
         <Note>
           Your asset win the voting competition and will be used in battle pass
@@ -97,7 +98,9 @@ export default function ModalConfirmVote({
         </Note>
         <ButtonVote onClick={handleVote} disabled={isLoading}>
           <ClipLoader loading={isLoading} size={20} color="#36d7b7" />
-          Vote
+
+          <p>Confirm rating</p>
+          <IconStarBlack />
         </ButtonVote>
       </ModalCard>
     </Modal>
@@ -115,6 +118,7 @@ const Note = styled.p`
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.25px;
+  margin-bottom: 10px;
 `;
 
 const BoxRate = styled.div`
@@ -134,8 +138,8 @@ const BoxRate = styled.div`
 
 const ModalCard = styled.div`
   display: flex;
-  width: 450px;
-  height: 703px;
+  width: 670px;
+  height: 900px;
   padding: 32px;
   flex-direction: column;
   align-items: center;
@@ -162,17 +166,22 @@ const ModalCard = styled.div`
   }
 `;
 const BoxImage = styled.div`
-  width: 100%;
+  background-image: url("/images/bg_card.png");
+  background-size: cover;
+
+  width: 607px;
   border-radius: 8px;
   border: 1px solid var(--PRIMARY, #3e6fff);
   overflow: hidden;
-  height: 280px;
+  height: 609px;
   border-radius: 8px;
   border: 1px solid var(--PRIMARY, #3e6fff);
-  background: var(--Blue-3, #00062b);
   img {
     width: 100%;
     height: 100%;
+    background-size: cover;
+    object-fit: contain;
+    background-position: center;
   }
 `;
 
@@ -180,18 +189,20 @@ const ButtonVote = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 364px;
+  width: 100%;
   height: 56px;
   border-radius: 4px;
   border: 1px solid var(--SECONDARY, #fed73b);
   background: var(--SECONDARY, #fed73b);
   cursor: pointer;
+  gap: 10px;
   p {
     color: #000;
     font-family: Montserrat;
     font-size: 18.886px;
     font-style: normal;
     font-weight: 600;
+    font-size: 20px;
   }
 `;
 
