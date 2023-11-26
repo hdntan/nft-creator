@@ -3,6 +3,7 @@ import { IconBack } from "@/assets/icons";
 import { Hero } from "@/assets/images";
 import ButtonBack from "@/components/ButtonBack";
 import axiosInstance from "@/config/axios.config";
+import { NFT_TYPE } from "@/constants";
 import MainLayout from "@/layout";
 import { imageNameToUrl } from "@/utils/helper";
 import { useParams, useRouter } from "next/navigation";
@@ -44,7 +45,7 @@ const NFTDetail = () => {
               </Content>
               <Content>
                 <Label textColor="">Type:</Label>
-                <Label textColor="yellow">{nftDetail?.type}</Label>
+                <Label textColor="yellow">{NFT_TYPE.find((item) => item.value == nftDetail?.type)?.label ?? ""}</Label>
               </Content>
               <Content>
                 <Label textColor="">Name:</Label>

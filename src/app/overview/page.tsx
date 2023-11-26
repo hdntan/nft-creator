@@ -10,6 +10,8 @@ import * as React from "react";
 import styled from "styled-components";
 import CardAsset from "./components/CardAsset";
 
+import NoResultsPage from "@/components/NoResultsPage";
+
 export interface IOverviewPageProps {}
 
 export default function OverviewPage(props: IOverviewPageProps) {
@@ -61,11 +63,20 @@ export default function OverviewPage(props: IOverviewPageProps) {
               <ListButton />
             </FilterBox>
           </TopMenu>
-          <ListAsset>
-            {listNft?.map((nft, index) => (
-              <CardAsset nft={nft} key={index} />
-            ))}
-          </ListAsset>
+
+          {listNft.length !== 0 ? (
+             <ListAsset>
+             {listNft?.map((nft, index) => (
+               <>
+                 <CardAsset nft={nft} key={index} />
+               </>
+             ))}
+           </ListAsset>
+            
+          ) : (
+           
+            <NoResultsPage />
+          )}
         </SectionOverview>
       )}
     </MainLayout>
@@ -115,5 +126,4 @@ const ListAsset = styled.div`
   gap: 24px;
   width: 100%;
   margin-top: 66px;
-  margin-bottom: 190px;
 `;

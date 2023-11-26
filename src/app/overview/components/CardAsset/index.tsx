@@ -1,4 +1,5 @@
 import IConDropdown from "@/assets/icons/IconDropdown";
+import { NFT_TYPE } from "@/constants";
 import { imageNameToUrl } from "@/utils/helper";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,7 +23,7 @@ export default function CardAsset({ nft }: any) {
     
       <BoxTitle>
         <Title>{nft.name}</Title>
-        <TypeAsset>Type: {nft.type}</TypeAsset>
+        <TypeAsset>Type: {NFT_TYPE.find((item) => item.value == nft.type)?.label ?? ""}</TypeAsset>
       </BoxTitle>
       <ButtonShowDetail>
         <p>See Detail</p>

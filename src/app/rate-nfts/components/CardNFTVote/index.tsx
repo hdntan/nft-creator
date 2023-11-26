@@ -41,26 +41,30 @@ export default function CardNFTVote({ data }: ICardNFTVoteProps) {
 }
 
 const BoxImage = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
   background-image: url("/images/bg_card.png");
   background-size: cover;
-  width: 498px;
-  height: 671px;
+  width: 100%;
+  /* height: 671px; */
+  height: 400px;
   border-radius: 24px;
   border: 1px solid var(--PRIMARY, #3e6fff);
   overflow: hidden;
   img {
-    width: 100%;
+    width: 327px;
     height: 100%;
     background-size: cover; 
-  object-fit: contain;
-  background-position: center; 
+    object-fit: contain;
+    background-position: center; 
   };
 `;
 
 const WrapperCard = styled.div`
   display: flex;
-  height: 828px;
-  width: 547px;
+  height: 550px;
+  width: 400px;
 
   padding: 24px;
   flex-direction: column;
