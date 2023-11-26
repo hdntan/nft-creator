@@ -9,6 +9,8 @@ import Image from "next/image";
 import React, { use, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
+import showRating from "./components/ShowRating";
+import ShowRating from "./components/ShowRating";
 
 interface StyledTdProps {
   bg: string;
@@ -33,7 +35,6 @@ type User = {
 };
 
 const LeaderBoard = () => {
-
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
 
@@ -70,7 +71,7 @@ const LeaderBoard = () => {
         const assets = await getSuccessfulAsset(transaction2[i].creator);
         const voteTotalPower = transaction2[i].voteTotalPower.toNumber();
         const voteCount = transaction2[i].voteCount.toNumber();
-       
+
         const user = {
           rank: i + 1,
           creator: transaction2[i].creator,
@@ -81,7 +82,7 @@ const LeaderBoard = () => {
           rating:
             voteTotalPower === 0 && voteCount === 0
               ? 0
-              : voteTotalPower / voteCount,
+              : (voteTotalPower / voteCount).toFixed(0),
         };
 
         listUsers.push(user);
@@ -95,14 +96,9 @@ const LeaderBoard = () => {
     getCreators();
   }, []);
 
- 
-
   return (
     <MainLayout>
-{
-  isConnected && <LoadingModal isLoading={loading} message="Loading..." />
-}      
-       
+      {isConnected && <LoadingModal isLoading={loading} message="Loading..." />}
 
       <Wrapper>
         <Title>Creators Leaderboards</Title>
@@ -152,37 +148,7 @@ const LeaderBoard = () => {
                   </StyledTd>
                   <StyledTd fontSize="" bg="" padding="0 60px">
                     <ContainerRating>
-                      {user.rating === 0 ? (
-                        "---"
-                      ) : user.rating === 1 ? (
-                        <IconStart />
-                      ) : user.rating === 2 ? (
-                        <>
-                          <IconStart />
-                          <IconStart />
-                        </>
-                      ) : user.rating === 3 ? (
-                        <>
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                        </>
-                      ) : user.rating === 4 ? (
-                        <>
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                        </>
-                      ) : (
-                        <>
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                          <IconStart />
-                        </>
-                      )}
+                      <ShowRating index={user.rating} />
                     </ContainerRating>
                   </StyledTd>
                 </StyledTr>
