@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardNFTVote from "./components/CardNFTVote";
 import { useAccount } from "wagmi";
+import NoResultsPage from "@/components/NoResultsPage";
 
 export interface IRaterNFTPageProps {}
 
@@ -96,11 +97,16 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
               />
             </FilterBox>
           </TopMenu>
-          <ListAsset>
-            {listDataFilter.map((nft) => (
-              <CardNFTVote data={nft} key={nft.id} />
-            ))}
-          </ListAsset>
+
+          {listData.length !==0  ? (
+            <ListAsset>
+              {listData.map((nft) => (
+                <CardNFTVote data={nft} key={nft.id} />
+              ))}
+            </ListAsset>
+          ) : (
+            <NoResultsPage />
+          )}
         </SectionOverview>
       )}
     </LayoutPrivate>
@@ -145,7 +151,7 @@ const FilterBox = styled.div`
 
 const ListAsset = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
   justify-items: center;
   gap: 24px;
   width: 100%;
