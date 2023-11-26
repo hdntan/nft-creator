@@ -10,12 +10,16 @@ export default function CardAsset({ nft }: any) {
   const router = useRouter();
   return (
     <WrapperCard onClick={() => router.push(`/nft-detail/${nft.id}`)}>
+
+      <ContainerImage>
       <Image
         src={imageNameToUrl(nft.fileName)}
         width={327}
         height={327}
         alt="hero1"
       />
+      </ContainerImage>
+    
       <BoxTitle>
         <Title>{nft.name}</Title>
         <TypeAsset>Type: {nft.type}</TypeAsset>
@@ -43,11 +47,28 @@ const WrapperCard = styled.div`
     --New-Gradient-1,
     linear-gradient(90deg, #021491 -16.29%, #1647cf 106.35%)
   );
-  img {
+  margin-bottom: 30px;
+`;
+
+
+const ContainerImage = styled.div`
+display: flex;
+height: 327px;
+padding: 8px 10.8px 7px 9px;
+justify-content: center;
+align-items: center;
+align-self: stretch;
+border-radius: 24px;
+border: 1px solid var(--PRIMARY, #3E6FFF);
+background: var(--Blue-1, #121949);
+img {
     border-radius: 24px;
     height: 327px;
+    background-size: cover; 
+  object-fit: contain;
+  background-position: center; 
   }
-`;
+`
 
 const BoxTitle = styled.div``;
 

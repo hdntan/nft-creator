@@ -72,9 +72,10 @@ export default function OverviewPage(props: IOverviewPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding: 53px;
+  padding-top: 76px;
   max-width: 1847px;
-  margin: auto;
+  margin: 0 auto;
+
 `;
 
 const TopMenu = styled.div`
@@ -112,5 +113,6 @@ const ListAsset = styled.div`
   justify-items: center;
   gap: 24px;
   width: 100%;
-  margin-top: 60px;
+  margin-top: 66px;
+  margin-bottom: 190px;
 `;

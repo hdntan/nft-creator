@@ -43,22 +43,25 @@ export default function CardNFTVote({ data }: ICardNFTVoteProps) {
 const BoxImage = styled.div`
   background-image: url("/images/bg_card.png");
   background-size: cover;
-  width: 100%;
+  width: 498px;
+  height: 671px;
   border-radius: 24px;
   border: 1px solid var(--PRIMARY, #3e6fff);
   overflow: hidden;
   img {
-    width: 327px;
-    height: 327px;
-  }
+    width: 100%;
+    height: 100%;
+    background-size: cover; 
+  object-fit: contain;
+  background-position: center; 
+  };
 `;
 
 const WrapperCard = styled.div`
   display: flex;
-  height: 515px;
-  width: 329px;
-  min-width: 329px;
-  max-width: 329px;
+  height: 828px;
+  width: 547px;
+
   padding: 24px;
   flex-direction: column;
   align-items: center;
@@ -71,6 +74,8 @@ const WrapperCard = styled.div`
     rgba(22, 71, 207, 0.4) 106.35%
   );
   backdrop-filter: blur(15px);
+  margin-bottom: 30px;
+
 `;
 
 const BoxTitle = styled.div``;
@@ -103,6 +108,7 @@ const ButtonShowDetail = styled.button`
   border: 1px solid var(--SECONDARY, #fed73b);
   background: var(--SECONDARY, #fed73b);
   cursor: pointer;
+  gap: 10px;
   p {
     color: #000;
     text-align: center;
