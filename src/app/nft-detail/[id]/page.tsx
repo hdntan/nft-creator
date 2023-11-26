@@ -4,7 +4,7 @@ import { Hero } from "@/assets/images";
 import ButtonBack from "@/components/ButtonBack";
 import axiosInstance from "@/config/axios.config";
 import MainLayout from "@/layout";
-import Image from "next/image";
+import { imageNameToUrl } from "@/utils/helper";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import styled from "styled-components";
@@ -15,13 +15,13 @@ interface StyledLabelProps {
 const NFTDetail = () => {
   const { id } = useParams();
 
-  const [nft, setNft] = React.useState<any>();
+  const [nftDetail, setNftDetail] = React.useState<any>();
 
   React.useEffect(() => {
     axiosInstance
       .get(`/collection/${id}`)
       .then((response) => {
-        setNft(response.data.data);
+        setNftDetail(response.data.data);
       })
       .catch((error) => {
         console.error(error);
@@ -35,12 +35,28 @@ const NFTDetail = () => {
         <WrapperDetail>
           <ContainerDetail>
             <ContainerImage>
-              <Image src={Hero} alt="hero" width={567} height={518}></Image>
+              <ImageNft src={imageNameToUrl(nftDetail?.fileName)}  />
             </ContainerImage>
             <ContainerContent>
               <Content>
                 <Label textColor="">Owner:</Label>
-                <Label textColor="yellow">{nft?.creator}</Label>
+                <Label textColor="yellow">{nftDetail?.creator?.slice(0, 6)}...{nftDetail?.creator?.slice(nftDetail?.creator.length - 6)}</Label>
+              </Content>
+              <Content>
+                <Label textColor="">Type:</Label>
+                <Label textColor="yellow">{nftDetail?.type}</Label>
+              </Content>
+              <Content>
+                <Label textColor="">Name:</Label>
+                <Label textColor="yellow">{nftDetail?.name}</Label>
+              </Content>
+              <Content>
+                <Label textColor="">Symbol:</Label>
+                <Label textColor="yellow">{nftDetail?.symbol}</Label>
+              </Content>
+              <Content>
+                <Label textColor="">Description:</Label>
+                <Label textColor="yellow">{nftDetail?.description}</Label>
               </Content>
             </ContainerContent>
           </ContainerDetail>
@@ -96,7 +112,17 @@ const ContainerImage = styled.div`
   padding-left: 16px;
   border: 1px solid #6c93ff;
   background-image: url("/images/BG-NFT.png");
+  background-size: cover; 
+  background-position: center; 
 `;
+
+const ImageNft = styled.img`
+  width: 567px;
+  height: 518px;
+  background-size: cover; 
+  object-fit: contain;
+  background-position: center; 
+`
 
 const ContainerContent = styled.div``;
 const Content = styled.div`
@@ -115,6 +141,8 @@ const Content = styled.div`
     rgba(11, 16, 50, 0.7) 106.19%
   );
 `;
+
+
 const Label = styled.label<StyledLabelProps>`
   font-size: 18px;
   color: ${(props) => (props.textColor !== "yellow" ? "#FFFFFF" : "#FED73B")};
