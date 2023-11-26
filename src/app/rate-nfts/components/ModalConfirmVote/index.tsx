@@ -88,10 +88,7 @@ export default function ModalConfirmVote({
           <p>Rate:</p>
           <Rating onChange={(rate) => setRating(rate)} />
         </BoxRate>
-        <BoxFeedback>
-          <Label>Send feedbacks:</Label>
-          <TextArea placeholder="curve-arrow-pointing-left" />
-        </BoxFeedback>
+       
         <Note>
           Your asset win the voting competition and will be used in battle pass
           seasion 3 (from xx/xx - to xx/xx)
@@ -138,12 +135,11 @@ const BoxRate = styled.div`
 
 const ModalCard = styled.div`
   display: flex;
-  width: 670px;
-  height: 900px;
+  width: 450px;
+  height: 703px;
   padding: 32px;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
   flex-shrink: 0;
   border-radius: 14.164px;
   border: 1.18px solid #021491;
@@ -164,12 +160,13 @@ const ModalCard = styled.div`
     font-weight: 400;
     line-height: 40px;
   }
+  gap: 10px;
 `;
 const BoxImage = styled.div`
   background-image: url("/images/bg_card.png");
   background-size: cover;
 
-  width: 607px;
+  width: 100%;
   border-radius: 8px;
   border: 1px solid var(--PRIMARY, #3e6fff);
   overflow: hidden;
@@ -206,7 +203,8 @@ const ButtonVote = styled.button`
   }
 `;
 
-const BoxTitle = styled.div``;
+const BoxTitle = styled.div`
+`;
 
 const Title = styled.h1`
   color: #fff;
