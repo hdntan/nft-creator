@@ -9,7 +9,6 @@ import Image from "next/image";
 import React, { use, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
-import showRating from "./components/ShowRating";
 import ShowRating from "./components/ShowRating";
 
 interface StyledTdProps {
@@ -46,10 +45,6 @@ const LeaderBoard = () => {
     if (contract) {
       const transaction1 = await contract.getCollectionsLengthByCreator(
         creator
-      );
-      console.log(
-        "🚀 ~ file: page.tsx:38 ~ getCreators ~ transaction1:",
-        transaction1.toNumber()
       );
       const assets = transaction1.toNumber();
       return assets;

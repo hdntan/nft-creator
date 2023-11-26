@@ -8,6 +8,7 @@ import { getListNFTOverviewRequest } from "@/services";
 import * as React from "react";
 import styled from "styled-components";
 import CardAsset from "./components/CardAsset";
+import ButtonBack from "@/components/ButtonBack";
 
 export interface IOverviewPageProps {}
 
@@ -46,7 +47,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
         <SectionOverview>
           <TopMenu>
             <TitleBox>
-              <IconBack />
+            <ButtonBack href="/" />
               <h2>Overview</h2>
             </TitleBox>
             <FilterBox>

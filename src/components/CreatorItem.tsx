@@ -1,6 +1,7 @@
 
 import { technoRaceFont } from "@/font";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 
@@ -9,6 +10,7 @@ interface StyledComponentProps {
 }
 
 const CreatorItem = ({ item }: any) => {
+  const router = useRouter();
   return (
     <Wrapper>
       <Title className={technoRaceFont.className}>{item.title}</Title>
@@ -16,8 +18,7 @@ const CreatorItem = ({ item }: any) => {
         <Image src={item.image} alt="gold" height={200} width={200} />
       </ContainerImage>
       <ButtonContainer>
-        <ButtonItem typeButton="manage">Manage</ButtonItem>
-        <ButtonItem typeButton="">Submit</ButtonItem>
+        <ButtonItem onClick={() =>router.push(`/upload-asset`)} typeButton="">Submit</ButtonItem>
       </ButtonContainer>
     </Wrapper>
   );
@@ -42,7 +43,7 @@ const Wrapper = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-top: 10px;
 `;
 const Title = styled.div`
 font-size: 32px;
