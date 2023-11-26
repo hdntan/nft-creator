@@ -25,6 +25,8 @@ const UploadForm = () => {
   const { register, control, handleSubmit } = useForm<UploadForm>();
 
   const [imageNft, setImageNft] = useState<File>();
+  const [imageDetail, setImageDetail] = useState<any>({});
+
 
   const { address, isConnected } = useAccount();
 
@@ -32,6 +34,13 @@ const UploadForm = () => {
 
   const onChangFile = async (e: any) => {
     let file = e.target.files[0];
+    const size = file.size  / (1024 * 1024)
+    const fileObject = {
+      fileName: file.name,
+      format: file.type,
+      size: size.toFixed(2)
+    }
+    setImageDetail(fileObject);
     setImageNft(file);
   };
 
@@ -147,13 +156,13 @@ const UploadForm = () => {
             </ContainerButtonSelect>
             <ContainerLabel>
               <Label textColor="" fontSize="">
-                Filename: curve-arrow-pointing-left.psd
+                Filename: {imageDetail.fileName || "curve-arrow-pointing-left.psd"}
               </Label>
               <Label textColor="" fontSize="">
-                Format: *.psd
+                Format: {imageDetail.format || "*.psd"} 
               </Label>
               <Label textColor="" fontSize="">
-                Max size per file: 20 MB
+                Max size per file: {imageDetail.size || "20"} MB
               </Label>
               <Label textColor="" fontSize="">
                 Image will be visible to others after moderation.
