@@ -1,15 +1,16 @@
 "use client";
 
+import { klaytnBaobab } from "@/utils/KlaytnTestChain";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import React from "react";
-import { configureChains, createConfig, WagmiConfig,Chain } from "wagmi";
-import { goerli } from "wagmi/chains";
+import { configureChains, createConfig, useAccount, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
-import { klaytnBaobab } from "@/utils/KlaytnTestChain";
 
-
-const { chains, publicClient } = configureChains([klaytnBaobab], [publicProvider()]);
+const { chains, publicClient } = configureChains(
+  [klaytnBaobab],
+  [publicProvider()]
+);
 
 const { connectors } = getDefaultWallets({
   appName: "My RainbowKit App",
@@ -30,5 +31,3 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
     </WagmiConfig>
   );
 };
-
-

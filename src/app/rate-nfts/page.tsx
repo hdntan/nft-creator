@@ -2,14 +2,15 @@
 import { IconBack } from "@/assets/icons";
 import Select from "@/components/Select";
 import { NFT_TYPE } from "@/constants";
-import MainLayout from "@/layout";
+import LayoutPrivate from "@/layout/LayoutPrivate";
 import { contractNftCreatorFactory, getNftDetail } from "@/services";
 import { INFTDetail } from "@/types";
 import { BigNumber } from "ethers";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardNFTVote from "./components/CardNFTVote";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useAccount } from "wagmi";
 
 export interface IRaterNFTPageProps {}
 
@@ -19,6 +20,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isConnected } = useAccount();
 
   const SelectType = async (e: any) => {
     router.push(`/rate-nfts?type=${e.target.value}`);
@@ -60,8 +62,8 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
   };
 
   useEffect(() => {
-    getListAddress();
-  }, []);
+    if (isConnected) getListAddress();
+  }, [isConnected]);
 
   useEffect(() => {
     if (searchParams.get("type")) {
@@ -75,7 +77,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
   }, [searchParams.get("type"), listData]);
 
   return (
-    <MainLayout>
+    <LayoutPrivate>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -101,7 +103,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
           </ListAsset>
         </SectionOverview>
       )}
-    </MainLayout>
+    </LayoutPrivate>
   );
 }
 

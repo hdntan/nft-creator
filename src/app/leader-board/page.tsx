@@ -10,6 +10,7 @@ import React, { use, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
 import ShowRating from "./components/ShowRating";
+import LayoutPrivate from "@/layout/LayoutPrivate";
 
 interface StyledTdProps {
   bg: string;
@@ -34,8 +35,7 @@ type User = {
 };
 
 const LeaderBoard = () => {
-  const { address, isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
+  const { isConnected } = useAccount();
 
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -83,11 +83,11 @@ const LeaderBoard = () => {
   };
 
   useEffect(() => {
-    getCreators();
-  }, []);
+    if (isConnected) getCreators();
+  }, [isConnected]);
 
   return (
-    <MainLayout>
+    <LayoutPrivate>
       {isConnected && <LoadingModal isLoading={loading} message="Loading..." />}
 
       <Wrapper>
@@ -147,7 +147,7 @@ const LeaderBoard = () => {
           </StyledTable>
         </StyledTableWrapper>
       </Wrapper>
-    </MainLayout>
+    </LayoutPrivate>
   );
 };
 
