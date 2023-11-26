@@ -56,11 +56,6 @@ const LeaderBoard = () => {
     const contract = await contractNftCreatorFactory();
     if (contract) {
       const transaction2 = await contract.getAllCreatorsFullInfo();
-      console.log(
-        "🚀 ~ file: page.tsx:39 ~ getCreators ~ transaction2:",
-        transaction2
-      );
-
       const listUsers = [];
       for (var i = 0; i < transaction2.length; i++) {
         const assets = await getSuccessfulAsset(transaction2[i].creator);

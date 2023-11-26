@@ -15,13 +15,13 @@ export interface IRaterNFTPageProps {}
 
 export default function RaterNFTPage(props: IRaterNFTPageProps) {
   const [listData, setListData] = useState<INFTDetail[]>([]);
-  console.log("🚀 ~ file: page.tsx:18 ~ RaterNFTPage ~ listData:", listData);
+  const [listDataFilter, setListDataFilter] = useState<INFTDetail[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const SelectType = async (e: any) => {
-    router.push(`/overview?type=${e.target.value}`);
+    router.push(`/rate-nfts?type=${e.target.value}`);
   };
 
   const getListAddress = async () => {
@@ -63,11 +63,16 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
     getListAddress();
   }, []);
 
-  // useEffect(() => {
-  //   setListData(prev => {
-  //     prev.filter()
-  //   })
-  // }, [searchParams.get("type")]);
+  useEffect(() => {
+    if (searchParams.get("type")) {
+      const dataFilter = listData.filter(
+        (item) => item.type.toString() === searchParams.get("type")
+      );
+      setListDataFilter(dataFilter);
+    } else {
+      setListDataFilter(listData);
+    }
+  }, [searchParams.get("type"), listData]);
 
   return (
     <MainLayout>
@@ -90,7 +95,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
             </FilterBox>
           </TopMenu>
           <ListAsset>
-            {listData.map((nft) => (
+            {listDataFilter.map((nft) => (
               <CardNFTVote data={nft} key={nft.id} />
             ))}
           </ListAsset>
@@ -102,7 +107,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding-top: 76px;
+  padding: 76px 53px;
   max-width: 1847px;
   margin: 0 auto;
 `;

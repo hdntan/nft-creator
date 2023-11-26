@@ -74,10 +74,9 @@ export default function OverviewPage(props: IOverviewPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding-top: 76px;
+  padding: 76px 53px;
   max-width: 1847px;
   margin: 0 auto;
-
 `;
 
 const TopMenu = styled.div`
