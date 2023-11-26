@@ -1,11 +1,14 @@
 "use client";
+import { IconStart } from "@/assets/icons";
 import { Avatar, Coin } from "@/assets/images";
 import LoadingModal from "@/components/LoadingModal";
 import MainLayout from "@/layout";
 import { contractNftCreatorFactory } from "@/services";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAccount } from "wagmi";
 
 interface StyledTdProps {
   bg: string;
@@ -30,46 +33,79 @@ type User = {
 };
 
 const LeaderBoard = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  // const [message, setMessage] = useState("Processing...");
 
-  const getCreators = async () => {
-    setLoading(true)
+  const { address, isConnected } = useAccount();
+  const { openConnectModal } = useConnectModal();
+
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const getSuccessfulAsset = async (creator: any) => {
     const contract = await contractNftCreatorFactory();
     if (contract) {
-      const transaction1 = await contract.getAllCreators();
+      const transaction1 = await contract.getCollectionsLengthByCreator(
+        creator
+      );
       console.log(
         "🚀 ~ file: page.tsx:38 ~ getCreators ~ transaction1:",
-        transaction1
+        transaction1.toNumber()
       );
+      const assets = transaction1.toNumber();
+      return assets;
+    }
+  };
+
+  const getCreators = async () => {
+    setLoading(true);
+    const contract = await contractNftCreatorFactory();
+    if (contract) {
       const transaction2 = await contract.getAllCreatorsFullInfo();
       console.log(
         "🚀 ~ file: page.tsx:39 ~ getCreators ~ transaction2:",
         transaction2
       );
-      const topUsers = transaction1.map((user: any, index: number) => ({
-        id: index + 1,
-        user,
-        voteTotalPower: transaction2[index].voteTotalPower.toNumber(),
-        voteCount: transaction2[index].voteCount.toNumber(),
-      }));
-      setUsers(topUsers);
-    setLoading(false)
 
+      const listUsers = [];
+      for (var i = 0; i < transaction2.length; i++) {
+        const assets = await getSuccessfulAsset(transaction2[i].creator);
+        const voteTotalPower = transaction2[i].voteTotalPower.toNumber();
+        const voteCount = transaction2[i].voteCount.toNumber();
+       
+        const user = {
+          rank: i + 1,
+          creator: transaction2[i].creator,
+          assets: assets,
+          totalReward: transaction2[i].totalReward.toNumber(),
+          voteTotalPower: voteTotalPower,
+          voteCount: voteCount,
+          rating:
+            voteTotalPower === 0 && voteCount === 0
+              ? 0
+              : voteTotalPower / voteCount,
+        };
+
+        listUsers.push(user);
+      }
+      setUsers(listUsers);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getCreators();
   }, []);
+
+ 
+
   return (
     <MainLayout>
-      <LoadingModal isLoading={loading} message="Loading" />
+{
+  isConnected && <LoadingModal isLoading={loading} message="Loading..." />
+}      
+       
+
       <Wrapper>
-        <Title  onClick={getCreators}>
-          Creators Leaderboards
-        </Title>
+        <Title>Creators Leaderboards</Title>
         <StyledTableWrapper>
           <StyledTable>
             <StyleThead>
@@ -82,14 +118,14 @@ const LeaderBoard = () => {
               </StyledTr>
             </StyleThead>
             <StyledTbody>
-              {users.map((nft: any, index: number) => (
+              {users.map((user: any, index: number) => (
                 <StyledTr key={index}>
                   <StyledTd
                     fontSize=""
                     bg={index <= 2 ? "TOP" : ""}
                     padding="62px 80px"
                   >
-                    {nft.id}
+                    {user.rank}
                   </StyledTd>
                   <StyledTd fontSize="36px" padding="" bg="">
                     <ContainerUser>
@@ -100,22 +136,54 @@ const LeaderBoard = () => {
                         width={129}
                       />
                       <p>
-                        {nft.user?.slice(0, 6)}...$
-                        {nft.user?.slice(nft.user.length - 6)}
+                        {user.creator?.slice(0, 6)}...
+                        {user.creator?.slice(user.creator.length - 6)}
                       </p>
                     </ContainerUser>
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
-                    {"1234"}
+                    {user.assets}
                   </StyledTd>
                   <StyledTd fontSize="" padding="" bg="">
                     <ContainerReward>
                       <Image src={Coin} alt="avatar" height={65} width={67} />
-                      <p> {nft.voteTotalPower}</p>
+                      <p> {user.totalReward}</p>
                     </ContainerReward>
                   </StyledTd>
                   <StyledTd fontSize="" bg="" padding="0 60px">
-                    {nft.voteCount}
+                    <ContainerRating>
+                      {user.rating === 0 ? (
+                        "---"
+                      ) : user.rating === 1 ? (
+                        <IconStart />
+                      ) : user.rating === 2 ? (
+                        <>
+                          <IconStart />
+                          <IconStart />
+                        </>
+                      ) : user.rating === 3 ? (
+                        <>
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                        </>
+                      ) : user.rating === 4 ? (
+                        <>
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                        </>
+                      ) : (
+                        <>
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                          <IconStart />
+                        </>
+                      )}
+                    </ContainerRating>
                   </StyledTd>
                 </StyledTr>
               ))}
@@ -219,11 +287,16 @@ const ContainerReward = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 12px;
   padding: 0 60px;
 `;
 
+const ContainerRating = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const NFTS = [
   {
     id: "1",
