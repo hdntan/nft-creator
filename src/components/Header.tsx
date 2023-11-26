@@ -13,11 +13,7 @@ interface StyledComponentProps {
 const LINKS = [
   {
     label: "Reward",
-    href: "/reward",
-  },
-  {
-    label: "Download UGC Tool",
-    href: "/download",
+    href: "#",
   },
   {
     label: "Leaderboard",
@@ -61,7 +57,7 @@ const Header = () => {
 
         {LINKS.map((link) => (
           <Link href={link.href} key={link.href}>
-            <NavItem
+            <NavItem 
               currentActive={link.href === currentPath ? "active" : "default"}
             >
               {link.label}
