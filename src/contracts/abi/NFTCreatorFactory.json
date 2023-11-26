@@ -70,6 +70,25 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "availableAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RewardClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "collection",
         "type": "address"
       },
@@ -92,6 +111,13 @@
       }
     ],
     "name": "buyNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimReward",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -283,6 +309,11 @@
         "internalType": "uint256",
         "name": "voteTotalPower",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "claimedAmount",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -383,6 +414,11 @@
           {
             "internalType": "uint256",
             "name": "voteTotalPower",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimedAmount",
             "type": "uint256"
           }
         ],
@@ -498,6 +534,25 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isCreator",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -525,6 +580,32 @@
     "name": "setCollectionImpl",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalRewardAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalVotingPower",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
