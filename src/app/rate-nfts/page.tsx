@@ -9,12 +9,20 @@ import { BigNumber } from "ethers";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardNFTVote from "./components/CardNFTVote";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface IRaterNFTPageProps {}
 
 export default function RaterNFTPage(props: IRaterNFTPageProps) {
   const [listData, setListData] = useState<INFTDetail[]>([]);
+  console.log("🚀 ~ file: page.tsx:18 ~ RaterNFTPage ~ listData:", listData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const SelectType = async (e: any) => {
+    router.push(`/overview?type=${e.target.value}`);
+  };
 
   const getListAddress = async () => {
     setIsLoading(true);
@@ -55,6 +63,12 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
     getListAddress();
   }, []);
 
+  // useEffect(() => {
+  //   setListData(prev => {
+  //     prev.filter()
+  //   })
+  // }, [searchParams.get("type")]);
+
   return (
     <MainLayout>
       {isLoading ? (
@@ -69,8 +83,9 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
             <FilterBox>
               <Select
                 name="typeNft"
-                onChange={(e) => console.log(e)}
+                onChange={SelectType}
                 options={NFT_TYPE}
+                value={searchParams.get("type")}
               />
             </FilterBox>
           </TopMenu>

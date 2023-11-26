@@ -1,6 +1,6 @@
 const NFT_TYPE = [
   {
-    value: "--",
+    value: "",
     label: "--",
   },
   {

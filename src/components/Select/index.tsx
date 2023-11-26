@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 export interface ISelectProps {
   name: string;
-  options: { value: string | number; label: string }[];
+  options: { value?: string | number; label: string }[];
   defaultValue?: string;
   onChange: (e: any) => void;
+  value: any;
 }
 
 export default function Select({
@@ -13,9 +14,15 @@ export default function Select({
   options,
   defaultValue,
   name,
+  value,
 }: Readonly<ISelectProps>) {
   return (
-    <SelectCustom onChange={onChange} defaultValue={defaultValue} name={name}>
+    <SelectCustom
+      onChange={onChange}
+      defaultValue={defaultValue}
+      name={name}
+      value={value}
+    >
       {options?.map((item) => (
         <OptionItem value={item.value} key={item.value}>
           {item.label}

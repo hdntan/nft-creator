@@ -1,31 +1,32 @@
 "use client";
 import ListButton from "@/app/overview/components/ListButtons";
-import { IconBack } from "@/assets/icons";
+import ButtonBack from "@/components/ButtonBack";
 import Select from "@/components/Select";
 import { NFT_TYPE } from "@/constants";
 import MainLayout from "@/layout";
 import { getListNFTOverviewRequest } from "@/services";
+import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import styled from "styled-components";
 import CardAsset from "./components/CardAsset";
-import ButtonBack from "@/components/ButtonBack";
 
 export interface IOverviewPageProps {}
 
 export default function OverviewPage(props: IOverviewPageProps) {
   const [listNft, setListNft] = React.useState([]);
-  const [type, setType] = React.useState("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const SelectType = async (e: any) => {
-    setType(e.target.value);
+    router.push(`/overview?type=${e.target.value}`);
   };
 
   const fetchCollection = async () => {
     setIsLoading(true);
     try {
       const { data } = await getListNFTOverviewRequest(
-        type == "--" ? undefined : type
+        searchParams.get("type") ?? undefined
       );
       setListNft(data?.data);
       setIsLoading(false);
@@ -37,7 +38,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
 
   React.useEffect(() => {
     fetchCollection();
-  }, [type]);
+  }, [searchParams.get("type")]);
 
   return (
     <MainLayout>
@@ -47,7 +48,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
         <SectionOverview>
           <TopMenu>
             <TitleBox>
-            <ButtonBack href="/" />
+              <ButtonBack href="/" />
               <h2>Overview</h2>
             </TitleBox>
             <FilterBox>
@@ -55,6 +56,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
                 onChange={(e) => SelectType(e)}
                 options={NFT_TYPE}
                 name="typeNFT"
+                value={searchParams.get("type")}
               />
               <ListButton />
             </FilterBox>

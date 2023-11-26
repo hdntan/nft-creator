@@ -1,9 +1,7 @@
-
 import { technoRaceFont } from "@/font";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-
 
 interface StyledComponentProps {
   typeButton: string;
@@ -18,7 +16,9 @@ const CreatorItem = ({ item }: any) => {
         <Image src={item.image} alt="gold" height={200} width={200} />
       </ContainerImage>
       <ButtonContainer>
-        <ButtonItem onClick={() =>router.push(`/upload-asset`)} typeButton="">Submit</ButtonItem>
+        <ButtonItem onClick={() => router.push(`/upload-asset`)} typeButton="">
+          Submit
+        </ButtonItem>
       </ButtonContainer>
     </Wrapper>
   );
@@ -36,8 +36,13 @@ const Wrapper = styled.div`
   width: 398px;
   height: 480px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: 2px solid rgba(62, 111, 255, 0.00);
-  background: radial-gradient(110.18% 67.48% at 32.08% -8.14%, rgba(62, 111, 255, 0.40) 0%, rgba(62, 111, 255, 0.00) 100%), rgba(17, 14, 3, 0.40);
+  border: 2px solid rgba(62, 111, 255, 0.4);
+  background: radial-gradient(
+      110.18% 67.48% at 32.08% -8.14%,
+      rgba(62, 111, 255, 0.4) 0%,
+      rgba(62, 111, 255, 0) 100%
+    ),
+    rgba(17, 14, 3, 0.4);
   border-radius: 12px;
 `;
 const ButtonContainer = styled.div`
@@ -46,8 +51,8 @@ const ButtonContainer = styled.div`
   margin-top: 10px;
 `;
 const Title = styled.div`
-font-size: 32px;
-color: #FFFFFF;
+  font-size: 32px;
+  color: #ffffff;
 `;
 
 const ContainerImage = styled.div``;
