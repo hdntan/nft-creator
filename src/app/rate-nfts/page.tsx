@@ -98,9 +98,9 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
             </FilterBox>
           </TopMenu>
 
-          {listData.length !==0  ? (
+          {listDataFilter.length !== 0 ? (
             <ListAsset>
-              {listData.map((nft) => (
+              {listDataFilter.map((nft) => (
                 <CardNFTVote data={nft} key={nft.id} />
               ))}
             </ListAsset>
