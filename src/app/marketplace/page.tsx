@@ -26,8 +26,8 @@ const Marketplace = () => {
         const transaction = await contract.getAllCollections();
         const listRandom = [];
         for (let i = 0; i < 4; i++) {
-          const randomIndex = Math.floor(Math.random() * transaction.length);
-          const selectedRandomItem = await transaction[randomIndex];
+          // const randomIndex = Math.floor(Math.random() * transaction.length);
+          const selectedRandomItem = await transaction[i];
 
           listRandom.push(selectedRandomItem);
         }
