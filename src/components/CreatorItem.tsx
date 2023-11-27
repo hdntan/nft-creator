@@ -31,9 +31,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 36px;
+  justify-content: center;
+  /* padding: 20px; */
   gap: 36px;
-  width: 398px;
+  width: 400px;
   height: 480px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: 2px solid rgba(62, 111, 255, 0.4);
@@ -47,7 +48,7 @@ const Wrapper = styled.div`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 100%;
   margin-top: 10px;
 `;
 const Title = styled.div`
@@ -55,12 +56,18 @@ const Title = styled.div`
   color: #ffffff;
 `;
 
-const ContainerImage = styled.div``;
+const ContainerImage = styled.div`
+img {
+  width: 200px;
+  height: 200px;
+}`;
+
 const ButtonItem = styled.button<StyledComponentProps>`
   border-radius: 4px;
-  width: 326px;
+  width: 100%;
   border: 1px solid;
   padding: 8px 16px;
+  margin: 0 20px;
   font-size: 16px;
   background-color: ${(props) =>
     props.typeButton === "manage" ? "#FED73B" : " #000000"};

@@ -11,35 +11,36 @@ export default function App(props: IAppProps) {
   return (
     <MainLayout>
       <Wrapper>
-      <ContainerTitle>
-        <Title >Create your own world on</Title>
-        <SubTitle className={technoRaceFont.className}>PAWCIFIC RIM</SubTitle>
-      </ContainerTitle>
-      <ContainerItemCreator>
-        {ITEMS.map((item, index) => (
-          <CreatorItem item={item} key={index} />
-        ))}
-      </ContainerItemCreator>
+        <ContainerTitle>
+          <Title>Create your own world on</Title>
+          <SubTitle className={technoRaceFont.className}>PAWCIFIC RIM</SubTitle>
+        </ContainerTitle>
+        <ContainerItemCreator>
+          {ITEMS.map((item, index) => (
+            <CreatorItem item={item} key={index} />
+          ))}
+        </ContainerItemCreator>
       </Wrapper>
-      
     </MainLayout>
   );
 }
 
-
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-   width: 100%;
+  width: 100%;
   padding: 78px 90px;
-`
+  max-width: 1847px;
+  margin: 0 auto;
+`;
 
 const ContainerItemCreator = styled.div`
+  /* display: grid; */
+  /* flex-direction: row;
+   */
   display: flex;
-  flex-direction: row;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
   align-items: center;
   justify-content: center;
-  gap: 49px;
+  gap: 30px;
 `;
 
 const ContainerTitle = styled.div`
@@ -60,7 +61,7 @@ const Title = styled.p`
 const SubTitle = styled(Title)`
   font-size: 60px;
   line-height: 72px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 const ITEMS = [
   {
