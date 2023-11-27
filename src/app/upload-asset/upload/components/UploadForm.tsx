@@ -192,7 +192,7 @@ const UploadForm = () => {
         />
 
         <Label textColor="" fontSize="12px">
-          25/50 characters
+          {/* 25/50 characters */}
         </Label>
         <br />
         <Label textColor="" fontSize="">
@@ -204,7 +204,7 @@ const UploadForm = () => {
           {...register("description")}
         />
         <Label textColor="" fontSize="12px">
-          5/1000 characters
+          {/* 5/1000 characters */}
         </Label>
 
         <ContainerButton>

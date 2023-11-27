@@ -12,6 +12,7 @@ import styled from "styled-components";
 import CardNFTVote from "./components/CardNFTVote";
 import { useAccount } from "wagmi";
 import NoResultsPage from "@/components/NoResultsPage";
+import ButtonBack from "@/components/ButtonBack";
 
 export interface IRaterNFTPageProps {}
 
@@ -85,7 +86,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
         <SectionOverview>
           <TopMenu>
             <TitleBox>
-              <IconBack />
+            <ButtonBack href="/overview" />
               <h2>Rating the best art</h2>
             </TitleBox>
             <FilterBox>
@@ -115,7 +116,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
 
 const SectionOverview = styled.section`
   width: 100%;
-  padding: 76px 53px;
+  padding: 76px 90px;
   max-width: 1847px;
   margin: 0 auto;
 `;

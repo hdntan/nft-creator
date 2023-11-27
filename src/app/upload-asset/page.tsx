@@ -9,7 +9,7 @@ import styled from "styled-components";
 interface StyledLabelProps {
   fontSize: string;
   textColor: string;
-  fontWeight: string
+  fontWeight: string;
 }
 
 interface StyledTabProps {
@@ -81,6 +81,8 @@ const Wrapper = styled.div`
   align-items: start;
   width: 100%;
   padding: 81px 90px;
+  max-width: 1847px;
+  margin: 0 auto;
 `;
 const WrapperTab = styled.div`
   display: flex;
@@ -103,8 +105,6 @@ const Label = styled.label<StyledLabelProps>`
 const TabHeader = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 
@@ -149,7 +149,7 @@ const Content = styled.div`
 `;
 
 const ButtonTab = styled.button<StyledTabProps>`
-  width: 359px;
+  width: 300px;
   height: 101px;
   padding: 36px 0;
   border-bottom: 4px solid;
@@ -188,18 +188,21 @@ const tabs = [
     id: "2",
     tabTitle: "Character weapons  ",
     title: "No Character weapons ",
-    content: "You have no Character weapons yet. Create a new Character weapons, and build Pawcific Rim world together!",
+    content:
+      "You have no Character weapons yet. Create a new Character weapons, and build Pawcific Rim world together!",
   },
   {
     id: "3",
     tabTitle: "Map",
     title: "No Map",
-    content: "You have no Map yet. Create a new Map, and build Pawcific Rim world together!",
+    content:
+      "You have no Map yet. Create a new Map, and build Pawcific Rim world together!",
   },
   {
     id: "4",
     tabTitle: "Worlds",
     title: "No Worlds",
-    content: "You have no Worlds yet. Create a new Worlds, and build Pawcific Rim world together!",
+    content:
+      "You have no Worlds yet. Create a new Worlds, and build Pawcific Rim world together!",
   },
 ];

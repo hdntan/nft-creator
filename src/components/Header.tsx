@@ -11,10 +11,7 @@ interface StyledComponentProps {
 }
 
 const LINKS = [
-  {
-    label: "Reward",
-    href: "#",
-  },
+ 
   {
     label: "Leaderboard",
     href: "/leader-board",
@@ -70,7 +67,7 @@ const Header = () => {
         <ButtonConnect onClick={openConnectModal}>Connect Wallet</ButtonConnect>
       ) : (
         <ButtonConnect onClick={openAccountModal}>
-          {address?.slice(0, 6)}...${address?.slice(address.length - 6)}
+          {address?.slice(0, 6)}...{address?.slice(address.length - 6)}
         </ButtonConnect>
       )}
     </Wrapper>

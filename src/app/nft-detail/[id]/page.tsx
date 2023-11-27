@@ -58,6 +58,7 @@ const NFTDetail = () => {
               <Content>
                 <Label textColor="">Description:</Label>
                 <Label textColor="yellow">{nftDetail?.description}</Label>
+                
               </Content>
             </ContainerContent>
           </ContainerDetail>
@@ -133,6 +134,7 @@ const Content = styled.div`
   justify-content: space-between;
   width: 373px;
   height: 72px;
+
   padding: 24px;
   margin-bottom: 36px;
   border-radius: 14px;
@@ -141,12 +143,17 @@ const Content = styled.div`
     rgba(0, 6, 43, 0.7) -16.1%,
     rgba(11, 16, 50, 0.7) 106.19%
   );
+  overflow:hidden;
+    text-overflow:ellipsis;
 `;
-
 
 const Label = styled.label<StyledLabelProps>`
   font-size: 18px;
   color: ${(props) => (props.textColor !== "yellow" ? "#FFFFFF" : "#FED73B")};
+   
+  
+  
+    
 `;
 
 const NFTS = [
