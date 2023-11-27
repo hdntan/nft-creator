@@ -26,6 +26,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
 
   const SelectType = async (e: any) => {
     router.push(`/rate-nfts?type=${e.target.value}`);
+    setListDataFilter([]);
   };
 
   const getListAddress = async () => {
@@ -86,7 +87,7 @@ export default function RaterNFTPage(props: IRaterNFTPageProps) {
         <SectionOverview>
           <TopMenu>
             <TitleBox>
-            <ButtonBack href="/overview" />
+              <ButtonBack href="/overview" />
               <h2>Rating the best art</h2>
             </TitleBox>
             <FilterBox>
