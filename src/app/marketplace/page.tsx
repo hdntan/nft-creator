@@ -44,6 +44,8 @@ const Marketplace = () => {
       if (contract) {
         const transaction = await contract.balanceOf(user);
         const balance = await transaction.toString();
+        console.log("balance", toEth(balance));
+        return balance
       }
     } catch (error) {
       console.error("err", error);
@@ -52,6 +54,7 @@ const Marketplace = () => {
 
   const approveToken = async () => {
     try {
+     
       setLoading(true);
       setMessage("Processing approve...")
       const contract = await contractGamingToken();
@@ -64,11 +67,17 @@ const Marketplace = () => {
       }
     } catch (error) {
       console.error("err", error);
+
     }
   };
 
   const buyBattlePass = async () => {
     try {
+      const balanceToken = await getTokenContract();
+      if(balanceToken <  5 * 10 ** 6) {
+        showErrorToast("Not Enough Balance");
+        return
+      }
       await approveToken();
       const listCollection = await getRandomCollection();
       const contract = await contractNftCreatorFactory();
@@ -88,9 +97,7 @@ const Marketplace = () => {
     }
   };
 
-  useEffect(() => {
-    getTokenContract();
-  }, []);
+ 
 
   return (
     <MarketplaceLayout>
