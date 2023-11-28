@@ -46,20 +46,20 @@ const UploadForm = () => {
 
   const validateUpload = (data: any) => {
     if (!data.image && !imageNft) {
-      showErrorToast("please enter image NFT");
+      showErrorToast("Please Upload Collections");
       return false;
     }
     if (!data.name) {
-      showErrorToast("please enter name");
+      showErrorToast("Please Enter Collection Name");
       return false;
     }
    
     if (!data.symbol) {
-      showErrorToast("please enter symbol NFT");
-      return false;
+      showErrorToast("Please Enter Collection Symbol");
+      return false
     }
     if (!data.description) {
-      showErrorToast("please enter description NFT");
+      showErrorToast("Please Enter Collection Description");
       return false;
     }
     return true
@@ -93,11 +93,11 @@ const UploadForm = () => {
         }
       }
       setLoading(false);
-      showSuccessToast("upload nft successful");
+      showSuccessToast("Upload Collections Successfully");
       route.push("/overview");
     } catch (error) {
-      showErrorToast("upload nft failed");
-      setLoading(false);
+      showErrorToast("Upload Collections Failed");
+      setLoading(false)
     }
   };
 
@@ -161,10 +161,10 @@ const UploadForm = () => {
             </ContainerButtonSelect>
             <ContainerLabel>
               <Label textColor="" fontSize="">
-                Filename: {imageDetail.fileName || "curve-arrow-pointing-left.psd"}
+                Filename: {imageDetail.fileName || ""}
               </Label>
               <Label textColor="" fontSize="">
-                Format: {imageDetail.format || "*.psd"} 
+                Format: {imageDetail.format || "*.png"} 
               </Label>
               <Label textColor="" fontSize="">
                 Max size per file: {imageDetail.size || "20"} MB
@@ -182,7 +182,7 @@ const UploadForm = () => {
 
         <Input
           type="text"
-          placeholder="curve-arrow-pointing-left"
+          placeholder=""
           {...register("name")}
         />
 
@@ -192,7 +192,7 @@ const UploadForm = () => {
 
         <Input
           type="text"
-          placeholder="curve-arrow-pointing-left"
+          placeholder=""
           {...register("symbol")}
         />
 
@@ -205,7 +205,7 @@ const UploadForm = () => {
         </Label>
 
         <TextArea
-          placeholder="curve-arrow-pointing-left"
+          placeholder=""
           {...register("description")}
         />
         <Label textColor="" fontSize="12px">

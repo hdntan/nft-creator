@@ -31,7 +31,7 @@ const RewardPage = () => {
       const transaction = await contract.claimReward()
       await transaction.wait();
       setLoading(false)
-      showSuccessToast("Claim successful");
+      showSuccessToast("Claim Reward successfully");
       router.push("/");
 
     }
@@ -39,7 +39,7 @@ const RewardPage = () => {
         console.log("err",error);
       setLoading(false)
 
-        showErrorToast("Claim Fail")
+        showErrorToast("Claim Reward Failed")
     }
     
   };
