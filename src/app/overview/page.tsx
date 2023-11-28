@@ -3,47 +3,89 @@ import ListButton from "@/app/overview/components/ListButtons";
 import ButtonBack from "@/components/ButtonBack";
 import Select from "@/components/Select";
 import { NFT_TYPE } from "@/constants";
-import MainLayout from "@/layout";
-import { getListNFTOverviewRequest } from "@/services";
+import {
+  contractNftCreatorFactory,
+  getNftDetail,
+} from "@/services";
 import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import styled from "styled-components";
 import CardAsset from "./components/CardAsset";
 
 import NoResultsPage from "@/components/NoResultsPage";
+import { useAccount } from "wagmi";
+import { BigNumber } from "ethers";
+import LayoutPrivate from "@/layout/LayoutPrivate";
 
 export interface IOverviewPageProps {}
 
 export default function OverviewPage(props: IOverviewPageProps) {
-  const [listNft, setListNft] = React.useState([]);
+  const { address, isConnected } = useAccount();
+  const user = address?.toString();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [listData, setListData] = React.useState<any[]>([]);
+
+  const [listDataFilter, setListDataFilter] = React.useState<any[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const SelectType = async (e: any) => {
     router.push(`/overview?type=${e.target.value}`);
+    setListDataFilter([]);
   };
 
-  const fetchCollection = async () => {
+  const fetchCollectionByWallet = async () => {
     setIsLoading(true);
     try {
-      const { data } = await getListNFTOverviewRequest(
-        searchParams.get("type") ?? undefined
-      );
-      setListNft(data?.data);
-      setIsLoading(false);
+      const contract = await contractNftCreatorFactory();
+      if (contract) {
+        const transaction: any = await contract.getCollectionsFullInfoByCreator(
+          user
+        );
+        if (transaction) {
+          const collectionInfo = transaction.map((collection: any) => {
+            return collection;
+          });
+          Promise.all(collectionInfo).then((collections) => {
+            const conllectionIds = collections.map((infor: any) => {
+              const bigNumber = BigNumber.from(infor.recordId);
+              const id = bigNumber.toNumber();
+              return getNftDetail(id);
+            });
+            Promise.all(conllectionIds)
+              .then((values) => {
+                const listNFT = values.map((item) => item.data?.data);
+                setListData(listNFT);
+                setIsLoading(false);
+              })
+              .catch((error) => {
+                setListData([]);
+                setIsLoading(false);
+              });
+          });
+        }
+      }
     } catch (error) {
-      console.error(error);
       setIsLoading(false);
     }
   };
 
   React.useEffect(() => {
-    fetchCollection();
-  }, [searchParams.get("type")]);
+    if (isConnected) fetchCollectionByWallet();
+  }, [isConnected]);
 
+  React.useEffect(() => {
+    if (searchParams.get("type")) {
+      const dataFilter = listData.filter(
+        (item) => item.type.toString() === searchParams.get("type")
+      );
+      setListDataFilter(dataFilter);
+    } else {
+      setListDataFilter(listData);
+    }
+  }, [searchParams.get("type"), listData]);
   return (
-    <MainLayout>
+    <LayoutPrivate>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -55,7 +97,7 @@ export default function OverviewPage(props: IOverviewPageProps) {
             </TitleBox>
             <FilterBox>
               <Select
-                onChange={(e) => SelectType(e)}
+                onChange={SelectType}
                 options={NFT_TYPE}
                 name="typeNFT"
                 value={searchParams.get("type")}
@@ -64,22 +106,20 @@ export default function OverviewPage(props: IOverviewPageProps) {
             </FilterBox>
           </TopMenu>
 
-          {listNft.length !== 0 ? (
-             <ListAsset>
-             {listNft?.map((nft, index) => (
-               <>
-                 <CardAsset nft={nft} key={index} />
-               </>
-             ))}
-           </ListAsset>
-            
+          {listDataFilter.length !== 0 ? (
+            <ListAsset>
+              {listDataFilter?.map((nft, index) => (
+                <>
+                  <CardAsset nft={nft} key={index} />
+                </>
+              ))}
+            </ListAsset>
           ) : (
-           
             <NoResultsPage />
           )}
         </SectionOverview>
       )}
-    </MainLayout>
+    </LayoutPrivate>
   );
 }
 
