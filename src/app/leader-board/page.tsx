@@ -159,7 +159,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 94px 90px 163px 90px;
+  padding: 90px 60px;
 `;
 
 const Title = styled.div`
