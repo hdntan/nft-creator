@@ -1,12 +1,14 @@
 "use client";
 import { Seasion } from "@/assets/images";
 import ButtonBack from "@/components/ButtonBack";
+import ButtonLoading from "@/components/ButtonLoading";
 import MainLayout from "@/layout";
 import LayoutPrivate from "@/layout/LayoutPrivate";
 import { contractNftCreatorFactory } from "@/services";
 import { showErrorToast, showSuccessToast } from "@/utils/helper";
 import { BigNumber } from "ethers";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAccount } from "wagmi";
@@ -16,18 +18,27 @@ interface StyledLabelProps {
 const RewardPage = () => {
     const { address, isConnected } = useAccount();
     const [infoClaim, setInfoClaim] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+
   const user = address?.toString();
+  const router = useRouter();
 
   const getClaimReward = async () => {
     try {
+      setLoading(true);
         const contract = await contractNftCreatorFactory();
     if (contract) {
       const transaction = await contract.claimReward()
       await transaction.wait();
+      setLoading(false)
       showSuccessToast("Claim successful");
+      router.push("/");
+
     }
     } catch (error) {
         console.log("err",error);
+      setLoading(false)
+
         showErrorToast("Claim Fail")
     }
     
@@ -93,13 +104,13 @@ useEffect(()=> {
                   <Label textColor="yellow">{infoClaim.claimedAmount}</Label>
                 </Content>
                 <Content>
-                  <Label textColor="">Profit for creators::</Label>
+                  <Label textColor="">Profit for creators:</Label>
                   <Label textColor="yellow">{infoClaim.claimableAmount}</Label>
                 </Content>
               </BoardRight>
             </BoardContent>
             <ContainerButton>
-              <ButtonClaim onClick={getClaimReward}>Claim your reward</ButtonClaim>
+              <ButtonLoading title="Claim your reward" fonSize="19" width="383.621px" loading={loading} onClick={getClaimReward}/>
             </ContainerButton>
           </ContainerBoard>
         </WrapperBoard>
