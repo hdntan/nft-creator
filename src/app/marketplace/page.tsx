@@ -45,7 +45,7 @@ const Marketplace = () => {
         const transaction = await contract.balanceOf(user);
         const balance = await transaction.toString();
         console.log("balance", toEth(balance));
-        return balance
+        return balance;
       }
     } catch (error) {
       console.error("err", error);
@@ -54,9 +54,8 @@ const Marketplace = () => {
 
   const approveToken = async () => {
     try {
-     
       setLoading(true);
-      setMessage("Processing approve...")
+      setMessage("Processing Approve...");
       const contract = await contractGamingToken();
       if (contract) {
         const transaction = await contract.approve(
@@ -67,41 +66,38 @@ const Marketplace = () => {
       }
     } catch (error) {
       console.error("err", error);
-
     }
   };
 
   const buyBattlePass = async () => {
     try {
       const balanceToken = await getTokenContract();
-      if(balanceToken <  5 * 10 ** 6) {
+      if (balanceToken < 5 * 10 ** 6) {
         showErrorToast("Not Enough Balance");
-        return
+        return;
       }
       await approveToken();
       const listCollection = await getRandomCollection();
       const contract = await contractNftCreatorFactory();
-      setMessage("Processing buy...")
+      setMessage("Processing Buy...");
 
       if (contract) {
         const transaction = await contract.buyNFT(listCollection, {
           gasLimit: 7000000,
         });
         await transaction.wait();
-        showSuccessToast("Buy successful");
+        showSuccessToast("Buy Battle Pass Successfully");
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      showErrorToast("Buy is failed");
+      showErrorToast("Buy Battle Pass Failed");
     }
   };
 
- 
-
   return (
     <MarketplaceLayout>
-        <LoadingModal isLoading={loading} message={message}/>
+      <LoadingModal isLoading={loading} message={message} />
 
       <Wrapper>
         <ContainerBuyBattle>

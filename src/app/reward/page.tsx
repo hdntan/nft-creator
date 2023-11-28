@@ -31,7 +31,7 @@ const RewardPage = () => {
       const transaction = await contract.claimReward()
       await transaction.wait();
       setLoading(false)
-      showSuccessToast("Claim successful");
+      showSuccessToast("Claim Reward successfully");
       router.push("/");
 
     }
@@ -39,7 +39,7 @@ const RewardPage = () => {
         console.log("err",error);
       setLoading(false)
 
-        showErrorToast("Claim Fail")
+        showErrorToast("Claim Reward Failed")
     }
     
   };
@@ -93,19 +93,19 @@ useEffect(()=> {
                 </Content>
                 <Content>
                   <Label textColor="">Number of assets:</Label>
-                  <Label textColor="yellow">{infoClaim.assets}</Label>
+                  <Label textColor="yellow">{infoClaim.assets ||"0"}</Label>
                 </Content>
                 <Content>
                   <Label textColor="">Quantity sold:</Label>
-                  <Label textColor="yellow">{infoClaim.totalReward}</Label>
+                  <Label textColor="yellow">{infoClaim.totalReward ||"0"}</Label>
                 </Content>
                 <Content>
                   <Label textColor="">Total profit:</Label>
-                  <Label textColor="yellow">{infoClaim.claimedAmount}</Label>
+                  <Label textColor="yellow">{infoClaim.claimedAmount ||"0"}</Label>
                 </Content>
                 <Content>
                   <Label textColor="">Profit for creators:</Label>
-                  <Label textColor="yellow">{infoClaim.claimableAmount}</Label>
+                  <Label textColor="yellow">{infoClaim.claimableAmount ||"0"}</Label>
                 </Content>
               </BoardRight>
             </BoardContent>

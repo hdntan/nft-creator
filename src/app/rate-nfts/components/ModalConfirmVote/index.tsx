@@ -66,7 +66,7 @@ export default function ModalConfirmVote({
     
     const rate = await getRating();
     if(rate > 0) {
-      showSuccessToast("You have rated it")
+      showSuccessToast("You Have Rated It")
       return
     }
     try {
@@ -77,12 +77,12 @@ export default function ModalConfirmVote({
         const transaction = await contract.voteCollection(addressNFT, rating);
         await transaction.wait();
         setIsLoading(false);
-        showSuccessToast("Rate successfully!");
+        showSuccessToast("Rate Successfully!");
         toggle();
       }
     } catch (error) {
       setIsLoading(false);
-      showSuccessToast("Rate failed!");
+      showSuccessToast("Rate Failed!");
     }
   };
 

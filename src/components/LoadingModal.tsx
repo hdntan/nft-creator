@@ -32,7 +32,6 @@ justify-content: center;
 align-items: center; 
 width: 100%; 
 height: 100%; 
-opacity: 0.5; 
 background: rgba(0, 0, 0, 0.5);
 
 transition-property: transform;
@@ -51,7 +50,7 @@ const ContainerLoading = styled.div`
 
 `
 const Label = styled.p`
-    font-size: 50px;
+    font-size: 36px;
     font-weight: 600;
     color: #36d7b7;
     
