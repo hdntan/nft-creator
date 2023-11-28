@@ -12,6 +12,7 @@ import { Label } from "@/components/Label";
 import { TextArea } from "@/components/TexArea";
 import { ClipLoader } from "react-spinners";
 import { IconStarBlack } from "@/assets/icons";
+import { useAccount } from "wagmi";
 
 export interface IModalConfirmVoteProps {
   isShowing: boolean;
@@ -43,9 +44,33 @@ export default function ModalConfirmVote({
   const [rating, setRating] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleVote = async () => {
-    setIsLoading(true);
+  const { address } = useAccount();
+  const user = address?.toString();
+
+  const getRating = async () => {
     try {
+      const contract = await contractNftCreatorFactory();
+      if (contract) {
+        const transaction = await contract.voteHistory(user, data.id);
+        const rate = transaction.toNumber();
+        console.log("rate", rate)
+       return rate
+       
+      }
+    } catch (error) {
+      console.log("err", error);
+    }
+  };
+
+  const handleVote = async () => {
+    
+    const rate = await getRating();
+    if(rate > 0) {
+      showSuccessToast("You have rated it")
+      return
+    }
+    try {
+      setIsLoading(true);
       const contract = await contractNftCreatorFactory();
       if (contract) {
         const addressNFT = await contract.recordIdCollection(data.id);
@@ -86,9 +111,9 @@ export default function ModalConfirmVote({
         </BoxTitle>
         <BoxRate>
           <p>Rate:</p>
-          <Rating onChange={(rate) => setRating(rate)} />
+          <Rating id={data.id} onChange={(rate) => setRating(rate)} />
         </BoxRate>
-       
+
         <Note>
           Your asset win the voting competition and will be used in battle pass
           seasion 3 (from xx/xx - to xx/xx)
@@ -203,8 +228,7 @@ const ButtonVote = styled.button`
   }
 `;
 
-const BoxTitle = styled.div`
-`;
+const BoxTitle = styled.div``;
 
 const Title = styled.h1`
   color: #fff;
