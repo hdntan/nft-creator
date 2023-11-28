@@ -45,14 +45,15 @@ const UploadForm = () => {
   };
 
   const validateUpload = (data: any) => {
-    if (!data.name) {
-      showErrorToast("please enter name");
-      return false;
-    }
     if (!data.image && !imageNft) {
       showErrorToast("please enter image NFT");
       return false;
     }
+    if (!data.name) {
+      showErrorToast("please enter name");
+      return false;
+    }
+   
     if (!data.symbol) {
       showErrorToast("please enter symbol NFT");
       return false;
@@ -61,6 +62,7 @@ const UploadForm = () => {
       showErrorToast("please enter description NFT");
       return false;
     }
+    return true
   };
 
   const removeImage = () => {
@@ -68,7 +70,10 @@ const UploadForm = () => {
   };
 
   const onSubmit = async (data: any) => {
-    validateUpload(data);
+    if( !validateUpload(data)) {
+      return
+    }
+   
 
     const dataSubmit = { ...data, creator: address, file: imageNft };
 
@@ -221,12 +226,6 @@ const UploadForm = () => {
 export default UploadForm;
 
 const WrapperFormUpload = styled.div`
-  /* margin: 64px 0 105px 0; */
-  /* 
-
-  display: flex;
-  align-items: center;
-  justify-content: center; */
 
   color: white;
   width: 850px;
