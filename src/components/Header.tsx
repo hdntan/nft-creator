@@ -11,13 +11,20 @@ interface StyledComponentProps {
 }
 
 const LINKS = [
- 
+  {
+    label: "Reward",
+    href: "/reward",
+  },
+  {
+    label: "Upcoming",
+    href: "#",
+  },
   {
     label: "Leaderboard",
     href: "/leader-board",
   },
   {
-    label: "Marketplace",
+    label: "BattlePass",
     href: "/marketplace",
   },
 ];
