@@ -276,6 +276,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "address", "name": "creator", "type": "address" }
+    ],
+    "name": "getClaimInfo",
+    "outputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getCollectionListBought",
     "outputs": [
@@ -298,6 +311,33 @@
     "name": "getCollectionsByCreator",
     "outputs": [
       { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "creator", "type": "address" }
+    ],
+    "name": "getCollectionsFullInfoByCreator",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "recordId", "type": "uint256" },
+          { "internalType": "address", "name": "creator", "type": "address" },
+          { "internalType": "uint256", "name": "voteCount", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "voteTotalPower",
+            "type": "uint256"
+          },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "nonce", "type": "uint256" }
+        ],
+        "internalType": "struct NFTCreatorFactory.CollectionInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -370,6 +410,16 @@
     "name": "voteCollection",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "voteHistory",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   }
 ]
