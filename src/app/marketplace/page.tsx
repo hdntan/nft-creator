@@ -24,14 +24,7 @@ const Marketplace = () => {
       const contract = await contractNftCreatorFactory();
       if (contract) {
         const transaction = await contract.getAllCollections();
-        const listRandom = [];
-        for (let i = 0; i < 4; i++) {
-          // const randomIndex = Math.floor(Math.random() * transaction.length);
-          const selectedRandomItem = await transaction[i];
-
-          listRandom.push(selectedRandomItem);
-        }
-        return listRandom;
+        return transaction;
       }
     } catch (error) {
       console.error("err", error);
@@ -52,7 +45,7 @@ const Marketplace = () => {
     }
   };
 
-  const approveToken = async () => {
+  const approveToken = async (number: any) => {
     try {
       setLoading(true);
       setMessage("Processing Approve...");
@@ -60,7 +53,7 @@ const Marketplace = () => {
       if (contract) {
         const transaction = await contract.approve(
           NFTCreatorFactory.address,
-          5 * 10 ** 6
+          number * 10 ** 6
         );
         await transaction.wait();
       }
@@ -70,14 +63,14 @@ const Marketplace = () => {
   };
 
   const buyBattlePass = async () => {
+    const listCollection = await getRandomCollection();
     try {
       const balanceToken = await getTokenContract();
-      if (balanceToken < 5 * 10 ** 6) {
+      if (balanceToken < listCollection.length * 10 ** 6) {
         showErrorToast("Not Enough Balance");
         return;
       }
-      await approveToken();
-      const listCollection = await getRandomCollection();
+      await approveToken(listCollection.length + 1);
       const contract = await contractNftCreatorFactory();
       setMessage("Processing Buy...");
 
