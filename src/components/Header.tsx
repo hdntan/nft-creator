@@ -16,16 +16,16 @@ const LINKS = [
     href: "/reward",
   },
   {
-    label: "Upcoming",
-    href: "#",
-  },
-  {
     label: "Leaderboard",
     href: "/leader-board",
   },
   {
     label: "BattlePass",
     href: "/marketplace",
+  },
+  {
+    label: "Download UGC Tool",
+    href: "/download-ugc-tool",
   },
 ];
 const Header = () => {
