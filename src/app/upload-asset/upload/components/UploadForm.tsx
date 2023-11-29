@@ -45,6 +45,10 @@ const UploadForm = () => {
   };
 
   const validateUpload = (data: any) => {
+    if(!isConnected) {
+      showErrorToast("Please Connect Wallet");
+      return false;
+    }
     if (!data.image && !imageNft) {
       showErrorToast("Please Upload Collections");
       return false;
